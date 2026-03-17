@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aluno</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body {
+  background-color:aquamarine;
+}
+  </style>
+</head>
+<body>
+  <div class="aluno-container">
+   <div class="aluno-box">
+  <div class="titulo-container">
+     
+        <h2 class="aluno-nome">Eliabe de Lima Dutra</h2>
+    <div class="foto-aluno"><img src="./img/eliabe.JPG" class="img-aluno"></div>
+  </div>
+  <div class="info-container">
+       <h2 class="aluno-data">Terça-feira, 11/03/2026</h2>
+    <p><strong>Série:</strong> Jardim III</p>
+    <p><strong>Turno:</strong> Manhã</p>
+    <p><strong>Professor:</strong> Janielle</p>
+  </div>
+</div>
+
+    <div class="aluno-box">
+      <h2 class="aluno-titulo">Tarefas para Casa</h2>
+      <div class="tarefa-container">
+        <div class="tarefa-item">
+          <p><strong>Matemática:</strong> Páginas 01, 03, 10</p>
+        </div>
+        <div class="tarefa-item">
+          <p><strong>História:</strong> Páginas 12, 13, 14</p>
+        </div>
+        <div class="tarefa-item">
+          <p><strong>Redação:</strong> Livro tal</p>
+        </div>
+        <div class="tarefa-item">
+          <p><strong>Tarefa Impressa:</strong> SIM</p>
+        </div>
+        <div class="tarefa-item">
+          <p><strong>Observações:</strong> Sexta-feira vir sem farda.</p>
+        </div>
+      </div>
+    </div>
+    <button id="agendamentos-anteriores">Agendamentos da semana</button> <button id="sair" class="btn-sair">Sair</button>
+  </div>
+  <!-- Modal (vazio, vamos preencher depois) -->
+  <div id="modal-agendamentos" style="display: none;">
+    <!-- Conteúdo do modal aqui -->
+  </div>
+  <script>
+    document.getElementById('agendamentos-anteriores').addEventListener('click', () => {
+      // Aqui vamos abrir o modal quando o banco estiver pronto
+      alert('Modal de agendamentos anteriores!');
+    });
+  </script>
+</body>
+</html>
+

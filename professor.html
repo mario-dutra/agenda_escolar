@@ -1,0 +1,131 @@
+<!DOCTYPE html> 
+<html lang="pt-BR"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Professor</title> 
+  <link rel="stylesheet" href="./css/style.css"> 
+  <style> 
+    body { 
+      background-color: aquamarine; 
+    } 
+  </style> 
+</head> 
+<body> 
+  <!-- Section 1: Header --> 
+  <header> 
+    <div class="logo">LOGO</div> 
+    <div class="info-professor"> 
+      <span>Nome Professor | Disciplina</span> 
+    </div> 
+    <button>Sair</button> 
+  </header> 
+  <!-- Section 2: Agendamento Tarefas --> 
+  <section class="agendamento"> 
+    <h2>Agendamento Tarefas</h2> 
+    <form> 
+      <div class="container"> 
+        <div class="col"> 
+          <div> 
+            <label>Data:</label> 
+            <input type="date" id="data-agendamento" class="form-control" style="width: 50%;"> 
+          </div> 
+          <div> 
+            <label>Disciplina:</label> 
+            <select> 
+              <option value="">Historia</option> 
+              <option value="">Geografia</option> 
+              <option value="">Gramatica</option> 
+              <option value="">Matematica</option> 
+              <option value="">Inglês</option> 
+              <option value="">Redação</option> 
+              <option value="">Artes</option> 
+            </select> 
+          </div> 
+          <div> 
+            <label>Turno:</label> 
+            <select> 
+              <option value="">Manhã</option> 
+              <option value="">Tarde</option> 
+            </select> 
+          </div> 
+          <div> 
+            <label>Livro:</label> 
+            <input type="text"> 
+          </div> 
+        </div> 
+        <div class="col"> 
+          <div> 
+            <label>Série:</label> 
+            <select> 
+              <option value="">jardim I</option> 
+              <option value="">jardim II</option> 
+              <option value="">jardim III</option> 
+              <option value="">jardim IV</option> 
+              <option value="">jardim V</option> 
+              <option value="">1ª série</option> 
+              <option value="">2ª série</option> 
+              <option value="">3ª série</option> 
+              <option value="">4ª série</option> 
+              <option value="">5ª série</option> 
+              <option value="">6ª série</option> 
+              <option value="">7ª série</option> 
+              <option value="">8ª série</option> 
+              <option value="">9ª ano</option> 
+              <option value="">1ª ano</option> 
+              <option value="">2ª ano</option> 
+            </select> 
+          </div> 
+          <div> 
+            <label>Turma:</label> 
+            <select> 
+              <option value="">turma A</option> 
+              <option value="">turma B</option> 
+              <option value="">turma C</option> 
+            </select> 
+          </div> 
+          <div> 
+            <label>Observação:</label> 
+            <textarea></textarea> 
+          </div> 
+          <div class="inline-row" style="position: relative;"> 
+            <button id="btn-tarefa-impressa" type="button">Tarefa Impressa</button> 
+           <div id="opcoes-impressa" style="display: none; position: absolute; top:0px;width: 100px; left: 125px; padding:0px; border: 0px solid #ddd;height: 30px;">
+
+                <input type="checkbox" name="impressa" value="sim"> &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sim 
+              </label> 
+            </div> 
+          </div> 
+        </div> 
+      </div> 
+      <div class="botoes"> 
+        <button>Salvar</button> 
+        <button>Limpar</button> 
+        <button>Histórico</button> 
+      </div> 
+    </form> 
+  </section> 
+  <!-- Section 3: Resumo --> 
+  <section class="resumo"> 
+    <div id="resumo-container"></div> 
+    <button>Editar</button> 
+    <button>Excluir</button> 
+  </section> 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+  <script>
+    $(document).ready(function() {
+      $('#btn-tarefa-impressa').click(function() {
+        $('#opcoes-impressa').toggle();
+      });
+
+      $(document).click(function(e) {
+        if (!$(e.target).closest('#btn-tarefa-impressa, #opcoes-impressa').length) {
+          $('#opcoes-impressa').hide();
+        }
+      });
+    });
+  </script> 
+</body> 
+</html>
+

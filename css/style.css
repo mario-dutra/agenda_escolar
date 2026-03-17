@@ -1,0 +1,402 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+.geral {
+  border: 0px solid black;
+  padding: 20px;
+  display: flex;
+  background-color: aquamarine;
+}
+
+.login {
+  background-color: rgb(7, 99, 67);
+  height: 300px;
+}
+
+h1 {
+  margin-top: 20px;
+  color: rgb(4, 96, 73);
+  font-family: 'Dancing Script', cursive;
+}
+
+p {
+  color: rgb(12, 132, 80);
+  margin-top: 10px;
+}
+
+.logo {
+  border: 0px solid black;
+  height: 100px;
+  width: 100px;
+}
+
+.logo-img {
+  width: 100px;
+}
+
+.titulo {
+  border: 0px solid black;
+  width: 65%;
+  text-align: center;
+}
+
+.area-aluno, .area-professor {
+  margin-top: 30px;
+  border: 0px solid black;
+  height: 45px;
+  width: 70px;
+  margin-left: 5px;
+  text-align: center;
+  padding: 5px;
+  background-color: white;
+  border-radius: 6%;
+}
+
+.logo-aluno-professor {
+  width: 30px;
+}
+
+hr {
+  border: 0px;
+}
+
+/* estilização modais */
+.modal {
+  display: none;
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 300px;
+  text-align: center;
+}
+
+.modal h2 {
+  margin-bottom: 20px;
+  font-family: 'Dancing Script', cursive;
+}
+
+.modal input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal button {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal button[type="button"] {
+  background: #f44336;
+}
+
+.modal button:hover {
+  opacity: 0.8;
+}
+
+/* professor.html */
+header, .agendamento, .resumo {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 1em;
+  width: 90%;
+  margin: 10px auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bold;
+}
+
+.info-professor {
+  text-align: center;
+}
+
+.agendamento h2 {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.agendamento .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.agendamento .col {
+  flex: 1;
+  min-width: 250px;
+  border: 1px solid rgb(44, 208, 153);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.agendamento .col div {
+  margin-bottom: 1em;
+}
+
+.agendamento input, .agendamento select, .agendamento textarea {
+  width: 100%;
+  padding: 0.5em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.agendamento .inline-row {
+  display: flex;
+  align-items: center;
+  margin: 1em 0;
+}
+
+.agendamento .inline-row label {
+  margin-right: 1em;
+}
+
+.opcao-radio{
+  border: 0px solid black;
+  width: 50%;
+  display: flex ;
+  margin-top: 20px;
+}
+
+
+
+
+
+.agendamento .botoes {
+  display: flex;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.agendamento button {
+  padding: 0.5em 1em;
+  border: none;
+  background-color: #4CAF50;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.resumo #resumo-container {
+  padding: 1em;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  margin-bottom: 1em;
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+  .titulo h1 {
+    font-size: 1.2em;
+  }
+  .titulo p {
+    font-size: 0.9em;
+    margin-bottom: 10px;
+  }
+  .modal {
+    width: 90%;
+    padding: 20px;
+  }
+  .geral {
+    display: block;
+  }
+  hr {
+    border: 2px solid aquamarine;
+  }
+  .area-aluno, .area-professor {
+    width: 80%;
+    border: 2px solid rgb(3, 58, 40);
+    border-radius: 5px;
+  }
+  .titulo, .logo, .area-aluno, .area-professor {
+    margin: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  header, .agendamento, .resumo {
+    width: 95%;
+  }
+  .agendamento .container {
+    flex-direction: column;
+  }
+  .agendamento .inline-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .titulo h1 {
+    font-size: 1.5em;
+  }
+  .modal {
+    width: 400px;
+  }
+}
+
+@media (min-width: 901px) {
+  .titulo h1 {
+    font-size: 2em;
+  }
+}
+
+@media (min-width: 1200px) {
+  .agendamento, .resumo ,header{
+    max-width: 1200px;
+    margin: 10px auto;
+  }
+}
+
+
+/*aluno*/
+
+ .aluno-box {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-left: 4px solid #4CAF50;
+   
+}
+
+.titulo-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+ 
+}
+
+.aluno-nome {
+  margin: 0;
+  font-size: 24px;
+  color: #4CAF50;
+}
+
+.aluno-data {
+ 
+  font-size: 18px;
+  color: #666;
+  text-align: center;
+}
+
+.foto-aluno{
+
+  width: 80px;
+  height: 80px;
+}
+
+.img-aluno{
+  width:78px;
+  height: 79px;
+   border-radius: 50%;
+}
+
+.aluno-titulo {
+  margin-top: 0;
+  color: #4CAF50;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.btn-sair{
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #e25045;
+  border: none;
+  color: white;
+}
+
+.btn-sair:hover {
+  background-color: #f4653a;
+}
+
+.info-container p {
+  margin: 5px 0;
+}
+
+.tarefa-container {
+  margin-top: 10px;
+}
+
+
+
+
+
+
+.tarefa-item {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px dashed #ddd;
+}
+
+.tarefa-item:last-child {
+  border-bottom: none;
+}
+
+#agendamentos-anteriores {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#agendamentos-anteriores:hover {
+  background-color: #3e8e41;
+}
+
+.aluno-container {
+  padding: 10px;
+  max-width: 500px; /* diminui a largura máxima */
+  margin: 20px auto;
+}
+
+@media (max-width: 600px) {
+  .aluno-container {
+    padding: 10px;
+    max-width: 90%; /* ajusta para telas pequenas */
+  }
+  .aluno-box {
+    padding: 15px;
+  }
+}
+
+@media (min-width: 768px) {
+  .aluno-container {
+    max-width: 600px;
+  }
+}

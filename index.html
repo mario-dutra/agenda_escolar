@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda Escolar</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+<style>
+  body {
+  background-color: rgb(3, 54, 24);
+}
+</style>
+</head>
+<body>
+  <div class="geral">
+    <div class="logo"><img src="./img/logo0.png" alt="" class="logo-img"></div>
+    <div class="titulo">
+      <h1>Instituto Educacional Marito Dutra</h1>
+      <p><b>AGENDA ESCOLAR 2026</b></p>
+    </div>
+    <div class="area-aluno" onclick="abrirModal('aluno')"><img src="./img/aluna.png" alt="area do aluno" class="logo-aluno-professor"></div><hr/>
+    <div class="area-professor" onclick="abrirModal('professor')"><img src="./img/professor.png" alt="area do professor" class="logo-aluno-professor"></div>
+  </div>
+
+  <!-- Modais -->
+ <div id="modal-aluno" class="modal">
+  <form>
+    <h2>Login Aluno</h2>
+    <input type="text" placeholder="Matrícula">
+    <input type="password" placeholder="Senha">
+    <button type="submit">Entrar</button>
+    <button type="button" onclick="fecharModal('aluno')">Fechar</button>
+  </form>
+</div>
+<div id="modal-professor" class="modal">
+  <form>
+    <h2>Login Professor</h2>
+    <input type="text" placeholder="ID Professor">
+    <input type="password" placeholder="Senha">
+    <button type="submit">Entrar</button>
+    <button type="button" onclick="fecharModal('professor')">Fechar</button>
+  </form>
+</div>
+
+  
+
+  <script src="js/script.js"></script>
+</body>
+</html>
