@@ -439,13 +439,17 @@ header {
     margin-top:10px;
     width: 100%;
   }
-  .botao-pre {
-    width: 100%; /* largura total */
-    height: 60px; /* altura maior */
-    font-size: 16pt; /* tamanho da fonte */
-    margin: 5px 0;
-    border-radius: 8px;
+
+.botao-pre {
+    width: 100% !important;
+    height: 60px !important;
+    font-size: 16pt !important;
+    margin: 5px 0 !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
   }
+
+  
   .botao-pre:nth-child(1) {
     background-color: #247e24; /* verde claro */
   }
