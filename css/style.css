@@ -442,7 +442,7 @@ header {
   .botao-pre {
     width: auto;
     height: 50px;
-    font-size: 20pt;
+    font-size: 25pt; /* aumentei o tamanho do ícone */
     margin: 5px 0;
     border-radius: 8px;
   }
