@@ -442,32 +442,14 @@ header {
   .botao-pre {
     width: auto;
     height: 50px;
-    font-size: 12pt;
+    font-size: 20pt;
     margin: 5px 0;
-    border: none;
     border-radius: 8px;
   }
   .botao-pre:nth-child(1) {
-    background-color: #318831; /* verde claro */
+    background-color: #247e24; /* verde claro */
   }
   .botao-pre:nth-child(2) {
-    background-color: #e07687; /* vermelho clarinho */
-  }
-}
-
-@media (min-width: 601px) {
-  .botao-pre {
-    width: 50px;
-    height: 30px;
-    font-size: 8pt;
-  }
-}
-
-@media (min-width: 601px) and (max-width: 1024px) {
-  .tarefa-preview > div {
-    margin: 2px;
-  }
-  .info-pre, .info-observ-pre {
-    padding: 3px;
+    background-color: #d72a2a; /* vermelho clarinho */
   }
 }
