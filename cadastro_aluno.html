@@ -63,7 +63,7 @@
       <option value="5º Ano">5º Ano</option>
       <option value="6º Ano">6º Ano</option>
       <option value="7º Ano">7º Ano</option>
-      <option value="8º Ano" >8º Ano</option>
+      <option value="8º Ano">8º Ano</option>
     </select>
     <label>Turno:</label>
     <select name="periodo">
@@ -81,7 +81,6 @@
       <button id="sair" type="button">Sair</button>
     </div>
   </form>
-
   <script type="importmap">
     {
       "imports": {
@@ -118,10 +117,8 @@
     });
 
     const form = document.getElementById('form-cadastro-aluno');
-
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-
       const nome = form.nome.value;
       const foto = form['foto-aluno'].files[0];
       const serie = form.serie.value;
@@ -129,89 +126,99 @@
       const usuario = form.usuario.value;
       const senha = form.senha.value;
 
-      // Obtenha o token de acesso do Google Fotos
- const apiKey = 'AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg';
-const clientId = '460998217684-343pt8eb6kteor193t80cckoa6nun2i9.apps.googleusercontent.com';
-const clientSecret = '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';
-const redirectUri = 'https://mario-dutra.github.io/';
+      // Autorizar o acesso ao Google Fotos
+      const apiKey = 'AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg';
+      const clientId = '460998217684-343pt8eb6kteor193t80cckoa6nun2i9.apps.googleusercontent.com';
+      const clientSecret = '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';
+      const redirectUri = 'https://mario-dutra.github.io/';
 
-const url = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=https://www.googleapis.com/auth/photoslibrary&access_type=offline&key=${apiKey}`;
-      window.location.href = url;
+      // Função para obter o token de acesso
+      async function getAccessToken() {
+        const url = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=https://www.googleapis.com/auth/photoslibrary&access_type=offline&key=${apiKey}`;
+        window.location.href = url;
+      }
 
-      // Após o redirecionamento, obtenha o código de autorização
+      // Função para fazer o upload da foto
+      async function uploadFoto(foto, accessToken) {
+        const uploadResponse = await fetch('https://photoslibrary.googleapis.com/v1/uploads', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/octet-stream'
+          },
+          body: foto
+        });
+        const uploadToken = await uploadResponse.text();
+        // Creat um novo item de mídia no Google Fotos
+        const mediaItemResponse = await fetch('https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            'newMediaItems': [
+              {
+                'description': 'Foto do aluno',
+                'simpleMediaItem': {
+                  'fileName': foto.name,
+                  'uploadToken': uploadToken
+                }
+              }
+            ]
+          })
+        });
+        const mediaItemData = await mediaItemResponse.json();
+        const mediaItemId = mediaItemData.newMediaItemResults[0].mediaItem.id;
+        return mediaItemId;
+      }
+
+      // Obter o código de autorização
       const urlParams = new URLSearchParams(window.location.search);
       const code = urlParams.get('code');
 
-      // Obtenha o token de acesso
-      const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `code=${code}&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirectUri}&grant_type=authorization_code`
-      });
-
-      const tokenData = await tokenResponse.json();
-      const accessToken = tokenData.access_token;
-
-      // Faça o upload da foto para o Google Fotos
-      const uploadResponse = await fetch('https://photoslibrary.googleapis.com/v1/uploads', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/octet-stream'
-        },
-        body: foto
-      });
-
-      const uploadToken = await uploadResponse.text();
-
-      // Creat um novo item de mídia no Google Fotos
-      const mediaItemResponse = await fetch('https://photoslibrary.googleapis.com/v1/mediaItems:batchCreate', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          'newMediaItems': [
-            {
-              'description': 'Foto do aluno',
-              'simpleMediaItem': {
-                'fileName': foto.name,
-                'uploadToken': uploadToken
-              }
-            }
-          ]
-        })
-      });
-
-      const mediaItemData = await mediaItemResponse.json();
-      const mediaItemId = mediaItemData.newMediaItemResults[0].mediaItem.id;
-
-      // Salve os dados do aluno no Firestore
-      createUserWithEmailAndPassword(auth, usuario, senha)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          addDoc(collection(db, 'alunos'), {
-            nome,
-            foto: `https://photos.google.com/l/${mediaItemId}`,
-            serie,
-            turno,
-            usuario,
-            uid: user.uid,
-          }).then(() => {
-            alert('Aluno cadastrado com sucesso!');
-            $('form')[0].reset();
-          });
-        })
-        .catch((error) => {
-          if (error.code === 'auth/email-already-in-use') {
-            alert('Usuário já existe!');
-          } else {
-            alert('Erro ao cadastrar aluno: ' + error.message);
-          }
+      if (code) {
+        // Obter o token de acesso
+        const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `code=${code}&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirectUri}&grant_type=authorization_code`
         });
+        const tokenData = await tokenResponse.json();
+        const accessToken = tokenData.access_token;
+
+        // Fazer o upload da foto
+        const mediaItemId = await uploadFoto(foto, accessToken);
+
+        // Salvar os dados do aluno no Firestore
+        createUserWithEmailAndPassword(auth, usuario, senha)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            addDoc(collection(db, 'alunos'), {
+              nome,
+              foto: `https://photos.google.com/l/${mediaItemId}`,
+              serie,
+              turno,
+              usuario,
+              uid: user.uid,
+            }).then(() => {
+              alert('Aluno cadastrado com sucesso!');
+              $('form')[0].reset();
+            });
+          })
+          .catch((error) => {
+            if (error.code === 'auth/email-already-in-use') {
+              alert('Usuário já existe!');
+            } else {
+              alert('Erro ao cadastrar aluno: ' + error.message);
+            }
+          });
+      } else {
+        // Redirecionar para a página de autorização
+        getAccessToken();
+      }
     });
 
     $('#sair').click(function() {
@@ -221,6 +228,62 @@ const url = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&red
         console.error('Erro ao sair:', error);
       });
     });
-  </script>
+
+    // Obter o código de autorização
+const urlParams = new URLSearchParams(window.location.search);
+const code = urlParams.get('code');
+
+if (code) {
+  // Obter o token de acesso
+  const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: `code=${code}&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirectUri}&grant_type=authorization_code`
+  });
+  const tokenData = await tokenResponse.json();
+  const accessToken = tokenData.access_token;
+
+  // Fazer o upload da foto
+  const mediaItemId = await uploadFoto(foto, accessToken);
+
+  // Salvar os dados do aluno no Firestore
+  createUserWithEmailAndPassword(auth, usuario, senha)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      addDoc(collection(db, 'alunos'), {
+        nome,
+        foto: `https://photos.google.com/l/${mediaItemId}`,
+        serie,
+        turno,
+        usuario,
+        uid: user.uid,
+      }).then(() => {
+        alert('Aluno cadastrado com sucesso!');
+        $('form')[0].reset();
+      });
+    })
+    .catch((error) => {
+      if (error.code === 'auth/email-already-in-use') {
+        alert('Usuário já existe!');
+      } else {
+        alert('Erro ao cadastrar aluno: ' + error.message);
+      }
+    });
+} else {
+  // Redirecionar para a página de autorização
+  getAccessToken();
+}
+});
+
+$('#sair').click(function() {
+signOut(auth).then(() => {
+  window.location.href = 'admin.html';
+}).catch((error) => {
+  console.error('Erro ao sair:', error);
+});
+});
+</script>
 </body>
 </html>
