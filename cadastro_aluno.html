@@ -130,7 +130,7 @@
       const apiKey = 'AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg';
       const clientId = '460998217684-343pt8eb6kteor193t80cckoa6nun2i9.apps.googleusercontent.com';
       const clientSecret = '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';
-      const redirectUri = 'https://mario-dutra.github.io/';
+      const redirectUri = ' https://mario-dutra.github.io/aluno.html';
 
       // Função para obter o token de acesso
       async function getAccessToken() {
@@ -173,63 +173,8 @@
         return mediaItemId;
       }
 
-      // Obter o código de autorização
-      const urlParams = new URLSearchParams(window.location.search);
-      const code = urlParams.get('code');
-
-      if (code) {
-        // Obter o token de acesso
-        const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          body: `code=${code}&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirectUri}&grant_type=authorization_code`
-        });
-        const tokenData = await tokenResponse.json();
-        const accessToken = tokenData.access_token;
-
-        // Fazer o upload da foto
-        const mediaItemId = await uploadFoto(foto, accessToken);
-
-        // Salvar os dados do aluno no Firestore
-        createUserWithEmailAndPassword(auth, usuario, senha)
-          .then((userCredential) => {
-            const user = userCredential.user;
-            addDoc(collection(db, 'alunos'), {
-              nome,
-              foto: `https://photos.google.com/l/${mediaItemId}`,
-              serie,
-              turno,
-              usuario,
-              uid: user.uid,
-            }).then(() => {
-              alert('Aluno cadastrado com sucesso!');
-              $('form')[0].reset();
-            });
-          })
-          .catch((error) => {
-            if (error.code === 'auth/email-already-in-use') {
-              alert('Usuário já existe!');
-            } else {
-              alert('Erro ao cadastrar aluno: ' + error.message);
-            }
-          });
-      } else {
-        // Redirecionar para a página de autorização
-        getAccessToken();
-      }
-    });
-
-    $('#sair').click(function() {
-      signOut(auth).then(() => {
-        window.location.href = 'admin.html';
-      }).catch((error) => {
-        console.error('Erro ao sair:', error);
-      });
-    });
-
-    // Obter o código de autorização
+    
+   // Obter o código de autorização
 const urlParams = new URLSearchParams(window.location.search);
 const code = urlParams.get('code');
 
@@ -254,11 +199,10 @@ if (code) {
       const user = userCredential.user;
       addDoc(collection(db, 'alunos'), {
         nome,
-        foto: `https://photos.google.com/l/${mediaItemId}`,
+        foto_id: mediaItemId,
         serie,
         turno,
         usuario,
-        uid: user.uid,
       }).then(() => {
         alert('Aluno cadastrado com sucesso!');
         $('form')[0].reset();
@@ -278,11 +222,11 @@ if (code) {
 });
 
 $('#sair').click(function() {
-signOut(auth).then(() => {
-  window.location.href = 'admin.html';
-}).catch((error) => {
-  console.error('Erro ao sair:', error);
-});
+  signOut(auth).then(() => {
+    window.location.href = 'admin.html';
+  }).catch((error) => {
+    console.error('Erro ao sair:', error);
+  });
 });
 </script>
 </body>
