@@ -5,14 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Editar Tarefa</title>
   <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
     body{background-color: aquamarine;}
     .form-container {
       width: 95%;
       max-width: 500px;
-      margin: 20px auto;
+      margin: 100px auto; 
       padding: 20px;
-      border: 1px solid #ddd;
+      border: 2px solid green; 
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       background-color: white;
@@ -39,7 +40,54 @@
     .form-container button:hover {
       background-color: #3e8e41;
     }
-   
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+    }
+    #excluir-btn {
+      background-color: #f44336;
+      color: white;
+    }
+    #fechar-btn {
+      background-color: #ccc;
+      color: black;
+    }
+    .alert {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border: 2px solid green;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      text-align: center;
+    }
+    .alert .msg {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .alert .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+
+    h2{
+      text-align: center;
+    }
   </style>
 </head>
 <body onload="window.resizeTo(600,800);">
@@ -67,10 +115,9 @@
       </select>
       <label>Observação:</label>
       <textarea name="observacao"></textarea>
-    
-      <button type="submit">Salvar</button>
-      <button type="button" id="excluir-tarefa">Excluir</button>
-      <button onclick="window.close()">Fechar</button>
+      <button type="submit"><i class="fas fa-save"></i> Salvar</button>
+      <button type="button" id="excluir-btn"><i class="fas fa-trash"></i> Excluir</button>
+      <button type="button" id="fechar-btn"><i class="fas fa-times"></i> Fechar</button>
     </form>
   </div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -92,20 +139,18 @@
     const db = getFirestore(app);
     const urlParams = new URLSearchParams(window.location.search);
     const idTarefa = urlParams.get('id');
-    // Obter a tarefa original do banco de dados
+
     const tarefaRef = doc(db, 'tarefas', idTarefa);
     getDoc(tarefaRef).then((docSnap) => {
       if (docSnap.exists()) {
         const tarefa = docSnap.data();
-        // Preencher os campos do formulário com as informações da tarefa
         document.querySelector('input[type="date"]').value = tarefa.data;
         document.getElementById('disciplina-select').value = tarefa.disciplina;
         document.querySelector('select[name="turno"]').value = tarefa.turno;
         document.querySelector('input[name="livro"]').value = tarefa.livro;
         document.querySelector('select[name="serie"]').value = tarefa.serie;
         document.querySelector('textarea[name="observacao"]').value = tarefa.observacao;
-     
-        // Obter as disciplinas do banco de dados
+
         const professorRef = doc(db, 'professores', auth.currentUser.uid);
         getDoc(professorRef).then((docSnap) => {
           if (docSnap.exists()) {
@@ -118,45 +163,102 @@
               option.textContent = disciplina;
               select.appendChild(option);
             });
-            // Selecione a disciplina da tarefa
             document.getElementById('disciplina-select').value = tarefa.disciplina;
           }
         });
       }
     });
-    // Ao clicar na botão de editar
-    document.getElementById('editar-tarefa-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const data = document.querySelector('input[type="date"]').value;
-      const disciplina = document.getElementById('disciplina-select').value;
-      const turno = document.querySelector('select[name="turno"]').value;
-      const livro = document.querySelector('input[name="livro"]').value;
-      const serie = document.querySelector('select[name="serie"]').value;
-      const observacao = document.querySelector('textarea[name="observacao"]').value;
-     
-      const tarefaAtualizada = {
-        data,
-        disciplina,
-        turno,
-        livro,
-        serie,
-        observacao,
+
+    function showAlert(msg, type, callback) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = 'alert';
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'msg';
+      msgDiv.textContent = msg;
+      alertDiv.appendChild(msgDiv);
+
+      if (type === 'confirm') {
+        const simBtn = document.createElement('button');
+        simBtn.className = 'btn';
+        simBtn.style.backgroundColor = '#4CAF50';
+        simBtn.textContent = 'Sim';
+        simBtn.onclick = () => {
+          callback(true);
+          alertDiv.remove();
         };
-      updateDoc(tarefaRef, tarefaAtualizada).then(() => {
-        window.location.href = 'editar-tarefa.html';
-      }).catch((error) => {
-        console.error('Erro:', error);
-      });
+
+        const naoBtn = document.createElement('button');
+        naoBtn.className = 'btn';
+        naoBtn.style.backgroundColor = '#f44336';
+        naoBtn.textContent = 'Não';
+        naoBtn.onclick = () => {
+          callback(false);
+          alertDiv.remove();
+        };
+
+        alertDiv.appendChild(simBtn);
+        alertDiv.appendChild(naoBtn);
+      } else {
+        const okBtn = document.createElement('button');
+        okBtn.className = 'btn';
+        okBtn.textContent = 'OK';
+        okBtn.onclick = () => {
+          alertDiv.remove();
+        };
+
+        alertDiv.appendChild(okBtn);
+      }
+
+      document.body.appendChild(alertDiv);
+    }
+
+    function confirmDelete(confirmed) {
+      const id = new URLSearchParams(window.location.search).get('id');
+      if (confirmed) {
+        deleteDoc(doc(db, 'tarefas', id)).then(() => {
+          showAlert('✅ Tarefa excluída com sucesso!', '', null);
+          window.close();
+        }).catch((error) => {
+          console.error('Erro ao excluir:', error);
+          showAlert('❌ Erro ao excluir tarefa', '', null);
+        });
+      } else {
+        showAlert('Exclusão cancelada!', '', null);
+      }
+    }
+
+    document.getElementById('excluir-btn').addEventListener('click', () => {
+      showAlert('Tem certeza que deseja excluir?', 'confirm', confirmDelete);
     });
-    // Ao clicar no botão de excluir
-    document.getElementById('excluir-tarefa').addEventListener('click', async () => {
-      deleteDoc(tarefaRef).then(() => {
-        window.location.href = 'editar-tarefa.html';
-      }).catch((error) => {
-        console.error('Erro:', error);
-      });
+
+    document.getElementById('fechar-btn').addEventListener('click', () => {
+      window.close();
     });
+
+   document.getElementById('editar-tarefa-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = document.querySelector('input[type="date"]').value;
+  const disciplina = document.getElementById('disciplina-select').value;
+  const turno = document.querySelector('select[name="turno"]').value;
+  const livro = document.querySelector('input[name="livro"]').value;
+  const serie = document.querySelector('select[name="serie"]').value;
+  const observacao = document.querySelector('textarea[name="observacao"]').value;
+  const tarefaAtualizada = {
+    data,
+    disciplina,
+    turno,
+    livro,
+    serie,
+    observacao,
+  };
+  updateDoc(tarefaRef, tarefaAtualizada).then(() => {
+    showAlert('✅ Tarefa atualizada com sucesso!', '', null);
+    window.close();
+  }).catch((error) => {
+    console.error('Erro:', error);
+    showAlert('❌ Erro ao atualizar tarefa', '', null);
+  });
+});
   </script>
- 
 </body>
 </html>
