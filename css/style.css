@@ -412,7 +412,6 @@ header {
 
 
 /*ajueste botoes pagina professor sessao previsualização*/
-
 .tarefa-preview {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -433,6 +432,13 @@ header {
   border: 1px solid black;
   padding: 5px;
   border-radius: 4px;
+}
+
+.info-observ-pre {
+  width: auto;
+  max-width: 500px; /* ajuste esse valor para o tamanho máximo que você deseja */
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .btns-ed-ex {
@@ -487,3 +493,98 @@ header {
   }
 }
 
+/* modal do relatorio */
+@media (max-width: 480px) {
+  #historico-modal {
+    width: 95vw;
+    padding: 10px;
+  }
+}
+
+
+/*professor*/
+.info-professor span.nome {
+      font-size: 22pt;
+      display: block;
+      color: green;
+    }
+    .info-professor span.disciplinas {
+      font-size: 10pt;
+    }
+    .alert {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      text-align: center;
+      z-index: 1000;
+      border: 2px solid #28a745;
+    }
+    .alert button {
+      margin-top: 10px;
+      padding: 5px 10px;
+    }
+    #historico-modal {
+      width: 40vw;
+      max-width: 400px;
+      height: 50vh;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+    #historico-lista {
+      border-radius: 10px;
+      overflow-y: auto;
+      height: 100%;
+    }
+    .btn-fechar-modal {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #ff0000;
+      color: #ffffff;
+      border: none;
+      padding: 5px 10px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .btn-fechar-modal:hover {
+      background-color: #cc0000;
+    }
+    .btns-ed-ex {
+      display: flex;
+      gap: 10px;
+    }
+    .botao-pre {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+      cursor: pointer;
+      display: inline-block !important;
+    }
+    /*stilo links modal*/
+    .link-modal {
+      display: block;
+      padding: 10px;
+      font-weight: bold;
+      color: #04390a;
+      font-size: 14px;
+      text-decoration: none !important;
+    }
+    li:nth-child(odd) .link-modal {
+      background-color:aquamarine;
+    }
+    li:nth-child(even) .link-modal {
+      background-color: #f3f5f3;
+    }
