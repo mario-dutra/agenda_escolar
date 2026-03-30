@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
   <style>
-    body { background-color: rgb(3, 54, 24); }
+    body {
+      background-color: rgb(3, 54, 24);
+    }
     .alert {
       position: fixed;
       top: 50%;
@@ -36,12 +38,13 @@
     <div class="area-aluno" onclick="abrirModal('aluno')"><img src="./img/aluna.png" alt="area do aluno" class="logo-aluno-professor"></div><hr/>
     <div class="area-professor" onclick="abrirModal('professor')"><img src="./img/professor.png" alt="area do professor" class="logo-aluno-professor"></div>
   </div>
+
   <!-- Modais -->
   <div id="modal-aluno" class="modal">
-    <form>
+    <form id="aluno-login-form">
       <h2>Login Aluno</h2>
-      <input type="text" placeholder="Matrícula">
-      <input type="password" placeholder="Senha">
+      <input type="text" id="aluno-matricula" placeholder="Matrícula">
+      <input type="password" id="aluno-senha" placeholder="Senha">
       <button type="submit">Entrar</button>
       <button type="button" onclick="fecharModal('aluno')">Fechar</button>
     </form>
@@ -55,11 +58,11 @@
       <button type="button" onclick="fecharModal('professor')">Fechar</button>
     </form>
   </div>
+
   <script src="js/script.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
     const firebaseConfig = {
       apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
       authDomain: "agenda-escolar-19fda.firebaseapp.com",
@@ -72,11 +75,25 @@
     initializeApp(firebaseConfig);
     const auth = getAuth();
 
+   document.getElementById('aluno-login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const matricula = document.getElementById('aluno-matricula').value;
+  const senha = document.getElementById('aluno-senha').value;
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, matricula, senha);
+    const user = userCredential.user;
+    localStorage.setItem('uid', user.uid);
+    window.location.href = 'aluno.html';
+  } catch (error) {
+    console.error('Erro:', error);
+    showAlert('❌ Matrícula ou senha inválidos');
+  }
+});
+
     document.getElementById('professor-login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.querySelector('input[name="email"]').value;
       const senha = document.querySelector('input[name="senha"]').value;
-
       try {
         await signInWithEmailAndPassword(auth, email, senha);
         window.location.href = 'professor.html';
