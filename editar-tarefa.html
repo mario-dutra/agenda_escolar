@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Tarefa</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    body{background-color: aquamarine;}
+    .form-container {
+      width: 95%;
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: white;
+    }
+    .form-container label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-container input, .form-container select, .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .form-container button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+    }
+    .form-container button:hover {
+      background-color: #3e8e41;
+    }
+   
+  </style>
+</head>
+<body onload="window.resizeTo(600,800);">
+  <div class="form-container">
+    <h2>Editar Tarefa</h2>
+    <form id="editar-tarefa-form">
+      <label>Data:</label>
+      <input type="date" id="data" name="data">
+      <label>Disciplina:</label>
+      <select id="disciplina-select" name="disciplina">
+        <!-- opções de disciplinas -->
+      </select>
+      <label>Turno:</label>
+      <select name="turno">
+        <option value="manha">Manhã</option>
+        <option value="tarde">Tarde</option>
+      </select>
+      <label>Livro:</label>
+      <input type="text" name="livro">
+      <label>Série:</label>
+      <select name="serie">
+        <option value="1ª serie">1ª série</option>
+        <option value="2ª serie">2ª série</option>
+        <!-- outras opções de séries -->
+      </select>
+      <label>Observação:</label>
+      <textarea name="observacao"></textarea>
+    
+      <button type="submit">Editar</button>
+      <button type="button" id="excluir-tarefa">Excluir</button>
+      <button onclick="window.close()">Fechar</button>
+    </form>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
+      authDomain: "agenda-escolar-19fda.firebaseapp.com",
+      projectId: "agenda-escolar-19fda",
+      storageBucket: "agenda-escolar-19fda.firebasestorage.app",
+      messagingSenderId: "460998217684",
+      appId: "1:460998217684:web:98e4a2cc23b467124bd041",
+      measurementId: "G-RL4NVD2Y1C"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const urlParams = new URLSearchParams(window.location.search);
+    const idTarefa = urlParams.get('id');
+    // Obter a tarefa original do banco de dados
+    const tarefaRef = doc(db, 'tarefas', idTarefa);
+    getDoc(tarefaRef).then((docSnap) => {
+      if (docSnap.exists()) {
+        const tarefa = docSnap.data();
+        // Preencher os campos do formulário com as informações da tarefa
+        document.querySelector('input[type="date"]').value = tarefa.data;
+        document.getElementById('disciplina-select').value = tarefa.disciplina;
+        document.querySelector('select[name="turno"]').value = tarefa.turno;
+        document.querySelector('input[name="livro"]').value = tarefa.livro;
+        document.querySelector('select[name="serie"]').value = tarefa.serie;
+        document.querySelector('textarea[name="observacao"]').value = tarefa.observacao;
+     
+        // Obter as disciplinas do banco de dados
+        const professorRef = doc(db, 'professores', auth.currentUser.uid);
+        getDoc(professorRef).then((docSnap) => {
+          if (docSnap.exists()) {
+            const professor = docSnap.data();
+            const disciplinas = professor.disciplinas;
+            const select = document.getElementById('disciplina-select');
+            disciplinas.forEach((disciplina) => {
+              const option = document.createElement('option');
+              option.value = disciplina;
+              option.textContent = disciplina;
+              select.appendChild(option);
+            });
+            // Selecione a disciplina da tarefa
+            document.getElementById('disciplina-select').value = tarefa.disciplina;
+          }
+        });
+      }
+    });
+    // Ao clicar na botão de editar
+    document.getElementById('editar-tarefa-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = document.querySelector('input[type="date"]').value;
+      const disciplina = document.getElementById('disciplina-select').value;
+      const turno = document.querySelector('select[name="turno"]').value;
+      const livro = document.querySelector('input[name="livro"]').value;
+      const serie = document.querySelector('select[name="serie"]').value;
+      const observacao = document.querySelector('textarea[name="observacao"]').value;
+     
+      const tarefaAtualizada = {
+        data,
+        disciplina,
+        turno,
+        livro,
+        serie,
+        observacao,
+        };
+      updateDoc(tarefaRef, tarefaAtualizada).then(() => {
+        window.location.href = 'editar-tarefa.html';
+      }).catch((error) => {
+        console.error('Erro:', error);
+      });
+    });
+    // Ao clicar no botão de excluir
+    document.getElementById('excluir-tarefa').addEventListener('click', async () => {
+      deleteDoc(tarefaRef).then(() => {
+        window.location.href = 'editar-tarefa.html';
+      }).catch((error) => {
+        console.error('Erro:', error);
+      });
+    });
+  </script>
+ 
+</body>
+</html>
