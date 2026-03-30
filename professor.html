@@ -10,7 +10,8 @@
     body {
       background-color: aquamarine;
     }
-    #historico-modal {
+    
+  #historico-modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -39,6 +40,7 @@
     padding: 10px;
   }
 }
+
   </style>
 </head>
 <body>
@@ -336,29 +338,28 @@
   });
 
   document.getElementById('btn-historico').addEventListener('click', async () => {
-    document.getElementById('loading').style.display = 'block';
-    const professorUid = auth.currentUser.uid;
-    const q = query(collection(db, 'tarefas'), where('professor', '==', professorUid), orderBy('criadoEm', 'desc'), limit(20));
-    const querySnapshot = await getDocs(q);
-    let lista = '';
-    if (querySnapshot.empty) {
-      lista = '<li>Nenhuma tarefa encontrada.</li>';
-    } else {
-      querySnapshot.forEach((doc) => {
-        const tarefa = doc.data();
-        const dataFormatada = tarefa.data.split('-').reverse().join('/');
-  const altura = 800;
-const largura = 500;
-const top = (screen.height - altura) / 2;
-const left = (screen.width - largura) / 2;
-
-lista += `<li><a href="#" onclick="window.open('editar-tarefa.html?id=${doc.id}', 'Editar Tarefa', 'width=${largura},height=${altura},left=${left},top=${top},resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,status=no'); return false;" class="link-modal">Editar - ${dataFormatada} - ${tarefa.disciplina}</a></li>`;
-      });
-    }
-    document.getElementById('historico-lista').innerHTML = lista;
-    document.getElementById('historico-modal').style.display = 'block';
-    document.getElementById('loading').style.display = 'none';
-  });
+  document.getElementById('loading').style.display = 'block';
+  const professorUid = auth.currentUser.uid;
+  const q = query(collection(db, 'tarefas'), where('professor', '==', professorUid), orderBy('criadoEm', 'desc'), limit(20));
+  const querySnapshot = await getDocs(q);
+  let lista = '';
+  if (querySnapshot.empty) {
+    lista = '<li>Nenhuma tarefa encontrada.</li>';
+  } else {
+    querySnapshot.forEach((doc) => {
+      const tarefa = doc.data();
+      const dataFormatada = tarefa.data.split('-').reverse().join('/');
+      const altura = 800;
+      const largura = 500;
+      const top = (screen.height - altura) / 2;
+      const left = (screen.width - largura) / 2;
+      lista += `<li><a href="#" onclick="document.getElementById('historico-modal').style.display = 'none'; window.open('editar-tarefa.html?id=${doc.id}', 'Editar Tarefa', 'width=${largura},height=${altura},left=${left},top=${top},resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,status=no'); return false;" class="link-modal">Editar - ${dataFormatada} - ${tarefa.disciplina}</a></li>`;
+    });
+  }
+  document.getElementById('historico-lista').innerHTML = lista;
+  document.getElementById('historico-modal').style.display = 'block';
+  document.getElementById('loading').style.display = 'none';
+});
 
   document.addEventListener('DOMContentLoaded', () => {
     const modal = document.querySelector('#historico-modal');
