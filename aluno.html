@@ -4,61 +4,212 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aluno</title>
-  <link rel="stylesheet" href="./css/style.css">
   <style>
     body {
-  background-color:aquamarine;
-}
+      font-family: Arial, sans-serif;
+      background-color: aquamarine;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .aluno-info {
+      margin-bottom: 20px;
+      padding: 20px;
+      border: 1px solid #3adc60;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .aluno-foto {
+      border-radius: 10%;
+      width: 40%;
+      height: auto;
+      max-width: 100px;
+      max-height: 80px;
+    }
+    .aluno-dados {
+      text-align: center;
+      margin: 0 auto;
+    }
+    .aluno-nome {
+      color: green;
+      font-weight: bold;
+    }
+    #loader {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      color: #fff;
+    }
+    #loader .spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    #tarefas-container {
+      text-align: center;
+    }
+    #tarefas-container h2 {
+      color: #2E865F;
+    }
+    #tarefas-lista {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .tarefa {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 250px;
+      color: #2E865F;
+    }
+    .livro-vazio {
+      color: red;
+    }
+
+    .nome_professor{
+      font-size: 6pt;
+      color: rgb(67, 62, 62);
+      font-weight: bolder;
+    }
+
+    @media (max-width: 768px) {
+      #tarefas-lista {
+        display: block;
+        padding: 0 20px;
+      }
+      .tarefa {
+        width: 100%;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="aluno-container">
-   <div class="aluno-box">
-  <div class="titulo-container">
-     
-        <h2 class="aluno-nome">Eliabe de Lima Dutra</h2>
-    <div class="foto-aluno"><img src="./img/eliabe.JPG" class="img-aluno"></div>
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>Carregando...</p>
   </div>
-  <div class="info-container">
-       <h2 class="aluno-data">Terça-feira, 11/03/2026</h2>
-    <p><strong>Série:</strong> Jardim III</p>
-    <p><strong>Turno:</strong> Manhã</p>
-    <p><strong>Professor:</strong> Janielle</p>
+  <div class="container" id="aluno-container"></div>
+  <div class="container" id="tarefas-container">
+    <h2>Tarefas do Dia</h2>
+    <div id="tarefas-lista"></div>
   </div>
-</div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    <div class="aluno-box">
-      <h2 class="aluno-titulo">Tarefas para Casa</h2>
-      <div class="tarefa-container">
-        <div class="tarefa-item">
-          <p><strong>Matemática:</strong> Páginas 01, 03, 10</p>
-        </div>
-        <div class="tarefa-item">
-          <p><strong>História:</strong> Páginas 12, 13, 14</p>
-        </div>
-        <div class="tarefa-item">
-          <p><strong>Redação:</strong> Livro tal</p>
-        </div>
-        <div class="tarefa-item">
-          <p><strong>Tarefa Impressa:</strong> SIM</p>
-        </div>
-        <div class="tarefa-item">
-          <p><strong>Observações:</strong> Sexta-feira vir sem farda.</p>
-        </div>
-      </div>
-    </div>
-    <button id="agendamentos-anteriores">Agendamentos da semana</button> <button id="sair" class="btn-sair">Sair</button>
-  </div>
-  <!-- Modal (vazio, vamos preencher depois) -->
-  <div id="modal-agendamentos" style="display: none;">
-    <!-- Conteúdo do modal aqui -->
-  </div>
-  <script>
-    document.getElementById('agendamentos-anteriores').addEventListener('click', () => {
-      // Aqui vamos abrir o modal quando o banco estiver pronto
-      alert('Modal de agendamentos anteriores!');
+    const firebaseConfig = {
+      apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
+      authDomain: "agenda-escolar-19fda.firebaseapp.com",
+      projectId: "agenda-escolar-19fda",
+      storageBucket: "agenda-escolar-19fda.firebasestorage.app",
+      messagingSenderId: "460998217684",
+      appId: "1:460998217684:web:98e4a2cc23b467124bd041",
+      measurementId: "G-RL4NVD2Y1C"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const email = user.email;
+        const data = new Date();
+        const diaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'][data.getDay()];
+        const dataFormatadaExibicao = `${diaSemana}, ${data.getDate().toString().padStart(2, '0')}/${(data.getMonth() + 1).toString().padStart(2, '0')}/${data.getFullYear()}`;
+        const dataFormatada = new Date().toLocaleDateString('en-CA');
+
+        try {
+          const alunosRef = collection(db, 'alunos');
+          const q = query(alunosRef, where('usuario', '==', email));
+          const querySnapshot = await getDocs(q);
+
+          if (querySnapshot.empty) {
+            console.log('Aluno não encontrado');
+            document.getElementById('loader').style.display = 'none';
+            return;
+          }
+
+          const alunoContainer = document.getElementById('aluno-container');
+          querySnapshot.forEach(async (doc) => {
+            const alunoInfo = document.createElement('div');
+            alunoInfo.classList.add('aluno-info');
+            alunoInfo.innerHTML = `
+              <img src="${doc.data().foto}" alt="Foto do aluno" class="aluno-foto">
+              <div class="aluno-dados">
+                <h2 class="aluno-nome">${doc.data().nome}</h2>
+                <p>${dataFormatadaExibicao}</p>
+                <p>${doc.data().serie} - ${doc.data().turno}</p>
+              </div>
+              <div></div>
+            `;
+            alunoContainer.appendChild(alunoInfo);
+
+            const serie = doc.data().serie;
+            const turno = doc.data().turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const tarefasRef = collection(db, 'tarefas');
+            const qt = query(tarefasRef, where('serie', '==', serie), where('turno', '==', turno), where('data', '==', dataFormatada));
+            const querySnapshotTarefas = await getDocs(qt);
+            const tarefasLista = document.getElementById('tarefas-lista');
+            tarefasLista.innerHTML = '';
+            if (querySnapshotTarefas.size === 0) {
+              tarefasLista.innerHTML = '<p>Nenhuma tarefa encontrada.</p>';
+            } else {
+              querySnapshotTarefas.forEach((docTarefa) => {
+                const tarefa = document.createElement('div');
+                tarefa.classList.add('tarefa');
+                const livro = docTarefa.data().livro;
+                const livroHtml = livro ? livro : `<span class="livro-vazio">não contém</span>`;
+                tarefa.innerHTML = `
+                  <h3>${docTarefa.data().disciplina}</h3>
+                  <p>${docTarefa.data().observacao}</p>
+                  <p>Livro: ${livroHtml}</p>
+                   <p class="nome_professor">Professor: ${docTarefa.data().nome_professor}</p>
+                `;
+                tarefasLista.appendChild(tarefa);
+              });
+            }
+          });
+        } catch (error) {
+          console.error(error);
+        } finally {
+          document.getElementById('loader').style.display = 'none';
+        }
+      } else {
+        console.log('Usuário não logado');
+        document.getElementById('loader').style.display = 'none';
+      }
     });
   </script>
 </body>
 </html>
-
