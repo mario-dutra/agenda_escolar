@@ -17,6 +17,7 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       background-color: white;
+    
     }
     .form-container label {
       display: block;
@@ -87,32 +88,71 @@
 
     h2{
       text-align: center;
+      margin-bottom: 20px;
+      background-color: #4CAF50;
+      color:white;
+      border-radius: 5px;
+    }
+    
+
+    .for-edi-tarefa{
+      width: 90%;
+      border: 0px solid rgb(84, 220, 86);
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    fieldset{
+      border: none;
     }
   </style>
 </head>
 <body onload="window.resizeTo(600,800);">
-  <div class="form-container">
+<div class="form-container">
     <h2>Editar Tarefa</h2>
     <form id="editar-tarefa-form">
-      <label>Data:</label>
+
+      <div class="for-edi-tarefa">
+
+     <fieldset>
+      <legend>Data:</legend>
       <input type="date" id="data" name="data">
-      <label>Disciplina:</label>
+      </fieldset>
+
+      <fieldset>
+      <legend>Disciplina:</legend>
       <select id="disciplina-select" name="disciplina">
         <!-- opções de disciplinas -->
       </select>
-      <label>Turno:</label>
+      </fieldset>
+
+        <fieldset>
+       <legend>Turno:</legend>
       <select name="turno">
         <option value="manha">Manhã</option>
         <option value="tarde">Tarde</option>
       </select>
-      <label>Livro:</label>
+      </fieldset>
+      </div>
+     
+
+      <div class="for-edi-tarefa">
+     <fieldset>
+         <legend>Livro:</legend>
       <input type="text" name="livro">
-      <label>Série:</label>
+    </fieldset>
+
+      <fieldset>
+      <legend>Série:</legend>
       <select name="serie">
         <option value="1ª serie">1ª série</option>
         <option value="2ª serie">2ª série</option>
         <!-- outras opções de séries -->
       </select>
+      </fieldset>
+      </div>
+
+     
       <label>Observação:</label>
       <textarea name="observacao"></textarea>
       <button type="submit"><i class="fas fa-save"></i> Salvar</button>
@@ -120,6 +160,8 @@
       <button type="button" id="fechar-btn"><i class="fas fa-times"></i> Fechar</button>
     </form>
   </div>
+
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
