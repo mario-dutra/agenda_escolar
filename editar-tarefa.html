@@ -106,12 +106,7 @@
       border: none;
     }
     select{margin-right:4px;}
-    @media (max-width: 768px) {
-  #excluir-btn, #fechar-btn {
-    display: inline-block;
-    margin: 10px;
-  }
-}
+
   </style>
 </head>
 <body onload="window.resizeTo(600,800);">
@@ -245,8 +240,7 @@
           alertDiv.remove();
         };
 
-        alertDiv.appendChild(simBtn);
-        alertDiv.appendChild(naoBtn);
+        alertDiv.appendChild(simBtn); alertDiv.appendChild(naoBtn);
       } else {
         const okBtn = document.createElement('button');
         okBtn.className = 'btn';
