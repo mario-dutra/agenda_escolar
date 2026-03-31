@@ -225,6 +225,7 @@
         const simBtn = document.createElement('button');
         simBtn.className = 'btn';
         simBtn.style.backgroundColor = '#4CAF50';
+         simBtn.style.width = '30px';
         simBtn.textContent = 'Sim';
         simBtn.onclick = () => {
           callback(true);
@@ -234,13 +235,16 @@
         const naoBtn = document.createElement('button');
         naoBtn.className = 'btn';
         naoBtn.style.backgroundColor = '#f44336';
+        naoBtn.style.width = '30px';
         naoBtn.textContent = 'Não';
         naoBtn.onclick = () => {
           callback(false);
           alertDiv.remove();
         };
 
-        alertDiv.appendChild(simBtn); alertDiv.appendChild(naoBtn);
+        alertDiv.appendChild(simBtn);
+        alertDiv.appendChild(naoBtn);
+        
       } else {
         const okBtn = document.createElement('button');
         okBtn.className = 'btn';
