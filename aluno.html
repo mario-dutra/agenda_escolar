@@ -110,7 +110,7 @@
       font-weight: bolder;
     }
 
-   
+    
 
     @media (max-width: 768px) {
       #tarefas-lista {
@@ -149,6 +149,13 @@
       border-radius: 10px 10px 0px 0px;
       background-color: #0a8928;
     }
+
+    .tarefa-dia{
+      background-color:#0a8928;
+      border-radius: 10px;
+      color: white !important;
+      padding: 5px;
+    }
   </style>
 </head>
 <body>
@@ -161,7 +168,7 @@
   </div>
 
   <div class="container" id="tarefas-container">
-    <h2>Tarefas do Dia</h2>
+    <h2 class="tarefa-dia">Tarefas do Dia</h2>
     <div id="tarefas-lista"></div>
   </div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
