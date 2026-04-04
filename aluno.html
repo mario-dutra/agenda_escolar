@@ -17,6 +17,7 @@
       border: 1px solid #ddd;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   
     }
     .aluno-info {
       margin-bottom: 20px;
@@ -29,11 +30,12 @@
       align-items: center;
     }
     .aluno-foto {
-      border-radius: 10%;
-      width: 40%;
-      height: auto;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
       max-width: 100px;
-      max-height: 80px;
+      max-height: 100px;
+     border:  2px solid aquamarine;
     }
     .aluno-dados {
       text-align: center;
@@ -108,7 +110,15 @@
         margin-bottom: 20px;
         box-sizing: border-box;
       }
+
+      .aluno-nome {
+      color: green;
+      font-weight: bold;
+      font-size: 9pt;
+      margin-top: 60px;
     }
+    }
+    
   </style>
 </head>
 <body>
@@ -116,7 +126,10 @@
     <div class="spinner"></div>
     <p>Carregando...</p>
   </div>
-  <div class="container" id="aluno-container"></div>
+  <div class="container" id="aluno-container">     
+ 
+  </div>
+
   <div class="container" id="tarefas-container">
     <h2>Tarefas do Dia</h2>
     <div id="tarefas-lista"></div>
@@ -194,7 +207,7 @@
                   <h3>${docTarefa.data().disciplina}</h3>
                   <p>${docTarefa.data().observacao}</p>
                   <p>Livro: ${livroHtml}</p>
-                 <p class="nome_professor">Professor: ${docTarefa.data().nome_professor.split(" ").slice(0, 2).join(" ")}</p>
+                  <p class="nome_professor">Professor: ${docTarefa.data().nome_professor.split(" ").slice(0, 2).join(" ")}</p>
                 `;
                 tarefasLista.appendChild(tarefa);
               });
