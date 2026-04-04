@@ -194,7 +194,7 @@
                   <h3>${docTarefa.data().disciplina}</h3>
                   <p>${docTarefa.data().observacao}</p>
                   <p>Livro: ${livroHtml}</p>
-                   <p class="nome_professor">Professor: ${docTarefa.data().nome_professor}</p>
+                 <p class="nome_professor">Professor: ${docTarefa.data().nome_professor.split(" ").slice(0, 2).join(" ")}</p>
                 `;
                 tarefasLista.appendChild(tarefa);
               });
