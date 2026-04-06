@@ -96,7 +96,7 @@
     
 
     .for-edi-tarefa{
-      width: 98%;
+      width: 90%;
       border: 0px solid rgb(84, 220, 86);
       display: flex;
       justify-content: space-between;
@@ -105,8 +105,6 @@
     fieldset{
       border: none;
     }
-    select{margin-right:4px;}
-
   </style>
 </head>
 <body onload="window.resizeTo(600,800);">
@@ -221,76 +219,70 @@
       }
     });
 
-    function showAlert(msg, type, callback) {
-      const alertDiv = document.createElement('div');
-      alertDiv.className = 'alert';
-      const msgDiv = document.createElement('div');
-      msgDiv.className = 'msg';
-      msgDiv.textContent = msg;
-      alertDiv.appendChild(msgDiv);
+  function showAlert(msg, type, callback) {
+  const alertDiv = document.createElement('div');
+  alertDiv.className = 'alert';
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'msg';
+  msgDiv.textContent = msg;
+  alertDiv.appendChild(msgDiv);
 
-      if (type === 'confirm') {
-        const simBtn = document.createElement('button');
-        simBtn.className = 'btn';
-        simBtn.style.backgroundColor = '#4CAF50';
-         simBtn.style.width = '50px';
-        simBtn.textContent = 'Sim';
-        simBtn.onclick = () => {
-          callback(true);
-          alertDiv.remove();
-        };
+  if (type === 'confirm') {
+    const simBtn = document.createElement('button');
+    simBtn.className = 'btn';
+    simBtn.style.backgroundColor = '#4CAF50';
+    simBtn.textContent = 'Sim';
+    simBtn.onclick = () => {
+      alertDiv.remove();
+      callback(true);
+    };
+    const naoBtn = document.createElement('button');
+    naoBtn.className = 'btn';
+    naoBtn.style.backgroundColor = '#f44336';
+    naoBtn.textContent = 'Não';
+    naoBtn.onclick = () => {
+      alertDiv.remove();
+      callback(false);
+    };
+    alertDiv.appendChild(simBtn);
+    alertDiv.appendChild(naoBtn);
+  } else {
+    const okBtn = document.createElement('button');
+    okBtn.className = 'btn';
+    okBtn.textContent = 'OK';
+    okBtn.onclick = () => {
+      alertDiv.remove();
+      if (callback) callback();
+    };
+    alertDiv.appendChild(okBtn);
+  }
 
-        const naoBtn = document.createElement('button');
-        naoBtn.className = 'btn';
-        naoBtn.style.backgroundColor = '#f44336';
-        naoBtn.style.width = '50px';
-        naoBtn.textContent = 'Não';
-        naoBtn.onclick = () => {
-          callback(false);
-          alertDiv.remove();
-        };
+  document.body.appendChild(alertDiv);
+}
 
-        alertDiv.appendChild(simBtn);
-        alertDiv.appendChild(naoBtn);
-        
-      } else {
-        const okBtn = document.createElement('button');
-        okBtn.className = 'btn';
-        okBtn.textContent = 'OK';
-        okBtn.onclick = () => {
-          alertDiv.remove();
-        };
-
-        alertDiv.appendChild(okBtn);
-      }
-
-      document.body.appendChild(alertDiv);
-    }
-
-    function confirmDelete(confirmed) {
-      const id = new URLSearchParams(window.location.search).get('id');
-      if (confirmed) {
-        deleteDoc(doc(db, 'tarefas', id)).then(() => {
-          showAlert('✅ Tarefa excluída com sucesso!', '', null);
-          window.close();
-        }).catch((error) => {
-          console.error('Erro ao excluir:', error);
-          showAlert('❌ Erro ao excluir tarefa', '', null);
-        });
-      } else {
-        showAlert('Exclusão cancelada!', '', null);
-      }
-    }
-
-    document.getElementById('excluir-btn').addEventListener('click', () => {
-      showAlert('Tem certeza que deseja excluir?', 'confirm', confirmDelete);
+function confirmDelete(confirmed) {
+  const id = new URLSearchParams(window.location.search).get('id');
+  if (confirmed) {
+    deleteDoc(doc(db, 'tarefas', id)).then(() => {
+      showAlert('✅ Tarefa excluída com sucesso!', '', () => window.close());
+    }).catch((error) => {
+      console.error('Erro ao excluir:', error);
+      showAlert('❌ Erro ao excluir tarefa', '', null);
     });
+  } else {
+    showAlert('Exclusão cancelada!', '', null);
+  }
+}
 
-    document.getElementById('fechar-btn').addEventListener('click', () => {
-      window.close();
-    });
+document.getElementById('excluir-btn').addEventListener('click', () => {
+  showAlert('Tem certeza que deseja excluir?', 'confirm', confirmDelete);
+});
 
-   document.getElementById('editar-tarefa-form').addEventListener('submit', async (e) => {
+document.getElementById('fechar-btn').addEventListener('click', () => {
+  window.close();
+});
+
+document.getElementById('editar-tarefa-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const data = document.querySelector('input[type="date"]').value;
   const disciplina = document.getElementById('disciplina-select').value;
@@ -307,13 +299,13 @@
     observacao,
   };
   updateDoc(tarefaRef, tarefaAtualizada).then(() => {
-    showAlert('✅ Tarefa atualizada com sucesso!', '', null);
-    window.close();
+    showAlert('✅ Tarefa atualizada com sucesso!', '', () => window.close());
   }).catch((error) => {
     console.error('Erro:', error);
     showAlert('❌ Erro ao atualizar tarefa', '', null);
   });
 });
   </script>
+  
 </body>
 </html>
