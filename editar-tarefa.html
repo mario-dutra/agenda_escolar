@@ -227,26 +227,31 @@
   msgDiv.textContent = msg;
   alertDiv.appendChild(msgDiv);
 
-  if (type === 'confirm') {
-    const simBtn = document.createElement('button');
-    simBtn.className = 'btn';
-    simBtn.style.backgroundColor = '#4CAF50';
-    simBtn.textContent = 'Sim';
-    simBtn.onclick = () => {
-      alertDiv.remove();
-      callback(true);
-    };
-    const naoBtn = document.createElement('button');
-    naoBtn.className = 'btn';
-    naoBtn.style.backgroundColor = '#f44336';
-    naoBtn.textContent = 'Não';
-    naoBtn.onclick = () => {
-      alertDiv.remove();
-      callback(false);
-    };
-    alertDiv.appendChild(simBtn);
-    alertDiv.appendChild(naoBtn);
-  } else {
+ if (type === 'confirm') {
+  const btnContainer = document.createElement('div');
+  btnContainer.style.display = 'flex';
+  btnContainer.style.justifyContent = 'space-around';
+
+  const simBtn = document.createElement('button');
+  simBtn.className = 'btn';
+  simBtn.style.backgroundColor = '#4CAF50';
+  simBtn.textContent = 'Sim';
+  simBtn.onclick = () => {
+    alertDiv.remove();
+    callback(true);
+  };
+  const naoBtn = document.createElement('button');
+  naoBtn.className = 'btn';
+  naoBtn.style.backgroundColor = '#f44336';
+  naoBtn.textContent = 'Não';
+  naoBtn.onclick = () => {
+    alertDiv.remove();
+    callback(false);
+  };
+  btnContainer.appendChild(simBtn);
+  btnContainer.appendChild(naoBtn);
+  alertDiv.appendChild(btnContainer);
+} else {
     const okBtn = document.createElement('button');
     okBtn.className = 'btn';
     okBtn.textContent = 'OK';
