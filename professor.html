@@ -11,73 +11,34 @@
       background-color: aquamarine;
     }
     
- #historico-modal {
+  #historico-modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
   padding: 20px;
-  border-radius: 5px !important;
-  width: 500px;
-  max-height: 60vh; 
-  overflow-y: auto; 
-}
-
-#historico-modal::-webkit-scrollbar {
-  width: 8px;
-}
-
-#historico-modal::-webkit-scrollbar-thumb {
-  background: aquamarine;
   border-radius: 10px;
+  width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 @media (max-width: 768px) {
   #historico-modal {
     width: 90%;
+    max-width: none;
+    max-height: 90vh;
   }
 }
 
 @media (max-width: 480px) {
   #historico-modal {
     width: 95%;
+    max-width: none;
+    max-height: 95vh;
     padding: 10px;
   }
-}
-
-.agendamento {
-  padding-bottom: 70px; /* ajuste o valor conforme necessário */
-}
-
-/*estilização menu botton*/
-.bottom-menu {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #fff;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-  border-top: 1px solid #ddd;
-  z-index: 1000; /* para garantir que fique acima de outros elementos */
-}
-
-
-.menu-item {
-  text-align: center;
-  color: #666;
-  text-decoration: none;
-}
-
-.menu-item i {
-  font-size: 24px;
-  margin-bottom: 5px;
-}
-
-.menu-item span {
-  font-size: 12px;
 }
 
   </style>
@@ -166,19 +127,7 @@
         <button id="btn-historico" type="button">Histórico</button>
       </div>
     </form>
- 
-
   </section>
-   <nav class="bottom-menu">
-  <a class="menu-item" onclick="window.open('cadastro-provas.html', '_self')">
-    <i class="fa fa-edit"></i>
-    <span>Cadastro</span>
-  </a>
-  <a class="menu-item" onclick="window.open('recados.html', '_self')">
-    <i class="fa fa-envelope"></i>
-    <span>Recados</span>
-  </a>
-</nav>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="module">
