@@ -164,9 +164,10 @@
     }
 
     .box-disciplina{
-      background-color:aquamarine;
+      background-color:green;
      padding: 5px;
      font-size: 10pt;
+     color: white;
     }
     .info-disciplinas{
       
@@ -196,8 +197,13 @@
     .titulo-tarefa-card{
       font-size: 9pt;
     }
-    .observacao-container{
+    .observacao-container-sn{
        font-size: 9pt;
+       color:rgb(247, 12, 12);
+    }
+    .observacao-container{
+      font-size:9pt ;
+      color: black;
     }
   </style>
 </head>
@@ -282,7 +288,7 @@
                 const tarefa = document.createElement('div');
                 tarefa.classList.add('tarefa');
                  const observacao = docTarefa.data().observacao;
-                const observacaoHtml = observacao ? observacao : `<span class="observacao-container">não contém</span>`;
+                const observacaoHtml = observacao ? observacao : `<span class="observacao-container-sn">não contém</span>`;
                 const livro = docTarefa.data().livro;
                 const livroHtml = livro ? livro : `<span class="livro-vazio">não contém</span>`;
                 tarefa.innerHTML = `
