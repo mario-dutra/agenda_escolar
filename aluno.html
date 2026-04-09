@@ -31,31 +31,32 @@
       
     }
     .aluno-foto {
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
-      max-width: 100px;
-      max-height: 100px;
-     border:  4px solid rgb(249, 253, 252);
-     position: absolute;
-     top:12%;
+      border-radius: 10%;
+      width: 90px;
+      height: 90px;
+      max-width: 90px;
+      max-height: 90px;
+     border:  3px solid white;
+     position: absolute;  
+   
+     transform: translateY(-30%);
     
     }
     .aluno-dados {
       text-align: center;
       margin: 0 auto;
-   
+     font-size: 8pt;
+     border: 0px solid red;
     }
     .aluno-nome {
       color:white;
       font-weight: bold;
      position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  text-align: center;
-    
+     top:7%;
+    width: 100%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+    padding-bottom: 10px;
     }
     #loader {
       position: fixed;
@@ -112,6 +113,26 @@
       font-weight: bolder;
     }
 
+    @media (max-width: 869px) {
+       .aluno-dados {
+        
+    margin-left: 34% !important;
+    border: 0px solid red;
+       }
+
+       .aluno-foto {
+    top:14%;
+      width: 90px;
+      height: 90px;
+      max-width: 90px;
+      max-height: 90px;
+       left: 10%;
+       border-radius: 10%;
+      
+    }
+    }
+
+   
     
 
     @media (max-width: 768px) {
@@ -125,24 +146,31 @@
         box-sizing: border-box;
       }
 
-     .aluno-nome {
-      color:white;
-      font-weight: bold;
-     position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  text-align: center;
+      .aluno-dados {
+      text-align: center;
+     margin: auto;
     
+   
+    }
+
+      .aluno-nome {
+     
+      font-weight: bold;
+      font-size: 13pt;
+      position: absolute;
+     
+     color: white;
+        text-align: center;
     }
  .aluno-foto {
-    top:9%;
+    top:14%;
       width: 90px;
       height: 90px;
       max-width: 90px;
       max-height: 90px;
        left: 10%;
+       border-radius: 10%;
+      
     }
 
     .box-disciplina{
@@ -153,10 +181,10 @@
     }
     .teste{
       border: 0px solid black;
-      padding:40px;
+      padding: 40px;
       border-radius: 10px 10px 0px 0px;
       background-color:green;
-     position:relative;
+    
     }
 
     .tarefa-dia{
