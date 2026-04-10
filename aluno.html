@@ -215,16 +215,7 @@
       padding: 5px;
     }
 
-    .box-disciplina{
-      background-color:green;
-     padding: 5px;
-     font-size: 10pt;
-     color: white;
-     justify-content: center;
-     display: flex;
-     align-items: center; /* Alinha verticalmente */
-     justify-content: center; /* Alinha horizontalmente (opcional) */
-     }
+    
      
     .info-disciplinas{
           border: 0px solid black;
@@ -265,6 +256,76 @@
       font-size:9pt ;
       color: black;
     }
+
+
+
+    .box-disciplina {
+  padding: 15px;
+  font-size: 10pt;
+  color: white;
+  justify-content: center;
+  display: flex;
+  background-size: cover;
+  background-position: center;
+}
+
+.matematica {
+  background-color: #2E865F !important;
+  background-image: url("./img/matematica.png");
+    background-repeat: no-repeat;  /* Evita que a imagem se repita */
+    background-size: auto;        /* Mantém o tamanho real da imagem */
+    background-position: center;  /* Centraliza a imagem na div */
+}
+
+.portugues {
+  background-color: #3498DB !important;
+ background-image: url("./img/portugues.png");
+   background-repeat: no-repeat;  /* Evita que a imagem se repita */
+    background-size: auto;        /* Mantém o tamanho real da imagem */
+    background-position: center;  /* Centraliza a imagem na div */
+}
+
+.historia {
+  background-color: #7A288A;
+  background-image: url('icone-historia.png');
+}
+
+.geografia {
+  background-color: #E67E73;
+  background-image: url('icone-geografia.png');
+}
+
+.fisica {
+  background-color: #1ABC9C;
+  background-image: url("./img/fisica.png");
+   background-repeat: no-repeat;  /* Evita que a imagem se repita */
+    background-size: auto;        /* Mantém o tamanho real da imagem */
+    background-position: center;  /* Centraliza a imagem na div */
+}
+
+.quimica {
+  background-color: #9B59B6;
+   background-image: url("./img/quimica.png");
+   background-repeat: no-repeat;  /* Evita que a imagem se repita */
+    background-size: auto;        /* Mantém o tamanho real da imagem */
+    background-position: center;  /* Centraliza a imagem na div */
+}
+
+.ingles {
+  background-color: #F1C40F;
+  background-image: url('icone-ingles.png');
+}
+
+.redacao {
+  background-color: #E74C3C;
+  background-image: url('icone-redacao.png');
+}
+
+.artes {
+  background-color: #8E44AD;
+  background-image: url('icone-artes.png');
+}
+
   </style>
 </head>
 <body>
@@ -351,23 +412,24 @@
                 const observacaoHtml = observacao ? observacao : `<span class="observacao-container-sn">não contém</span>`;
                 const livro = docTarefa.data().livro;
                 const livroHtml = livro ? livro : `<span class="livro-vazio">não contém</span>`;
-                tarefa.innerHTML = `
-                <div class="box-container-card">
-                <div class="box-disciplina">  <h3>${docTarefa.data().disciplina}</h3></div>
-                
-                <div class="info-disciplinas">
-                           <div class="box-container-livros">
-                                <p class="titulo-tarefa-card">Tarefa Livro pag:</p>
-                                 ${livroHtml}
-                                </div>
-                        <div class="box-conteianer-observacao">   
-                         <p class="observacao-container-titulo"> observação </p>      
-                    <div class="observacao-container">${observacaoHtml}</div>
-                    </div>
-                  <p class="nome_professor">Professor: ${docTarefa.data().nome_professor.split(" ").slice(0, 2).join(" ")}</p>
-                  <div>
-                    </div>
-                `;
+               tarefa.innerHTML = `
+  <div class="box-container-card">
+    <div class="box-disciplina ${docTarefa.data().disciplina.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}">
+      <h3>${docTarefa.data().disciplina}</h3>
+    </div>
+    <div class="info-disciplinas">
+      <div class="box-container-livros">
+        <p class="titulo-tarefa-card">Tarefa Livro pag:</p>
+        ${livroHtml}
+      </div>
+      <div class="box-conteianer-observacao">
+        <p class="observacao-container-titulo"> observação </p>
+        <div class="observacao-container">${observacaoHtml}</div>
+      </div>
+      <p class="nome_professor">Professor: ${docTarefa.data().nome_professor.split(" ").slice(0, 2).join(" ")}</p>
+    </div>
+  </div>
+`;
                 tarefasLista.appendChild(tarefa);
               });
             }
