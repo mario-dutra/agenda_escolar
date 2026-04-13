@@ -478,89 +478,98 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const email = user.email;
-        const data = new Date();
-        const diaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'][data.getDay()];
-        const dataFormatadaExibicao = `${diaSemana}, ${data.getDate().toString().padStart(2, '0')}/${(data.getMonth() + 1).toString().padStart(2, '0')}/${data.getFullYear()}`;
-        const dataFormatada = new Date().toLocaleDateString('en-CA');
-
-        try {
-          const alunosRef = collection(db, 'alunos');
-          const q = query(alunosRef, where('usuario', '==', email));
-          const querySnapshot = await getDocs(q);
-
-          if (querySnapshot.empty) {
-            console.log('Aluno não encontrado');
-            document.getElementById('loader').style.display = 'none';
-            return;
-          }
-
-          const alunoContainer = document.getElementById('aluno-container');
-          querySnapshot.forEach(async (doc) => {
-            const alunoInfo = document.createElement('div');
-            alunoInfo.classList.add('aluno-info');
-            alunoInfo.innerHTML = `
-              <img src="${doc.data().foto}" alt="Foto do aluno" class="aluno-foto">
-              <div class="aluno-dados">
-                <h2 class="aluno-nome">${doc.data().nome}</h2>
-                <p>${dataFormatadaExibicao}</p>
-                <p>${doc.data().serie} - ${doc.data().turno}</p>
-              </div>
-              <div></div>
-            `;
-            alunoContainer.appendChild(alunoInfo);
-
-            const serie = doc.data().serie;
-            const turno = doc.data().turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            const tarefasRef = collection(db, 'tarefas');
-            const qt = query(tarefasRef, where('serie', '==', serie), where('turno', '==', turno), where('data', '==', dataFormatada));
-            const querySnapshotTarefas = await getDocs(qt);
-            const tarefasLista = document.getElementById('tarefas-lista');
-            tarefasLista.innerHTML = '';
-            if (querySnapshotTarefas.size === 0) {
-              tarefasLista.innerHTML = '<p>Nenhuma tarefa encontrada.</p>';
-            } else {
-              querySnapshotTarefas.forEach((docTarefa) => {
-                const tarefa = document.createElement('div');
-                tarefa.classList.add('tarefa');
-                 const observacao = docTarefa.data().observacao;
-                const observacaoHtml = observacao ? observacao : `<span class="observacao-container-sn">não contém</span>`;
-                const livro = docTarefa.data().livro;
-                const livroHtml = livro ? livro : `<span class="livro-vazio">não contém</span>`;
-               tarefa.innerHTML = `
-  <div class="box-container-card">
-    <div class="box-disciplina ${docTarefa.data().disciplina.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}">
-      <h3>${docTarefa.data().disciplina}</h3>
-    </div>
-    <div class="info-disciplinas">
-      <div class="box-container-livros">
-        <p class="titulo-tarefa-card">Tarefa Livro pag:</p>
-        ${livroHtml}
-      </div>
-      <div class="box-conteianer-observacao">
-        <p class="observacao-container-titulo"> observação </p>
-        <div class="observacao-container">${observacaoHtml}</div>
-      </div>
-      <p class="nome_professor">Professor: ${docTarefa.data().nome_professor.split(" ").slice(0, 2).join(" ")}</p>
-    </div>
-  </div>
-`;
-                tarefasLista.appendChild(tarefa);
-              });
-            }
-          });
-        } catch (error) {
-          console.error(error);
-        } finally {
-          document.getElementById('loader').style.display = 'none';
-        }
+  onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = 'index.html';
+    return;
+  }
+  const email = user.email;
+  const data = new Date();
+  const diaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'][data.getDay()];
+  const dataFormatadaExibicao = `${diaSemana}, ${data.getDate().toString().padStart(2, '0')}/${(data.getMonth() + 1).toString().padStart(2, '0')}/${data.getFullYear()}`;
+  const dataFormatada = new Date().toLocaleDateString('en-CA');
+  try {
+    const alunosRef = collection(db, 'alunos');
+    const q = query(alunosRef, where('usuario', '==', email));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) {
+      console.log('Aluno não encontrado');
+      document.getElementById('loader').style.display = 'none';
+      return;
+    }
+    const alunoContainer = document.getElementById('aluno-container');
+    querySnapshot.forEach(async (doc) => {
+      const alunoInfo = document.createElement('div');
+      alunoInfo.classList.add('aluno-info');
+      alunoInfo.innerHTML = ` 
+        <img src="${doc.data().foto}" alt="Foto do aluno" class="aluno-foto"> 
+        <div class="aluno-dados"> 
+          <h2 class="aluno-nome">${doc.data().nome}</h2> 
+          <p>${dataFormatadaExibicao}</p> 
+          <p>${doc.data().serie} - ${doc.data().turno}</p> 
+        </div> 
+        <div></div> 
+      `;
+      alunoContainer.appendChild(alunoInfo);
+      const serie = doc.data().serie;
+      const turno = doc.data().turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const tarefasRef = collection(db, 'tarefas');
+      const qt = query(tarefasRef, where('serie', '==', serie), where('turno', '==', turno), where('data', '==', dataFormatada));
+      const querySnapshotTarefas = await getDocs(qt);
+      const tarefasLista = document.getElementById('tarefas-lista');
+      tarefasLista.innerHTML = '';
+      if (querySnapshotTarefas.size === 0) {
+        tarefasLista.innerHTML = '<p>Nenhuma tarefa encontrada.</p>';
       } else {
-        console.log('Usuário não logado');
-        document.getElementById('loader').style.display = 'none';
+        querySnapshotTarefas.forEach((docTarefa) => {
+          const tarefa = document.createElement('div');
+          tarefa.classList.add('tarefa');
+          const observacao = docTarefa.data().observacao;
+          const observacaoHtml = observacao ? observacao : `<span class="observacao-container-sn">não contém</span>`;
+          const livro = docTarefa.data().livro;
+          const livroHtml = livro ? livro : `<span class="livro-vazio">não contém</span>`;
+          tarefa.innerHTML = ` 
+            <div class="box-container-card"> 
+              <div class="box-disciplina ${docTarefa.data().disciplina.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}"> 
+                <h3>${docTarefa.data().disciplina}</h3> 
+              </div> 
+              <div class="info-disciplinas"> 
+                <div class="box-container-livros"> 
+                  <p class="titulo-tarefa-card">Tarefa Livro pag:</p> 
+                  ${livroHtml} 
+                </div> 
+                <div class="box-conteianer-observacao"> 
+                  <p class="observacao-container-titulo"> observação </p> 
+                  <div class="observacao-container">${observacaoHtml}</div> 
+                </div> 
+                <p class="nome_professor">Professor: ${docTarefa.data().nome_professor.split(" ").slice(0, 2).join(" ")}</p> 
+              </div> 
+            </div> 
+          `;
+          tarefasLista.appendChild(tarefa);
+        });
       }
     });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    document.getElementById('loader').style.display = 'none';
+  }
+});
+document.querySelector('.icone-logout').addEventListener('click', () => {
+  auth.signOut().then(() => {
+    window.location.href = 'index.html';
+  }).catch((error) => {
+    console.error(error);
+  });
+});
+document.querySelector('.menu-superior .fa-sign-out-alt').parentElement.addEventListener('click', () => {
+  auth.signOut().then(() => {
+    window.location.href = 'index.html';
+  }).catch((error) => {
+    console.error(error);
+  });
+});
   </script>
 </body>
 </html>
