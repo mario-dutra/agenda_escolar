@@ -260,14 +260,14 @@
 
 
     .box-disciplina {
-  
+ 
   font-size: 10pt;
   color: white;
   justify-content: center;
   display: flex;
   background-size: cover;
   background-position: center;
-      width:140px;
+ width: 140px;
 }
 
 .matematica {
@@ -327,7 +327,90 @@
   background-image: url('icone-artes.png');
 }
 
+
+/*navigation bar*/
+.menu-inferior {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.item-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icone-agenda, .icone-avisos, .icone-logout {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+/* Menu superior (tablet e desktop) */
+.menu-superior {
+ 
+  
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  display: none;
+}
+
+.menu-superior ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.menu-superior li {
+  margin-right: 20px;
+}
+
+.menu-superior a {
+  text-decoration: none;
+  color: #333;
+}
+
+.menu-superior a:hover {
+  color: #666;
+}
+
+@media (min-width: 769px) {
+  .menu-superior {
+    display: block;
+  }
+  .menu-inferior {
+    display: none;
+  }
+}
+
+@media (min-width: 869px) {
+  .menu-superior {
+    display: block;
+  }
+  .menu-inferior {
+    display: none;
+  }
+}
+
+.main-bar{
+ 
+  width: 840px;
+  margin: auto;
+ 
+}
   </style>
+  <!--icones navigation-->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
   <div id="loader">
@@ -338,10 +421,42 @@
    <div class="teste"></div>
   </div>
 
+<div class="main-bar">
+<!-- Menu superior (tablet e desktop) -->
+<nav class="menu-superior" style="width: 820px; ">
+  <ul>
+    <li><a href="#"><i class="fas fa-calendar-alt"></i>Provas</a></li>                                                              
+    <li><a href="#"><i class="fas fa-bell"></i> Avisos</a></li>
+    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+  </ul>
+</nav>
+
+</div>
+
   <div class="container" id="tarefas-container">
     <h2 class="tarefa-dia">Tarefas do Dia</h2>
     <div id="tarefas-lista"></div>
   </div>
+
+  <!-- Menu inferior (mobile) -->
+<div class="menu-inferior">
+  <div class="item-menu">
+    <i class="fas fa-calendar-alt icone-agenda"></i>
+    <span>Agenda de Provas</span>
+  </div>
+  <div class="item-menu">
+    <i class="fas fa-bell icone-avisos"></i>
+    <span>Avisos</span>
+  </div>
+  <div class="item-menu">
+    <i class="fas fa-sign-out-alt icone-logout"></i>
+    <span>Sair</span>
+  </div>
+</div>
+
+
+
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
