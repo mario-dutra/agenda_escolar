@@ -9,7 +9,7 @@
       font-family: Arial, sans-serif;
       background-color:aquamarine;
     }
-    .container {
+    .container,.main-bar {
       max-width: 800px;
       margin: 5px auto;
       padding: 20px;
@@ -403,10 +403,11 @@
 }
 
 .main-bar{
- 
-  width: 840px;
-  margin: auto;
-  overflow: hidden;
+ padding-top: 0px;
+ padding-bottom: 0px;
+ overflow: hidden;
+ border: 0px;
+ background-color: white;
 }
   </style>
   <!--icones navigation-->
@@ -423,7 +424,7 @@
 
 <div class="main-bar">
 <!-- Menu superior (tablet e desktop) -->
-<nav class="menu-superior" style="width:100%; ">
+<nav class="menu-superior" style="width: 100%; ">
   <ul>
     <li><a href="#"><i class="fas fa-calendar-alt"></i>Provas</a></li>                                                              
     <li><a href="#"><i class="fas fa-bell"></i> Avisos</a></li>
