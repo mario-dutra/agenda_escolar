@@ -4,472 +4,395 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aluno</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color:aquamarine;
+      background-color: #d4f4e2;
+      font-family: 'Poppins', sans-serif;
+      padding-bottom: 90px;
     }
-    .container,.main-bar {
-      max-width: 800px;
-      margin: 5px auto;
-      padding: 20px;
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-   
+
+    .header-aluno {
+      background: linear-gradient(135deg, #1a5c3a 0%, #2E865F 100%);
+      padding: 22px 15px 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-    .aluno-info {
-      margin-bottom: 20px;
-      padding: 20px;
-      border: 3px solid white;
-      border-radius:0px 0px 10px 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      
-    }
-    .aluno-foto {
-      border-radius: 10%;
-      width: 90px;
-      height: 90px;
-      max-width: 90px;
-      max-height: 90px;
-     border:  3px solid white;
-     position: absolute;  
-   
-     transform: translateY(-30%);
-    
-    }
-    .aluno-dados {
-      text-align: center;
+
+    .perfil-container {
+      max-width: 1100px;
       margin: 0 auto;
-     font-size: 8pt;
-     border: 0px solid red;
-    }
-    .aluno-nome {
-      color:white;
-      font-weight: bold;
-     position: absolute;
-     top:7%;
-    width: 100%;
-     left: 50%;
-     transform: translate(-50%, -50%);
-    padding-bottom: 10px;
-    }
-    #loader {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      color: #fff;
-    }
-    #loader .spinner {
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid #3498db;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 10px;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    #tarefas-container {
-      text-align: center;
-    }
-    #tarefas-container h2 {
-      color: #2E865F;
-    }
-    #tarefas-lista {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-    .tarefa {
-      background-color: #f9f9f9;
-      border: 3px solid #fbfefc;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      width: 250px;
-      color: #2E865F;
-    }
-    .livro-vazio {
-      color: red;
+      align-items: center;
+      gap: 18px;
     }
 
-    .nome_professor{
-      font-size: 6pt;
-      color: rgb(67, 62, 62);
-      font-weight: bolder;
+    .foto-aluno {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #ccc;
     }
 
-    @media (max-width: 869px) {
-       .aluno-dados {
-        
-    margin-left: 34% !important;
-    border: 0px solid red;
-       }
-
-       .aluno-foto {
-    top:26%;
-      width: 70px;
-      height: 70px;
-      max-width: 70px;
-      max-height: 70px;
-       left: 10%;
-       border-radius: 10%;
-      
+    .info-aluno {
+      flex: 1;
+      color: white;
+      min-width: 0;
     }
 
-       .aluno-nome {
-           
-     border:0px solid red;
-    width:60% !important;
-        padding-top:40px;
+    .nome-aluno {
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      word-wrap: break-word;
     }
-          .aluno-dados {
+
+    .detalhes-aluno {
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0.95;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .detalhes-aluno i {
+      margin-right: 6px;
+      font-size: 11px;
+    }
+
+    .menu-desktop {
+      background: white;
+      max-width: 1100px;
+      margin: -10px auto 18px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-around;
+      padding: 14px;
+    }
+
+    .menu-desktop button {
+      background: none;
+      border: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a5c3a;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: 0.2s;
+    }
+
+    .menu-desktop button:hover {
+      background: #e8f5e9;
+      transform: translateY(-2px);
+    }
+
+    .menu-desktop button i {
+      font-size: 17px;
+    }
+
+    .container-tarefas {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 12px;
+    }
+
+    .titulo-secao {
+      background: #6b9b6b;
+      color: white;
       text-align: center;
-     margin: auto;
-    font-size:12pt;
-   
-    }
-    }
-
-     @media (max-width: 740px) {
-        .aluno-dados{
-          font-size: 9pt !important;
-       
-        }
-        
-     }
-    
-
-    @media (max-width: 768px) {
-      #tarefas-lista {
-        display: block;
-        padding: 0 20px;
-      }
-      .tarefa {
-        width: 100%;
-        margin-bottom: 20px;
-        box-sizing: border-box;
-      }
-
-      .aluno-dados {
-      text-align: center;
-     margin: auto;
-    font-size: 10pt;
-   border: 0px solid orange;
-    }
-
-    
-      .aluno-nome {
-      top:7%;
-      font-weight: bold;
-      font-size: 11pt;
-      position: absolute;
-     border:0px solid white;
-     color: white;
-        text-align: center;
-                padding-top:20px;
-    }
- .aluno-foto {
-    top:15%;
-      width: 70px;
-      height: 70px;
-      max-width: 70px;
-      max-height: 70px;
-       left: 10%;
-       border-radius: 10%;
-      
-    }
-
-    .box-disciplina{
-   
-     font-size:8pt !important;
-    }
-     
-    }
-    .teste{
-      border: 0px solid black;
-      padding: 40px;
-      border-radius: 10px 10px 0px 0px;
-      background-color:green;
-   
-    }
-
-    .tarefa-dia{
-      background-color:#0a8928;
+      padding: 13px;
       border-radius: 10px;
-      color: white !important;
-      padding: 5px;
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+      letter-spacing: 0.5px;
     }
 
-    
-     
-    .info-disciplinas{
-          border: 0px solid black;
-         text-align: center;
-         width: 95%;
-         background-color: rgb(236, 239, 238);
+    .grid-tarefas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 18px;
+      margin-bottom: 20px;
     }
-    .box-container-card{
-      border: 0px solid rgb(6, 111, 39);
+
+    .card-tarefa {
+      background: white;
+      border-radius: 12px;
       display: flex;
       overflow: hidden;
-      border-radius: 10px;
-     
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     }
 
-    .box-container-livros{
-      border: 0px solid black;
-      border-radius: 0px 10px 0px 0px;
-      padding: 10px;
-       font-size: 9pt;
-       
+    .card-tarefa .lado-esquerdo {
+      color: white;
+      padding: 20px 15px;
+      width: 140px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
     }
 
-    .box-conteianer-observacao{
-      border: 0px solid orange;
-       border-radius: 0px 0px 10px 0px;
-      margin-top: 2px;
-      
-    }
-    .titulo-tarefa-card{
-      font-size: 9pt;
-    }
-    .observacao-container-sn{
-       font-size: 9pt;
-       color:rgb(247, 12, 12);
-    }
-    .observacao-container{
-      font-size:9pt ;
-      color: black;
+    .card-tarefa .lado-esquerdo h3 {
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
     }
 
+    .card-tarefa .lado-esquerdo .icone-principal {
+      font-size: 40px;
+    }
 
+    .card-tarefa .lado-esquerdo .icones {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      font-size: 22px;
+    }
 
-    .box-disciplina {
- 
-  font-size: 10pt;
-  color: white;
-  justify-content: center;
-  display: flex;
-  background-size: cover;
-  background-position: center;
- width: 140px;
-}
+    .matematica { background: #2c5f5d; }
+    .portugues { background: #3498DB; }
+    .geografia { background: #E67E73; }
+    .fisica { background: #1ABC9C; }
+    .quimica { background: #9B59B6; }
+    .ingles { background: #F1C40F; }
+    .historia { background: #7A288A; }
+    .artes { background: #8E44AD; }
+    .redacao { background: #E74C3C; }
+    .religiao { background: #34495E; }
+    .edfisica { background: #16A085; }
+    .default { background: #7f8c8d; }
 
-.matematica {
-  background-color: #2E865F !important;
-  background-image: url("./img/matematica.png");
-    background-repeat: no-repeat;  /* Evita que a imagem se repita */
-    background-size: auto;        /* Mantém o tamanho real da imagem */
-    background-position: center;  /* Centraliza a imagem na div */
-}
+    .lado-direito {
+      flex: 1;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
 
-.portugues {
-  background-color: #3498DB !important;
- background-image: url("./img/portugues.png");
-   background-repeat: no-repeat;  /* Evita que a imagem se repita */
-    background-size: auto;        /* Mantém o tamanho real da imagem */
-    background-position: center;  /* Centraliza a imagem na div */
-}
+    .lado-direito .linha {
+      color: #333;
+    }
 
-.historia {
-  background-color: #7A288A;
-  background-image: url('icone-historia.png');
-}
+    .lado-direito .observacao {
+      color: #1a5c3a;
+      font-weight: 600;
+      margin: 5px 0;
+    }
 
-.geografia {
-  background-color: #E67E73;
-  background-image: url('icone-geografia.png');
-}
+    .lado-direito .professor {
+      font-size: 12px;
+      color: #666;
+      margin-top: auto;
+    }
 
-.fisica {
-  background-color: #1ABC9C;
-  background-image: url("./img/fisica.png");
-   background-repeat: no-repeat;  /* Evita que a imagem se repita */
-    background-size: auto;        /* Mantém o tamanho real da imagem */
-    background-position: center;  /* Centraliza a imagem na div */
-}
+    .loading-tarefas {
+      text-align: center;
+      padding: 40px;
+      color: #1a5c3a;
+      font-weight: 600;
+      grid-column: 1 / -1;
+    }
 
-.quimica {
-  background-color: #9B59B6;
-   background-image: url("./img/quimica.png");
-   background-repeat: no-repeat;  /* Evita que a imagem se repita */
-    background-size: auto;        /* Mantém o tamanho real da imagem */
-    background-position: center;  /* Centraliza a imagem na div */
-}
+    .sem-tarefas {
+      text-align: center;
+      padding: 40px;
+      background: white;
+      border-radius: 12px;
+      color: #666;
+      grid-column: 1 / -1;
+    }
 
-.ingles {
-  background-color: #F1C40F;
-  background-image: url('icone-ingles.png');
-}
+    .menu-mobile {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      box-shadow: 0 -3px 15px rgba(0,0,0,0.15);
+      padding: 10px 0 6px;
+      z-index: 9999;
+      height: 65px;
+    }
 
-.redacao {
-  background-color: #E74C3C;
-  background-image: url('icone-redacao.png');
-}
+    .menu-mobile-items {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      max-width: 500px;
+      margin: 0 auto;
+      height: 100%;
+    }
 
-.artes {
-  background-color: #8E44AD;
-  background-image: url('icone-artes.png');
-}
+    .menu-mobile button {
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: #1a5c3a;
+      font-family: 'Poppins', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 4px 12px;
+    }
 
+    .menu-mobile button i {
+      font-size: 20px;
+    }
 
-/*navigation bar*/
-.menu-inferior {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #fff;
-  border-top: 1px solid #ddd;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-}
+    /* LOADER MATEI O PRETO - AGORA É INVISÍVEL */
+    #loader {
+      display: none !important;
+    }
 
-.item-menu {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    @media (max-width: 768px) {
+      .menu-desktop {
+        display: none;
+      }
+      .menu-mobile {
+        display: block;
+      }
+      .perfil-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+      }
+      .foto-aluno {
+        width: 95px;
+        height: 95px;
+      }
+      .nome-aluno {
+        font-size: 19px;
+      }
+      .detalhes-aluno {
+        align-items: center;
+      }
+      .grid-tarefas {
+        grid-template-columns: 1fr;
+      }
+      body {
+        padding-bottom: 80px;
+      }
+    }
 
-.icone-agenda, .icone-avisos, .icone-logout {
-  font-size: 24px;
-  margin-bottom: 5px;
-  color: #2E865F;
-}
+    @media (max-width: 480px) {
+      .foto-aluno {
+        width: 80px;
+        height: 80px;
+        border-width: 3px;
+      }
+      .nome-aluno {
+        font-size: 17px;
+      }
+      .card-tarefa .lado-esquerdo {
+        width: 110px;
+        padding: 15px 10px;
+      }
+      .card-tarefa .lado-esquerdo h3 {
+        font-size: 15px;
+      }
+      .lado-direito {
+        padding: 14px;
+        font-size: 12px;
+      }
+    }
 
-/* Menu superior (tablet e desktop) */
-.menu-superior {
- 
-  
-  width: 100%;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
-  display: none;
-}
-
-.menu-superior ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: space-around;
-}
-
-.menu-superior li {
-  margin-right: 20px;
-}
-
-.menu-superior a {
-  text-decoration: none;
-  color: #333;
-}
-
-.menu-superior a:hover {
-  color: #666;
-}
-
-@media (min-width: 769px) {
-  .menu-superior {
-    display: block;
-  }
-  .menu-inferior {
-    display: none;
-  }
-}
-
-@media (min-width: 869px) {
-  .menu-superior {
-    display: block;
-  }
-  .menu-inferior {
-    display: none;
-  }
-}
-
-.main-bar{
- padding-top: 0px;
- padding-bottom: 0px;
- overflow: hidden;
- border: 0px;
- background-color: white;
-}
-
-.item-menu span {
-  font-size: 11px;
-  color: #333;
-  margin-top: 2px;
-}
+    @media (min-width: 600px) and (max-width: 800px) {
+      .grid-tarefas {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
   </style>
-  <!--icones navigation-->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
-  <div id="loader">
-    <div class="spinner"></div>
-    <p>Carregando...</p>
-  </div>
-  <div class="container" id="aluno-container">     
-   <div class="teste"></div>
-  </div>
+  <div id="loader"></div>
 
-<div class="main-bar">
-<!-- Menu superior (tablet e desktop) -->
-<nav class="menu-superior" style="width: 100%; ">
-  <ul>
-    <li><a href="#"><i class="fas fa-calendar-alt"></i>Provas</a></li>                                                              
-    <li><a href="#"><i class="fas fa-bell"></i> Avisos</a></li>
-    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
-  </ul>
-</nav>
-
-</div>
-
-  <div class="container" id="tarefas-container">
-    <h2 class="tarefa-dia">Tarefas do Dia</h2>
-    <div id="tarefas-lista"></div>
+  <div class="header-aluno">
+    <div class="perfil-container">
+      <img src="" alt="Foto Aluno" class="foto-aluno" id="foto-aluno">
+      <div class="info-aluno">
+        <div class="nome-aluno" id="nome-aluno">CARREGANDO...</div>
+        <div class="detalhes-aluno">
+          <div><i class="fas fa-calendar-day"></i><span id="data-hoje"></span></div>
+          <div><i class="fas fa-graduation-cap"></i><span id="serie-turno"></span></div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Menu inferior (mobile) -->
-<div class="menu-inferior">
-  <div class="item-menu">
-    <i class="fas fa-calendar-alt icone-agenda"></i>
-    <span>Provas</span>
+  <div class="menu-desktop">
+    <button onclick="abrirProvas()">
+      <i class="fas fa-calendar-check"></i> Provas
+    </button>
+    <button onclick="abrirAvisos()">
+      <i class="fas fa-bell"></i> Avisos
+    </button>
+    <button onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i> Sair
+    </button>
   </div>
-  <div class="item-menu">
-    <i class="fas fa-bell icone-avisos"></i>
-    <span>Avisos</span>
+
+  <div class="container-tarefas">
+    <div class="titulo-secao">
+      <i class="fas fa-tasks"></i> Tarefas do Dia
+    </div>
+    <div class="grid-tarefas" id="grid-tarefas">
+      <div class="loading-tarefas">
+        <i class="fas fa-spinner fa-spin"></i> Carregando tarefas...
+      </div>
+    </div>
   </div>
-  <div class="item-menu">
-    <i class="fas fa-sign-out-alt icone-logout"></i>
-    <span>Sair</span>
+
+  <div class="menu-mobile">
+    <div class="menu-mobile-items">
+      <button onclick="abrirProvas()">
+        <i class="fas fa-calendar-check"></i>
+        <span>Provas</span>
+      </button>
+      <button onclick="abrirAvisos()">
+        <i class="fas fa-bell"></i>
+        <span>Avisos</span>
+      </button>
+      <button onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Sair</span>
+      </button>
+    </div>
   </div>
-</div>
 
-
-
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
@@ -485,99 +408,128 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-  onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = 'index.html';
-    return;
-  }
-  const email = user.email;
-  const data = new Date();
-  const diaSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'][data.getDay()];
-  const dataFormatadaExibicao = `${diaSemana}, ${data.getDate().toString().padStart(2, '0')}/${(data.getMonth() + 1).toString().padStart(2, '0')}/${data.getFullYear()}`;
-  const dataFormatada = new Date().toLocaleDateString('en-CA');
-  try {
-    const alunosRef = collection(db, 'alunos');
-    const q = query(alunosRef, where('usuario', '==', email));
-    const querySnapshot = await getDocs(q);
-    if (querySnapshot.empty) {
-      console.log('Aluno não encontrado');
-      document.getElementById('loader').style.display = 'none';
-      return;
+    const DISCIPLINAS = {
+      'matematica': { cor: 'matematica', icone: '<div class="icones"><i class="fas fa-plus"></i><i class="fas fa-minus"></i><i class="fas fa-times"></i><i class="fas fa-divide"></i></div>', nome: 'Matemática' },
+      'portugues': { cor: 'portugues', icone: '<i class="fas fa-book-open icone-principal"></i>', nome: 'Português' },
+      'geografia': { cor: 'geografia', icone: '<i class="fas fa-globe-americas icone-principal"></i>', nome: 'Geografia' },
+      'fisica': { cor: 'fisica', icone: '<i class="fas fa-atom icone-principal"></i>', nome: 'Física' },
+      'quimica': { cor: 'quimica', icone: '<i class="fas fa-flask icone-principal"></i>', nome: 'Química' },
+      'ingles': { cor: 'ingles', icone: '<i class="fas fa-language icone-principal"></i>', nome: 'Inglês' },
+      'historia': { cor: 'historia', icone: '<i class="fas fa-landmark icone-principal"></i>', nome: 'História' },
+      'artes': { cor: 'artes', icone: '<i class="fas fa-palette icone-principal"></i>', nome: 'Artes' },
+      'redacao': { cor: 'redacao', icone: '<i class="fas fa-pen-fancy icone-principal"></i>', nome: 'Redação' },
+      'religiao': { cor: 'religiao', icone: '<i class="fas fa-cross icone-principal"></i>', nome: 'Religião' },
+      'edfisica': { cor: 'edfisica', icone: '<i class="fas fa-futbol icone-principal"></i>', nome: 'Ed. Física' },
+     
+    };
+
+    function formatarData() {
+      const hoje = new Date();
+      const opcoes = { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' };
+      return hoje.toLocaleDateString('pt-BR', opcoes).replace(/^\w/, c => c.toUpperCase());
     }
-    const alunoContainer = document.getElementById('aluno-container');
-    querySnapshot.forEach(async (doc) => {
-      const alunoInfo = document.createElement('div');
-      alunoInfo.classList.add('aluno-info');
-      alunoInfo.innerHTML = ` 
-        <img src="${doc.data().foto}" alt="Foto do aluno" class="aluno-foto"> 
-        <div class="aluno-dados"> 
-          <h2 class="aluno-nome">${doc.data().nome}</h2> 
-          <p>${dataFormatadaExibicao}</p> 
-          <p>${doc.data().serie} - ${doc.data().turno}</p> 
-        </div> 
-        <div></div> 
-      `;
-      alunoContainer.appendChild(alunoInfo);
-      const serie = doc.data().serie;
-      const turno = doc.data().turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      const tarefasRef = collection(db, 'tarefas');
-      const qt = query(tarefasRef, where('serie', '==', serie), where('turno', '==', turno), where('data', '==', dataFormatada));
-      const querySnapshotTarefas = await getDocs(qt);
-      const tarefasLista = document.getElementById('tarefas-lista');
-      tarefasLista.innerHTML = '';
-      if (querySnapshotTarefas.size === 0) {
-        tarefasLista.innerHTML = '<p>Nenhuma tarefa encontrada.</p>';
+
+    function formatarDataFirebase() {
+      const hoje = new Date();
+      const ano = hoje.getFullYear();
+      const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+      const dia = String(hoje.getDate()).padStart(2, '0');
+      return `${ano}-${mes}-${dia}`;
+    }
+
+    document.getElementById('data-hoje').textContent = formatarData();
+
+    window.logout = () => {
+      signOut(auth).then(() => {
+        window.location.href = 'index.html';
+      });
+    };
+
+    window.abrirProvas = () => alert('Provas em breve!');
+    window.abrirAvisos = () => alert('Avisos em breve!');
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const alunoRef = doc(db, "alunos", user.uid);
+        const alunoSnap = await getDoc(alunoRef);
+        
+        if (alunoSnap.exists()) {
+          const dados = alunoSnap.data();
+          document.getElementById('nome-aluno').textContent = dados.nome.toUpperCase();
+          document.getElementById('serie-turno').textContent = `${dados.serie} - ${dados.turno}`;
+          document.getElementById('foto-aluno').src = dados.foto || dados.fotoURL || dados.avatar || './img/aluna.png';
+          
+          carregarTarefas(dados.serie, dados.turno);
+        } else {
+          window.location.href = 'index.html';
+        }
       } else {
-        querySnapshotTarefas.forEach((docTarefa) => {
-          const tarefa = document.createElement('div');
-          tarefa.classList.add('tarefa');
-          const observacao = docTarefa.data().observacao;
-          const observacaoHtml = observacao ? observacao : `<span class="observacao-container-sn">não contém</span>`;
-          const livro = docTarefa.data().livro;
-          const livroHtml = livro ? livro : `<span class="livro-vazio">não contém</span>`;
-          tarefa.innerHTML = ` 
-            <div class="box-container-card"> 
-              <div class="box-disciplina ${docTarefa.data().disciplina.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}"> 
-                <h3>${docTarefa.data().disciplina}</h3> 
-              </div> 
-              <div class="info-disciplinas"> 
-                <div class="box-container-livros"> 
-                  <p class="titulo-tarefa-card">Tarefa Livro pag:</p> 
-                  ${livroHtml} 
-                </div> 
-                <div class="box-conteianer-observacao"> 
-                  <p class="observacao-container-titulo"> observação </p> 
-                  <div class="observacao-container">${observacaoHtml}</div> 
-                </div> 
-                 <p class="nome_professor">Tarefa Impressa: ${docTarefa.data().impressa}</p> 
-                <p class="nome_professor">Professor: ${docTarefa.data().nome_professor.split(" ").slice(0, 2).join(" ")}</p> 
-              </div> 
-            </div> 
-          `;
-          tarefasLista.appendChild(tarefa);
-        });
+        window.location.href = 'index.html';
       }
     });
-  } catch (error) {
-    console.error(error);
-  } finally {
-    document.getElementById('loader').style.display = 'none';
-  }
-});
-document.querySelector('.icone-logout').addEventListener('click', () => {
-  auth.signOut().then(() => {
-    window.location.href = 'index.html';
-  }).catch((error) => {
-    console.error(error);
-  });
-});
-document.querySelector('.menu-superior .fa-sign-out-alt').parentElement.addEventListener('click', () => {
-  auth.signOut().then(() => {
-    window.location.href = 'index.html';
-  }).catch((error) => {
-    console.error(error);
-  });
-});
+
+    async function carregarTarefas(serie, turno) {
+      const grid = document.getElementById('grid-tarefas');
+      const dataHoje = formatarDataFirebase();
+      const turnoLimpo = turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      
+      try {
+        const q = query(
+          collection(db, 'tarefas'),
+          where('serie', '==', serie),
+          where('turno', '==', turnoLimpo),
+          where('data', '==', dataHoje)
+        );
+        
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+          grid.innerHTML = `
+            <div class="sem-tarefas">
+              <i class="fas fa-calendar-times" style="font-size:50px;margin-bottom:15px;color:#ccc;"></i>
+              <p>Nenhuma tarefa para hoje!</p>
+            </div>
+          `;
+          return;
+        }
+        
+        let html = '';
+        querySnapshot.forEach((doc) => {
+          const t = doc.data();
+          const disciplinaKey = t.disciplina.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s/g, '');
+          const disc = DISCIPLINAS[disciplinaKey] || { cor: 'default', icone: '<i class="fas fa-book icone-principal"></i>', nome: t.disciplina };
+          
+          html += `
+            <div class="card-tarefa">
+              <div class="lado-esquerdo ${disc.cor}">
+                <h3>${disc.nome}</h3>
+                ${disc.icone}
+              </div>
+              <div class="lado-direito">
+                <div class="linha">Tarefa ${t.livro || 'Livro'} </div>
+                <div class="linha">${t.pagina || t.pag || ''}</div>
+                <div class="observacao">observação</div>
+                <div class="linha">${t.observacao || t.obs || 'não contém'}</div>
+                <div class="linha">Tarefa Impressa: ${t.impressa || t.tarefaImpressa || 'Não'}</div>
+                <div class="professor">Professor: ${t.professor || t.nome_professor || ''}</div>
+              </div>
+            </div>
+          `;
+        });
+        
+        grid.innerHTML = html;
+        
+      } catch (error) {
+        console.error('ERRO:', error);
+        grid.innerHTML = `
+          <div class="sem-tarefas">
+            <i class="fas fa-exclamation-triangle" style="font-size:50px;margin-bottom:15px;color:#dc3545;"></i>
+            <p>Erro ao carregar tarefas</p>
+            <p style="font-size:11px;margin-top:10px;color:#999;">${error.message}</p>
+          </div>
+        `;
+      }
+    }
   </script>
 </body>
 </html>
