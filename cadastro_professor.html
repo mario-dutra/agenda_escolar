@@ -7,76 +7,87 @@
   <style>
     body { font-family: Arial, sans-serif; background-color: aquamarine; padding: 20px; }
     form { background: white; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; }
-    input, select { width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
+    input, select { width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
     button { padding: 10px 15px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
-    .botoes { display: flex; gap: 10px; }
-    .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
+    button:disabled { background: #ccc; cursor: not-allowed; }
+    .botoes { display: flex; gap: 10px; flex-wrap: wrap; }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; background-color: #f3ecec; padding: 10px; border-radius: 10px; }
     .checkbox-group label { display: flex; align-items: center; gap: 5px; }
-    .menu { background: #1b6017; color: white; padding: 15px; text-align: center; margin-bottom: 20px; }
-    .menu a, .menu button { color: white; margin: 0 15px; text-decoration: none; font-size: 18px; background: none; border: none; cursor: pointer; }
-    .alert {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      text-align: center;
-      z-index: 1000;
-    }
-    .alert button {
-      margin-top: 10px;
-      padding: 5px 10px;
-    }
+    .botoes-modalidade { display: flex; gap: 10px; margin: 10px 0; }
+    .btn-modalidade { flex: 1; background: #2196F3; }
+    .btn-modalidade.ativo { background: #0b7dda; font-weight: bold; }
+    .alert { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.2); text-align: center; z-index: 1000; }
+    .alert button { margin-top: 10px; padding: 5px 10px; }
+    #msg { margin-top: 10px; font-weight: bold; text-align: center; }
+    #logout-button { background-color: #f44336; }
   </style>
 </head>
 <body>
-  <form>
+  <form id="form-professor">
     <h2>Cadastro Professor</h2>
     <label>Nome:</label>
-    <input type="text" name="nome" required>
-    <label>Disciplinas:</label>
-    <div class="checkbox-group">
-      <label><input type="checkbox" name="disciplina[]" value="Matemática"> Matemática</label>
-      <label><input type="checkbox" name="disciplina[]" value="Português"> Português</label>
-      <label><input type="checkbox" name="disciplina[]" value="História"> História</label>
-      <label><input type="checkbox" name="disciplina[]" value="Geografia"> Geografia</label>
-      <label><input type="checkbox" name="disciplina[]" value="Física"> Física</label>
-      <label><input type="checkbox" name="disciplina[]" value="Química"> Química</label>
-      <label><input type="checkbox" name="disciplina[]" value="Ingles"> Inglês</label>
-      <label><input type="checkbox" name="disciplina[]" value="Redacao"> Redação</label>
-      <label><input type="checkbox" name="disciplina[]" value="Artes"> Artes</label>
+    <input type="text" id="nome" required>
+  
+    <div class="botoes-modalidade">
+      <button type="button" id="btn-jardim" class="btn-modalidade">Jardim</button>
+      <button type="button" id="btn-fundamental" class="btn-modalidade">Ensino Fundamental</button>
     </div>
+
+    <div id="disciplinas-jardim" class="checkbox-group" style="display: none;">
+      <label><input type="checkbox" name="disciplina" value="Alfabetização"> Alfabetização</label>
+      <label><input type="checkbox" name="disciplina" value="Brincadeiras"> Brincadeiras</label>
+      <label><input type="checkbox" name="disciplina" value="Música"> Música</label>
+      <label><input type="checkbox" name="disciplina" value="Números"> Números</label>
+    </div>
+
+    <div id="disciplinas-fundamental" class="checkbox-group" style="display: none;">
+      <label><input type="checkbox" name="disciplina" value="Matemática"> Matemática</label>
+      <label><input type="checkbox" name="disciplina" value="História"> História</label>
+      <label><input type="checkbox" name="disciplina" value="Física"> Física</label>
+      <label><input type="checkbox" name="disciplina" value="Inglês"> Inglês</label>
+      <label><input type="checkbox" name="disciplina" value="Português"> Português</label>
+      <label><input type="checkbox" name="disciplina" value="Geografia"> Geografia</label>
+      <label><input type="checkbox" name="disciplina" value="Química"> Química</label>
+      <label><input type="checkbox" name="disciplina" value="Redação"> Redação</label>
+      <label><input type="checkbox" name="disciplina" value="Artes"> Artes</label>
+    </div>
+
     <label>Email:</label>
-    <input type="email" name="email" required>
+    <input type="email" id="email" required>
     <label>Senha:</label>
-    <input type="password" name="senha" required placeholder="minimo de 6 caracteres">
+    <input type="password" id="senha" required placeholder="Mínimo de 6 caracteres">
+    
     <div class="botoes">
-      <button type="submit">Salvar</button>
+      <button type="submit" id="salvar-btn">Salvar</button>
       <button type="reset">Limpar</button>
       <button type="button" onclick="history.back()">Voltar</button>
-      <button id="logout-button">Sair</button>
+      <button type="button" id="logout-button">Sair</button>
     </div>
+    <div id="msg"></div>
   </form>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+                                             
     const firebaseConfig = {
       apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
       authDomain: "agenda-escolar-19fda.firebaseapp.com",
       projectId: "agenda-escolar-19fda",
       storageBucket: "agenda-escolar-19fda.firebasestorage.app",
       messagingSenderId: "460998217684",
-      appId: "1:460998217684:web:98e4a2cc23b467124bd041",
-      measurementId: "G-RL4NVD2Y1C"
+      appId: "1:460998217684:web:98e4a2cc23b467124bd041"
     };
-    initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const db = getFirestore();
+
+    // App principal = admin logado
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // App secundário = só pra criar professor, não desloga o admin
+    const secondaryApp = initializeApp(firebaseConfig, "Secondary");
+    const secondaryAuth = getAuth(secondaryApp);
 
     onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -84,12 +95,19 @@
       }
     });
 
-    document.getElementById('logout-button').addEventListener('click', () => {
-      signOut(auth).then(() => {
-        window.location.href = 'admin.html';
-      }).catch((error) => {
-        console.error('Erro ao sair:', error);
-      });
+    // Botões de modalidade
+    document.getElementById('btn-jardim').addEventListener('click', () => {
+      document.getElementById('disciplinas-jardim').style.display = 'flex';
+      document.getElementById('disciplinas-fundamental').style.display = 'none';
+      document.getElementById('btn-jardim').classList.add('ativo');
+      document.getElementById('btn-fundamental').classList.remove('ativo');
+    });
+
+    document.getElementById('btn-fundamental').addEventListener('click', () => {
+      document.getElementById('disciplinas-jardim').style.display = 'none';
+      document.getElementById('disciplinas-fundamental').style.display = 'flex';
+      document.getElementById('btn-fundamental').classList.add('ativo');
+      document.getElementById('btn-jardim').classList.remove('ativo');
     });
 
     function showAlert(msg) {
@@ -102,27 +120,69 @@
       document.body.appendChild(div);
     }
 
-    document.querySelector('form').addEventListener('submit', async (e) => {
+    document.getElementById('form-professor').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const nome = document.querySelector('input[name="nome"]').value;
-      const disciplinas = Array.from(document.querySelectorAll('input[name="disciplina[]"]:checked')).map(el => el.value);
-      const email = document.querySelector('input[name="email"]').value;
-      const senha = document.querySelector('input[name="senha"]').value;
+      const btn = document.getElementById('salvar-btn');
+      const msg = document.getElementById('msg');
+
+      const nome = document.getElementById('nome').value;
+      const disciplinas = Array.from(document.querySelectorAll('input[name="disciplina"]:checked')).map(el => el.value);
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+
+      if (disciplinas.length === 0) {
+        msg.style.color = 'red';
+        msg.textContent = 'Selecione pelo menos 1 disciplina!';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Salvando...';
+      msg.textContent = '';
 
       try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
-        const userId = userCredential.user.uid;
-        await setDoc(doc(db, "professores", userId), { nome, disciplinas, email });
+        // 1. Cria no Auth usando APP SECUNDÁRIO - não desloga admin
+        const userCredential = await createUserWithEmailAndPassword(secondaryAuth, email, senha);
+        const uid = userCredential.user.uid;
+
+        // 2. Cria no Firestore usando APP PRINCIPAL - admin ainda tá logado
+        await setDoc(doc(db, "professores", uid), {
+          nome: nome,
+          disciplinas: disciplinas,
+          email: email,
+          tipo_usuario: 'professor'
+        });
+
+        // 3. Desloga só o app secundário
+        await signOut(secondaryAuth);
+
         showAlert('✅ Professor cadastrado com sucesso!');
-        document.querySelector('form').reset();
+        document.getElementById('form-professor').reset();
+        document.getElementById('disciplinas-jardim').style.display = 'none';
+        document.getElementById('disciplinas-fundamental').style.display = 'none';
+        document.querySelectorAll('.btn-modalidade').forEach(b => b.classList.remove('ativo'));
+
       } catch (error) {
         console.error('Erro:', error);
         if (error.code === 'auth/weak-password') {
           showAlert('❌ Senha deve ter no mínimo 6 caracteres');
+        } else if (error.code === 'auth/email-already-in-use') {
+          showAlert('❌ Email já está em uso');
         } else {
-          showAlert('❌ Erro ao cadastrar');
+          showAlert('❌ Erro ao cadastrar: ' + error.message);
         }
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Salvar';
       }
+    });
+
+    document.getElementById('logout-button').addEventListener('click', () => {
+      signOut(auth).then(() => {
+        window.location.href = 'admin.html';
+      }).catch((error) => {
+        console.error('Erro ao sair:', error);
+      });
     });
   </script>
 </body>
