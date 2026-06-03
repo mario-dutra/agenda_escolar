@@ -5,52 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agenda Escolar</title>
   <link rel="stylesheet" href="css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">  
-
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                                                                                 
   <style>
     body {
       background-color: rgb(3, 54, 24);
     }
-    .alert {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  text-align: center;
-  z-index: 1000;
-}
-.alert button {
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-.alert button:hover {
-  cursor: pointer;
-}
-#forgot-password-aluno, #forgot-password-professor {
-  margin-top: 10px;
-  font-size: 14px;
-}
-#forgot-password-aluno a, #forgot-password-professor a {
-  color: #4CAF50;
-  text-decoration: none;
-}
-#forgot-password-aluno a:hover, #forgot-password-professor a:hover {
-  text-decoration: underline;
-}
-
-
-
-
+    #forgot-password-aluno, #forgot-password-professor {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    #forgot-password-aluno a, #forgot-password-professor a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+    #forgot-password-aluno a:hover, #forgot-password-professor a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -63,12 +35,13 @@
     <div class="area-aluno" onclick="abrirModal('aluno')"><img src="./img/aluna.png" alt="area do aluno" class="logo-aluno-professor"></div><hr/>
     <div class="area-professor" onclick="abrirModal('professor')"><img src="./img/professor.png" alt="area do professor" class="logo-aluno-professor"></div>
   </div>
+  
   <!-- Modais -->
  <div id="modal-aluno" class="modal">
   <form id="aluno-login-form">
     <h2>Login Aluno</h2>
-    <input type="text" id="aluno-matricula" placeholder="Email">
-    <input type="password" id="aluno-senha" placeholder="Senha">
+    <input type="text" id="aluno-matricula" placeholder="Email" required>
+    <input type="password" id="aluno-senha" placeholder="Senha" required>
     <button type="submit">Entrar</button>
     <button type="button" onclick="fecharModal('aluno')">Fechar</button>
     <p id="forgot-password-aluno"><a href="#">Esqueceu a senha?</a></p>                           
@@ -78,8 +51,8 @@
 <div id="modal-professor" class="modal">
   <form id="professor-login-form">
     <h2>Login Professor</h2>
-    <input type="email" name="email" placeholder="Email">
-    <input type="password" name="senha" placeholder="Senha">
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="senha" placeholder="Senha" required>
     <button type="submit">Entrar</button>
     <button type="button" onclick="fecharModal('professor')">Fechar</button>
     <p id="forgot-password-professor"><a href="#">Esqueceu a senha?</a></p>
@@ -87,11 +60,11 @@
 </div>
 
   <script src="js/script.js"></script>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-   // import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";                                                                                         
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, getDocs, query, collection, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
    
     const firebaseConfig = {
       apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
@@ -106,110 +79,172 @@
     const auth = getAuth();
     const db = getFirestore();
 
+    // LOGIN ALUNO
     document.getElementById('aluno-login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const matricula = document.getElementById('aluno-matricula').value;
       const senha = document.getElementById('aluno-senha').value;
+      
+      Swal.fire({
+        title: 'Entrando...',
+        didOpen: () => Swal.showLoading(),
+        allowOutsideClick: false,
+        showConfirmButton: false
+      });
+      
       try {
         const userCredential = await signInWithEmailAndPassword(auth, matricula, senha);
         const user = userCredential.user;
-        const alunoRef = collection(db, 'alunos');
-        const q = query(alunoRef, where('usuario', '==', matricula));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-          showAlert('❌ Usuário não encontrado');
+        
+        const alunoRef = doc(db, 'alunos', user.uid);
+        const alunoDoc = await getDoc(alunoRef);
+        
+        if (!alunoDoc.exists()) {
+          Swal.fire({icon: 'error', title: 'Opa!', text: 'Cadastro de aluno não encontrado no sistema'});
           return;
         }
-        const alunoDoc = querySnapshot.docs[0];
+        
         const tipo = alunoDoc.data().tipo_usuario;
         if (tipo !== 'aluno') {
-          showAlert('❌ Você não tem permissão para acessar essa área');
+          Swal.fire({icon: 'error', title: 'Sem permissão', text: 'Você não tem permissão para acessar essa área'});
           return;
         }
+        
         localStorage.setItem('uid', user.uid);
+        localStorage.setItem('nomeAluno', alunoDoc.data().nome);
         window.location.href = 'aluno.html';
       } catch (error) {
         console.error('Erro:', error);
-        showAlert('❌ Matrícula ou senha inválidos');
+        Swal.fire({icon: 'error', title: 'Erro', text: 'Matrícula ou senha inválidos'});
       }
     });
+
+    // LOGIN PROFESSOR
     document.getElementById('professor-login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.querySelector('input[name="email"]').value;
       const senha = document.querySelector('input[name="senha"]').value;
+      
+      Swal.fire({
+        title: 'Entrando...',
+        didOpen: () => Swal.showLoading(),
+        allowOutsideClick: false,
+        showConfirmButton: false
+      });
+      
       try {
         const userCredential = await signInWithEmailAndPassword(auth, email, senha);
         const user = userCredential.user;
-        const professorRef = collection(db, 'professores');
-        const q = query(professorRef, where('email', '==', email));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-          showAlert('❌ Usuário não encontrado');
+        
+        const professorRef = doc(db, 'professores', user.uid);
+        const professorDoc = await getDoc(professorRef);
+        
+        if (!professorDoc.exists()) {
+          Swal.fire({icon: 'error', title: 'Opa!', text: 'Cadastro de professor não encontrado no sistema'});
           return;
         }
-        const professorDoc = querySnapshot.docs[0];
+        
         const tipo = professorDoc.data().tipo_usuario;
         if (tipo !== 'professor') {
-          showAlert('❌ Você não tem permissão para acessar essa área');
+          Swal.fire({icon: 'error', title: 'Sem permissão', text: 'Você não tem permissão para acessar essa área'});
           return;
         }
-        window.location.href = 'professor.html';
+        
+        localStorage.setItem('uid', user.uid);
+        localStorage.setItem('nomeProfessor', professorDoc.data().nome);
+        window.location.href = 'agendamento.html';
       } catch (error) {
         console.error('Erro:', error);
-        showAlert('❌ Email ou senha inválidos');
+        Swal.fire({icon: 'error', title: 'Erro', text: 'Email ou senha inválidos'});
       }
     });
 
-    
-   document.getElementById('forgot-password-aluno').addEventListener('click', async (e) => {
-  e.preventDefault();
-  const email = prompt('Digite seu email:');
-  if (email) {
-    try {
-      await sendPasswordResetEmail(auth, email);
-      showAlert('Email de recuperação enviado!');
-    } catch (error) {
-      console.log(error);
-      showAlert('Erro ao enviar email de recuperação');
-    }
-  }
-});
+    // ESQUECEU A SENHA ALUNO - PANCADEIRO
+    document.getElementById('forgot-password-aluno').addEventListener('click', async (e) => {
+      e.preventDefault();
+      
+      const { value: email } = await Swal.fire({
+        title: 'Recuperar senha Aluno',
+        input: 'email',
+        inputLabel: 'Digite seu email cadastrado',
+        inputPlaceholder: 'aluno@escola.com',
+        confirmButtonText: 'Enviar link',
+        confirmButtonColor: '#4CAF50',
+        cancelButtonText: 'Cancelar',
+        showCancelButton: true,
+        inputValidator: (value) => {
+          if (!value) return 'Digita o email aí!';
+        }
+      });
 
-document.getElementById('forgot-password-professor').addEventListener('click', async (e) => {
-  e.preventDefault();
-  const email = prompt('Digite seu email:');
-  if (email) {
-    try {
-      await sendPasswordResetEmail(auth, email);
-      showAlert('Email de recuperação enviado!');
-    } catch (error) {
-      console.log(error);
-      showAlert('Erro ao enviar email de recuperação');
-    }
-  }
-});
-    function showAlert(msg) {
-      const div = document.createElement('div');
-      div.className = 'alert';
-      div.innerHTML = `
-        <p>${msg}</p>
-        <button onclick="this.parentNode.remove()">OK</button>
-      `;
-      document.body.appendChild(div);
-    }
+      if (!email) return;
+
+      Swal.fire({title: 'Verificando...', didOpen: () => Swal.showLoading(), allowOutsideClick: false, showConfirmButton: false});
+      
+      try {
+        const q = query(collection(db, 'alunos'), where('email', '==', email.trim()));
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+          Swal.fire({icon: 'error', title: 'Opa!', text: 'Email não cadastrado como aluno', confirmButtonColor: '#4CAF50'});
+          return;
+        }
+        
+        await sendPasswordResetEmail(auth, email.trim());
+        Swal.fire({icon: 'success', title: 'Enviado!', text: 'Link enviado pro teu email. Checa o spam também', confirmButtonColor: '#4CAF50'});
+        
+      } catch (error) {
+        console.log(error);
+        let msgErro = 'Erro ao enviar email';
+        if (error.code === 'auth/user-not-found') msgErro = 'Email não existe no Firebase';
+        if (error.code === 'auth/invalid-email') msgErro = 'Email inválido';
+        Swal.fire({icon: 'error', title: 'Deu ruim', text: msgErro, confirmButtonColor: '#4CAF50'});
+      }
+    });
+
+    // ESQUECEU A SENHA PROFESSOR - PANCADEIRO
+    document.getElementById('forgot-password-professor').addEventListener('click', async (e) => {
+      e.preventDefault();
+      
+      const { value: email } = await Swal.fire({
+        title: 'Recuperar senha Professor',
+        input: 'email',
+        inputLabel: 'Digite seu email cadastrado',
+        inputPlaceholder: 'professor@escola.com',
+        confirmButtonText: 'Enviar link',
+        confirmButtonColor: '#4CAF50',
+        cancelButtonText: 'Cancelar',
+        showCancelButton: true,
+        inputValidator: (value) => {
+          if (!value) return 'Digita o email aí!';
+        }
+      });
+
+      if (!email) return;
+
+      Swal.fire({title: 'Verificando...', didOpen: () => Swal.showLoading(), allowOutsideClick: false, showConfirmButton: false});
+      
+      try {
+        const q = query(collection(db, 'professores'), where('email', '==', email.trim()));
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+          Swal.fire({icon: 'error', title: 'Opa!', text: 'Email não cadastrado como professor', confirmButtonColor: '#4CAF50'});
+          return;
+        }
+        
+        await sendPasswordResetEmail(auth, email.trim());
+        Swal.fire({icon: 'success', title: 'Enviado!', text: 'Link enviado pro teu email. Checa o spam também', confirmButtonColor: '#4CAF50'});
+        
+      } catch (error) {
+        console.log(error);
+        let msgErro = 'Erro ao enviar email';
+        if (error.code === 'auth/user-not-found') msgErro = 'Email não existe no Firebase';
+        if (error.code === 'auth/invalid-email') msgErro = 'Email inválido';
+        Swal.fire({icon: 'error', title: 'Deu ruim', text: msgErro, confirmButtonColor: '#4CAF50'});
+      }
+    });
+
   </script>
-
-  <div id="reset-password-modal" class="modal" style="display: none;">
-  <div class="modal-content">
-    <h2>Recuperar Senha</h2>
-    <p>Digite seu email cadastrado:</p>
-    <input type="email" id="reset-email" placeholder="Seu email">
-    <div class="modal-buttons">
-      <button id="send-reset-email">Enviar</button>
-      <button id="cancel-reset">Cancelar</button>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
