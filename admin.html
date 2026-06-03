@@ -3,37 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Super Usuário</title>
+  <title>Login Admin</title>
   <style>
-    body { font-family: Arial, sans-serif; background-color: aquamarine; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    body { font-family: Arial, sans-serif; background-color:aquamarine; display: flex; justify-content: center; align-items: center; height: 100vh; }
     .login-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
     input { width: 100%; padding: 8px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; }
     button { width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; }
     button:hover { background: #45a049; }
-    .esqueci-senha { text-align: right; font-size: 12px; margin-top: 8px; }
-    .esqueci-senha a { color: #4CAF50; text-decoration: none; }
     #login-message { margin-top: 10px; text-align: center; }
+    #forgot-password-admin { text-align: center; margin-top: 10px; }
+    #forgot-password-admin a { color: #4CAF50; text-decoration: none; }
+    #forgot-password-admin a:hover { text-decoration: underline; }
+    .esqueci-senha{color:#45a049;text-decoration: none;font-size: 10pt;}
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <div class="login-container">
-    <h2>Login Super Usuário</h2>
-    <form id="login-form">
-      <label>Usuário:</label>
-      <input type="text" id="email" required>
+    <h2>Login Admin</h2>
+    <form id="admin-login-form">
+      <label>Email:</label>
+      <input type="email" id="admin-email" required>
       <label>Senha:</label>
-      <input type="password" id="password" required>
-      <button type="submit" id="login-button">Entrar</button>
+      <input type="password" id="admin-senha" required>
+      <button type="submit">Entrar</button>
       <div id="login-message"></div>
     </form>
-    <div class="esqueci-senha">
-      <a href="#">Esqueci a senha</a>
-    </div>
+     <p><a href="#" id="forgot-password-admin" class="esqueci-senha">Esqueceu a senha?</a></p>       
   </div>
 
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";                                                   
+  import { getFirestore, doc, getDoc, getDocs, query, collection, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";                                                          
+  import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
@@ -44,29 +46,129 @@
     appId: "1:460998217684:web:98e4a2cc23b467124bd041",
     measurementId: "G-RL4NVD2Y1C"
   };
-
+  
   const app = initializeApp(firebaseConfig);
-  const auth = getAuth();
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-  document.getElementById('login-form').addEventListener('submit', (e) => {
+  document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const messageDiv = document.getElementById('login-message');
-
+    const email = document.getElementById('admin-email').value;
+    const senha = document.getElementById('admin-senha').value;
+    const msg = document.getElementById('login-message');
+    msg.textContent = '';
     
-    signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    messageDiv.style.color = 'green';
-    messageDiv.textContent = 'Logado com sucesso!';
-    window.location.href = 'cad_aluno_prof.html';
-  })
-  .catch((error) => {
-    messageDiv.style.color = 'red';
-    messageDiv.textContent = 'Usuario ou senha Incorreto';
-  });
-  });
-</script>
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+      const user = userCredential.user;
 
+      const adminRef = doc(db, 'superadmins', user.uid);
+      const adminDoc = await getDoc(adminRef);
+
+      if (!adminDoc.exists()) {
+        msg.style.color = 'red';
+        msg.textContent = 'Cadastro de admin não encontrado';
+        await signOut(auth);
+        return;
+      }
+
+      const tipo = adminDoc.data().tipo_usuario;
+      if (tipo !== 'admin') {
+        msg.style.color = 'red';
+        msg.textContent = 'Você não tem permissão para acessar essa área';
+        await signOut(auth);
+        return;
+      }
+
+      localStorage.setItem('uid', user.uid);
+      localStorage.setItem('nomeAdmin', adminDoc.data().email);
+      window.location.href = 'cad_aluno_prof.html';
+      
+    } catch (error) {
+      msg.style.color = 'red';
+      if (error.code === 'auth/user-not-found') {
+        msg.textContent = 'Usuário não encontrado';
+      } else if (error.code === 'auth/wrong-password') {
+        msg.textContent = 'Senha incorreta';
+      } else {
+        console.error('Erro:', error);
+        msg.textContent = 'Erro ao autenticar';
+      }
+    }
+  });
+
+  // CÓDIGO NOVO DO "ESQUECEU A SENHA?" 
+ document.getElementById('forgot-password-admin').addEventListener('click', async (e) => {
+  e.preventDefault();
+  
+  // JANELA BONITONA AGORA
+  const { value: email } = await Swal.fire({
+    title: 'Recuperar senha Admin',
+    input: 'email',
+    inputLabel: 'Digite seu email de administrador',
+    inputPlaceholder: 'admin@escola.com',
+    confirmButtonText: 'Enviar link',
+    confirmButtonColor: '#4CAF50',
+    cancelButtonText: 'Cancelar',
+    showCancelButton: true,
+    background: '#fff',
+    color: '#333',
+    inputValidator: (value) => {
+      if (!value) {
+        return 'Tu tem que digitar um email, né cachorro louco!';
+      }
+    }
+  });
+
+  if (!email) return; // Cancelou
+
+  Swal.fire({
+    title: 'Verificando...',
+    didOpen: () => Swal.showLoading(),
+    allowOutsideClick: false,
+    showConfirmButton: false
+  });
+  
+  try {
+    const q = query(collection(db, 'superadmins'), where('email', '==', email.trim()));
+    const querySnapshot = await getDocs(q);
+    
+    if (querySnapshot.empty) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Opa!',
+        text: 'Email não cadastrado como admin',
+        confirmButtonColor: '#4CAF50'
+      });
+      return;
+    }
+    
+    await sendPasswordResetEmail(auth, email.trim());
+    
+    Swal.fire({
+      icon: 'success',
+      title: 'Enviado!',
+      text: 'Link de recuperação enviado. Checa teu email e o spam',
+      confirmButtonColor: '#4CAF50'
+    });
+    
+  } catch (error) {
+    console.log(error);
+    let msgErro = 'Erro ao enviar email. Tenta de novo';
+    if (error.code === 'auth/user-not-found') {
+      msgErro = 'Email não existe no Firebase Auth';
+    } else if (error.code === 'auth/invalid-email') {
+      msgErro = 'Email inválido';
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: 'Deu ruim',
+      text: msgErro,
+      confirmButtonColor: '#4CAF50'
+    });
+  }
+});
+</script>
 </body>
 </html>
