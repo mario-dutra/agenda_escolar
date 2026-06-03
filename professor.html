@@ -11,36 +11,224 @@
       background-color: aquamarine;
     }
     
-  #historico-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 500px;
-  max-height: 80vh;
-  overflow-y: auto;
-}
+    #historico-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 5px !important;
+      width: 500px;
+      max-height: 60vh; 
+      overflow-y: auto;
+      z-index: 9998;
+      border: 1px solid green;
+    }
 
-@media (max-width: 768px) {
-  #historico-modal {
-    width: 90%;
-    max-width: none;
-    max-height: 90vh;
-  }
-}
+    #historico-modal::-webkit-scrollbar {
+      width: 8px;
+    }
 
-@media (max-width: 480px) {
-  #historico-modal {
-    width: 95%;
-    max-width: none;
-    max-height: 95vh;
-    padding: 10px;
-  }
-}
+    #historico-modal::-webkit-scrollbar-thumb {
+      background: aquamarine;
+      border-radius: 10px;
+    }
 
+    /* MODAL EDITAR - IDÊNTICO AO PRINT */
+    #modal-editar-tarefa {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 10000;
+      display: none;
+      overflow: auto;
+      padding: 20px 0;
+    }
+
+    .modal-editar-content {
+      background: #fff;
+      max-width: 650px;
+      margin: 20px auto;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    }
+
+    .modal-editar-header {
+      background: #93dfb8;
+      color: rgb(5, 104, 13);
+      padding: 15px 20px;
+      border-radius: 8px 8px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-editar-header h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .fechar-modal-editar {
+      font-size: 28px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .modal-editar-body {
+      padding: 25px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .form-group input, 
+    .form-group select, 
+    .form-group textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+      background: white;
+    }
+
+    .form-group input:disabled {
+      background: #f0f0f0;
+      cursor: not-allowed;
+      color: #555;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 90px;
+      margin-bottom: 15px;
+    }
+
+    .botoes-modal-editar {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .botoes-modal-editar button {
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-salvar { background: #17a2b8; color: white; }
+    .btn-excluir { background: #dc3545; color: white; }
+    .btn-fechar { background: #5a6268; color: white; }
+    .btn-salvar:hover { background: #138496; }
+    .btn-excluir:hover { background: #c82333; }
+    .btn-fechar:hover { background: #4e555b; }
+
+    .item-historico {
+      background: #d4edda;
+      padding: 12px 15px;
+      margin: 8px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.2s;
+      border-left: 4px solid #2E865F;
+      font-size: 14px;
+    }
+
+    .item-historico:hover {
+      background: #c3e6cb;
+      transform: translateX(5px);
+    }
+
+    .btn-fechar-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translate(-50%, -20px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 768px) {
+      #historico-modal {
+        width: 90%;
+        max-height: 70vh;
+      }
+      .modal-editar-content {
+        width: 95%;
+        margin: 10px auto;
+      }
+      .form-grid, .form-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .modal-editar-body {
+        padding: 20px 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #historico-modal {
+        width: 95%;
+        padding: 15px;
+      }
+      .botoes-modal-editar {
+        flex-direction: column;
+      }
+      .botoes-modal-editar button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (min-width: 1080px) {
+      #historico-modal {
+        top: 26% !important;
+        max-height: 40vh; 
+      }
+    }
   </style>
 </head>
 <body>
@@ -55,10 +243,11 @@
     </div>
     <button id="logout-button">Sair</button>
   </header>
+  
   <!-- Section 2: Agendamento Tarefas -->
   <section class="agendamento">
     <h2>Agendamento Tarefas</h2>
-    <form>
+    <form id="form-tarefa">
       <div class="container">
         <div class="col">
           <div>
@@ -67,9 +256,7 @@
           </div>
           <div>
             <label>Disciplina:</label>
-            <select id="disciplina-select" name="disciplina" required>
-              <!-- disciplinas serão preenchidas pelo JS -->
-            </select>
+            <select id="disciplina-select" name="disciplina" required></select>
           </div>
           <div>
             <label>Turno:</label>
@@ -87,27 +274,22 @@
           <div>
             <label>Série:</label>
             <select name="serie">
-              <option value="1ª serie">1ª série</option>
-              <option value="2ª serie">2ª série</option>
-              <option value="3ª serie">3ª série</option>
-              <option value="4ª serie">4ª série</option>
-              <option value="5ª serie">5ª série</option>
-              <option value="6ª serie">6ª série</option>
-              <option value="7ª serie">7ª série</option>
-              <option value="8ª serie">8ª série</option>
-              <option value="9ª ano">9ª ano</option>
-              <option value="1ª ano">1ª ano</option>
-              <option value="2ª ano">2ª ano</option>
+              <option value="Jardim I">Jardim I</option>
+              <option value="Jardim II">Jardim II</option>
+              <option value="Jardim III">Jardim III</option>
+              <option value="Jardim VI">Jardim VI</option>
+              <option value="Jardim V">Jardim V</option>    
+               <option value="1° ANO">1° ANO</option>
+              <option value="2° ANO">2° ANO</option>
+               <option value="3° ANO">3° ANO</option>
+               <option value="4° ANO">4° ANO</option>
+               <option value="5° ANO">5° ANO</option>
+               <option value="6° ANO">6° ANO</option>
+                <option value="7° ANO">7° ANO</option>
+               <option value="8° ANO">8° ANO</option>
+               <option value="9° ANO">9° ANO</option>
             </select>
           </div>
-          <!-- <div>
-            <label>Turma:</label>
-            <select name="turma">
-              <option value="turma A">turma A</option>
-              <option value="turma B">turma B</option>
-              <option value="turma C">turma C</option>
-            </select>
-          </div> -->
           <div>
             <label>Observação:</label>
             <textarea name="observacao"></textarea>
@@ -129,251 +311,374 @@
     </form>
   </section>
 
+  <!-- MODAL HISTÓRICO -->
+  <div id="historico-modal" style="display: none;">
+    <button class="btn-fechar-modal">&times;</button>
+    <h3>Histórico</h3>
+    <ul id="historico-lista"></ul>
+  </div>
+
+  <!-- MODAL EDITAR TAREFA -->
+  <div id="modal-editar-tarefa">
+    <div class="modal-editar-content">
+      <div class="modal-editar-header">
+        <h2><i class="fas fa-edit"></i> Editar Tarefa</h2>
+        <span class="fechar-modal-editar">&times;</span>
+      </div>
+      <div class="modal-editar-body">
+        <form id="form-editar-tarefa">
+          <input type="hidden" id="edit-tarefa-id">
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Data:</label>
+              <input type="date" id="edit-data" required>
+            </div>
+            <div class="form-group">
+              <label>Disciplina:</label>
+              <input type="text" id="edit-disciplina" disabled>
+            </div>
+            <div class="form-group">
+              <label>Turno:</label>
+              <input type="text" id="edit-turno" disabled>
+            </div>
+          </div>
+          
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Livro:</label>
+              <input type="text" id="edit-livro">
+            </div>
+            <div class="form-group">
+              <label>Série:</label>
+              <input type="text" id="edit-serie" disabled>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Observação:</label>
+            <textarea id="edit-observacao"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Tarefa Impressa:</label>
+            <select id="edit-impressa">
+              <option value="Sim">Sim</option>
+              <option value="Não">Não</option>
+            </select>
+          </div>
+          
+          <div class="botoes-modal-editar">
+            <button type="submit" class="btn-salvar">
+              <i class="fas fa-save"></i> Salvar
+            </button>
+            <button type="button" class="btn-excluir" id="btn-excluir-tarefa">
+              <i class="fas fa-trash"></i> Excluir
+            </button>
+            <button type="button" class="btn-fechar" id="btn-fechar-editar">
+              <i class="fas fa-times"></i> Fechar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="loading" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.5); color: white; padding: 20px; border-radius: 10px; z-index:99999;">Carregando...</div>
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  import { getFirestore, doc, getDoc, collection, addDoc, query, where, onSnapshot, deleteDoc, updateDoc, orderBy, limit, getDocs} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, collection, addDoc, query, where, onSnapshot, deleteDoc, updateDoc, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
-    authDomain: "agenda-escolar-19fda.firebaseapp.com",
-    projectId: "agenda-escolar-19fda",
-    storageBucket: "agenda-escolar-19fda.firebasestorage.app",
-    messagingSenderId: "460998217684",
-    appId: "1:460998217684:web:98e4a2cc23b467124bd041",
-    measurementId: "G-RL4NVD2Y1C"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
+      authDomain: "agenda-escolar-19fda.firebaseapp.com",
+      projectId: "agenda-escolar-19fda",
+      storageBucket: "agenda-escolar-19fda.firebasestorage.app",
+      messagingSenderId: "460998217684",
+      appId: "1:460998217684:web:98e4a2cc23b467124bd041",
+      measurementId: "G-RL4NVD2Y1C"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-  onAuthStateChanged(auth, async (user) => {
-    document.getElementById('loading').style.display = 'block';
-    if (user) {
-      const docRef = doc(db, "professores", user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        document.getElementById('nome-professor').textContent = data.nome;
-        document.getElementById('disciplinas-professor').textContent = data.disciplinas.join(', ');
-        const select = document.getElementById('disciplina-select');
-        data.disciplinas.forEach(d => {
-          const opt = document.createElement('option');
-          opt.value = d;
-          opt.textContent = d;
-          select.appendChild(opt);
-        });
-        document.getElementById('loading').style.display = 'none';
+    onAuthStateChanged(auth, async (user) => {
+      document.getElementById('loading').style.display = 'block';
+      if (user) {
+        const docRef = doc(db, "professores", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          document.getElementById('nome-professor').textContent = data.nome;
+          document.getElementById('disciplinas-professor').textContent = data.disciplinas.join(', ');
+          const select = document.getElementById('disciplina-select');
+          select.innerHTML = '';
+          data.disciplinas.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d;
+            opt.textContent = d;
+            select.appendChild(opt);
+          });
+          document.getElementById('loading').style.display = 'none';
+        } else {
+          document.getElementById('loading').style.display = 'none';
+          window.location.href = 'index.html';
+        }
       } else {
         document.getElementById('loading').style.display = 'none';
         window.location.href = 'index.html';
       }
-    } else {
-      document.getElementById('loading').style.display = 'none';
-      window.location.href = 'index.html';
-    }
-  });
-
-  document.getElementById('logout-button').addEventListener('click', () => {
-    document.getElementById('loading').style.display = 'block';
-    signOut(auth).then(() => {
-      window.location.href = 'index.html';
-    }).catch((error) => {
-      console.error('Erro ao sair:', error);
-      document.getElementById('loading').style.display = 'none';
     });
-  });
 
-   const form = document.querySelector('form');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    document.getElementById('loading').style.display = 'block';
-    const data = document.querySelector('input[type="date"]').value;
-    const disciplina = document.getElementById('disciplina-select').value;
-    const turno = document.querySelector('select[name="turno"]').value;
-    const livro = document.querySelector('input[name="livro"]').value;
-    const serie = document.querySelector('select[name="serie"]').value;
-    //const turma = document.querySelector('select[name="turma"]').value;
-    const observacao = document.querySelector('textarea[name="observacao"]').value;
-    const impressa = document.querySelector('input[name="impressa"]').checked ? 'Sim' : 'Não';
-    const nomeProfessor = document.getElementById('nome-professor').textContent;
-    const tarefa = {
-      data,
-      disciplina,
-      turno,
-      livro,
-      serie,
-      //turma,
-      observacao,
-      impressa,
-      professor: auth.currentUser.uid,
-      nome_professor: nomeProfessor,
-      criadoEm: new Date()
-    };
-    try {
-      const docRef = await addDoc(collection(db, 'tarefas'), tarefa);
-      showAlert('✅ Tarefa salva com sucesso!');
-      form.reset();
-      document.getElementById('loading').style.display = 'none';
-    } catch (error) {
-      console.error('Erro:', error);
-      showAlert('❌ Erro ao salvar tarefa');
-      document.getElementById('loading').style.display = 'none';
-    }
-  });
-
-  async function editarTarefa(id, showExcluir = false) {
-    document.getElementById('historico-modal').style.display = 'none';
-    try {
-      const tarefaRef = doc(db, 'tarefas', id);
-      const docSnap = await getDoc(tarefaRef);
-      if (docSnap.exists()) {
-        const tarefa = docSnap.data();
-        document.querySelector('input[type="date"]').value = tarefa.data;
-        document.getElementById('disciplina-select').value = tarefa.disciplina;
-        document.querySelector('select[name="turno"]').value = tarefa.turno;
-        document.querySelector('input[name="livro"]').value = tarefa.livro;
-        document.querySelector('select[name="serie"]').value = tarefa.serie;
-        //document.querySelector('select[name="turma"]').value = tarefa.turma;
-        document.querySelector('textarea[name="observacao"]').value = tarefa.observacao;
-        document.querySelector('input[name="impressa"]').checked = tarefa.impressa === 'Sim';
-        form.onsubmit = async (e) => {
-          e.preventDefault();
-          const updatedTarefa = {
-            data: document.querySelector('input[type="date"]').value,
-            disciplina: document.getElementById('disciplina-select').value,
-            turno: document.querySelector('select[name="turno"]').value,
-            livro: document.querySelector('input[name="livro"]').value,
-            serie: document.querySelector('select[name="serie"]').value,
-            // turma: document.querySelector('select[name="turma"]').value,
-            observacao: document.querySelector('textarea[name="observacao"]').value,
-            impressa: document.querySelector('input[name="impressa"]').checked ? 'Sim' : 'Não',
-          };
-          try {
-            await updateDoc(tarefaRef, updatedTarefa);
-            showAlert('✅ Tarefa atualizada com sucesso!');
-            form.reset();
-            form.onsubmit = async (e) => {
-              e.preventDefault();
-              // código original de submissão do formulário
-            };
-            document.getElementById('loading').style.display = 'none';
-          } catch (error) {
-            console.error('Erro:', error);
-            showAlert('❌ Erro ao atualizar tarefa');
-            document.getElementById('loading').style.display = 'none';
-          }
-        };
+    document.getElementById('logout-button').addEventListener('click', () => {
+      document.getElementById('loading').style.display = 'block';
+      signOut(auth).then(() => {
+        window.location.href = 'index.html';
+      }).catch((error) => {
+        console.error('Erro ao sair:', error);
         document.getElementById('loading').style.display = 'none';
-      } else {
-        showAlert('❌ Tarefa não encontrada');
+      });
+    });
+
+    const form = document.getElementById('form-tarefa');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      document.getElementById('loading').style.display = 'block';
+      const data = document.querySelector('input[type="date"]').value;
+      const disciplina = document.getElementById('disciplina-select').value;
+      const turno = document.querySelector('select[name="turno"]').value;
+      const livro = document.querySelector('input[name="livro"]').value;
+      const serie = document.querySelector('select[name="serie"]').value;
+      const observacao = document.querySelector('textarea[name="observacao"]').value;
+      const impressa = document.querySelector('input[name="impressa"]').checked ? 'Sim' : 'Não';
+      const nomeProfessor = document.getElementById('nome-professor').textContent;
+      const tarefa = {
+        data, disciplina, turno, livro, serie, observacao, impressa,
+        professorId: auth.currentUser.uid,
+        nome_professor: nomeProfessor,
+        criadoEm: new Date()
+      };
+      try {
+        await addDoc(collection(db, 'tarefas'), tarefa);
+        showAlert('Tarefa salva com sucesso!');
+        form.reset();
+      } catch (error) {
+        console.error('Erro:', error);
+        showAlert('Erro ao salvar tarefa: ' + error.message);
+      } finally {
         document.getElementById('loading').style.display = 'none';
       }
-    } catch (error) {
-      console.error('Erro:', error);
-      showAlert('❌ Erro ao carregar tarefa');
-      document.getElementById('loading').style.display = 'none';
+    });
+
+    // ALERTA CORRIGIDO
+    function showAlert(msg) {
+      const alertaAntigo = document.getElementById('alerta-custom');
+      if (alertaAntigo) alertaAntigo.remove();
+
+      const div = document.createElement('div');
+      div.id = 'alerta-custom';
+      div.style.cssText = `
+        position: fixed;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #1a5c3a;
+        color: white;
+        padding: 18px 35px;
+        border-radius: 8px;
+        z-index: 10003;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+        font-weight: 600;
+        font-size: 16px;
+        text-align: center;
+        min-width: 280px;
+        animation: slideDown 0.3s ease;
+      `;
+      
+      div.innerHTML = `<i class="fas fa-check-circle" style="margin-right:8px;"></i>${msg}`;
+      document.body.appendChild(div);
+      
+      setTimeout(() => {
+        div.style.opacity = '0';
+        div.style.transition = 'opacity 0.3s';
+        setTimeout(() => div.remove(), 300);
+      }, 2500);
     }
-  }
 
-  function showConfirmModal(id) {
-    const modal = document.createElement('div');
-    modal.className = 'alert';
-    modal.innerHTML = `
-      <p>Tem certeza que deseja excluir esta tarefa?</p>
-      <button id="confirmYes">Sim</button>
-      <button id="confirmNo">Não</button>
-    `;
-    document.body.appendChild(modal);
-    document.getElementById('confirmYes').addEventListener('click', () => {
-      excluirTarefaConfirm(id);
-      modal.remove();
-    });
-    document.getElementById('confirmNo').addEventListener('click', () => {
-      modal.remove();
-    });
-  }
-
-  async function excluirTarefaConfirm(id) {
-    document.getElementById('loading').style.display = 'block';
-    try {
-      const tarefaRef = doc(db, 'tarefas', id);
-      await deleteDoc(tarefaRef);
-      showAlert('✅ Tarefa excluída com sucesso!');
-      document.getElementById('loading').style.display = 'none';
-    } catch (error) {
-      console.error('Erro ao excluir:', error);
-      showAlert('❌ Erro ao excluir tarefa');
-      document.getElementById('loading').style.display = 'none';
+    function showConfirm(msg, callback) {
+      const modal = document.createElement('div');
+      modal.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:10002; display:flex; align-items:center; justify-content:center;';
+      modal.innerHTML = `
+        <div style="background:white; padding:25px; border-radius:10px; max-width:400px; text-align:center;">
+          <p style="margin-bottom:20px; font-size:16px; color:#333;">${msg}</p>
+          <button id="confirmYes" style="background:#dc3545; color:white; padding:10px 25px; border:none; border-radius:5px; margin:0 5px; cursor:pointer; font-weight:600;">Sim</button>
+          <button id="confirmNo" style="background:#6c757d; color:white; padding:10px 25px; border:none; border-radius:5px; margin:0 5px; cursor:pointer; font-weight:600;">Não</button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      document.getElementById('confirmYes').onclick = () => { callback(true); modal.remove(); };
+      document.getElementById('confirmNo').onclick = () => { callback(false); modal.remove(); };
     }
-  }
 
-  async function excluirTarefa(id) {
-    showConfirmModal(id);
-  }
+    // HISTÓRICO
+    async function carregarHistorico() {
+      document.getElementById('loading').style.display = 'block';
+      const professorUid = auth.currentUser.uid;
+      
+      try {
+        const q = query(
+          collection(db, 'tarefas'), 
+          where('professorId', '==', professorUid), 
+          orderBy('criadoEm', 'desc'), 
+          limit(20)
+        );
+        const querySnapshot = await getDocs(q);
+        let lista = '';
+        
+        if (querySnapshot.empty) {
+          lista = '<li style="padding:10px; text-align:center; color:#666; list-style:none;">Nenhuma tarefa encontrada.</li>';
+        } else {
+          querySnapshot.forEach((doc) => {
+            const tarefa = doc.data();
+            const dataFormatada = tarefa.data.split('-').reverse().join('/');
+            lista += `
+              <div class="item-historico" onclick="abrirModalEditar('${doc.id}')">
+                <i class="fas fa-edit"></i> <b>Editar</b> - ${dataFormatada} - ${tarefa.disciplina}
+              </div>
+            `;
+          });
+        }
+        
+        document.getElementById('historico-lista').innerHTML = lista;
+        
+      } catch (error) {
+        console.error('Erro ao buscar histórico:', error);
+        showAlert('Erro ao carregar histórico');
+        if (error.message.includes('index')) {
+          console.log('>>> CLIQUE AQUI PRA CRIAR O ÍNDICE NECESSÁRIO <<<');
+          console.log(error.message);
+        }
+      } finally {
+        document.getElementById('loading').style.display = 'none';
+      }
+    }
 
-  function showAlert(msg) {
-    const div = document.createElement('div');
-    div.className = 'alert';
-    div.innerHTML = `
-      <p>${msg}</p>
-      <button onclick="this.parentNode.remove()">OK</button>
-    `;
-    document.body.appendChild(div);
-  }
-
-  window.editarTarefa = editarTarefa;
-  window.excluirTarefa = excluirTarefa;
-  $(document).ready(function() {
-    $('#btn-tarefa-impressa').click(function() {
-      $('#opcoes-impressa').toggle();
+    document.getElementById('btn-historico').addEventListener('click', async () => {
+      await carregarHistorico();
+      document.getElementById('historico-modal').style.display = 'block';
     });
-    $(document).click(function(e) {
-      if (!$(e.target).closest('#btn-tarefa-impressa, #opcoes-impressa').length) {
-        $('#opcoes-impressa').hide();
+
+    document.querySelector('.btn-fechar-modal').addEventListener('click', () => {
+      document.getElementById('historico-modal').style.display = 'none';
+    });
+
+    // ABRIR MODAL EDITAR
+    window.abrirModalEditar = async (tarefaId) => {
+      document.getElementById('loading').style.display = 'block';
+      try {
+        const tarefaRef = doc(db, 'tarefas', tarefaId);
+        const docSnap = await getDoc(tarefaRef);
+        
+        if (!docSnap.exists()) {
+          showAlert('Tarefa não encontrada');
+          return;
+        }
+        
+        const dados = docSnap.data();
+        document.getElementById('edit-tarefa-id').value = tarefaId;
+        document.getElementById('edit-disciplina').value = dados.disciplina;
+        document.getElementById('edit-data').value = dados.data;
+        document.getElementById('edit-turno').value = dados.turno;
+        document.getElementById('edit-serie').value = dados.serie;
+        document.getElementById('edit-livro').value = dados.livro || '';
+        document.getElementById('edit-impressa').value = dados.impressa;
+        document.getElementById('edit-observacao').value = dados.observacao || '';
+        
+        document.getElementById('modal-editar-tarefa').style.display = 'block';
+      } catch (error) {
+        console.error('Erro ao abrir edição:', error);
+        showAlert('Erro ao carregar tarefa');
+      } finally {
+        document.getElementById('loading').style.display = 'none';
+      }
+    }
+
+    // FECHAR MODAL
+    document.querySelector('.fechar-modal-editar').onclick = fecharModalEditar;
+    document.getElementById('btn-fechar-editar').onclick = fecharModalEditar;
+
+    function fecharModalEditar() {
+      document.getElementById('modal-editar-tarefa').style.display = 'none';
+    }
+
+    // SALVAR EDIÇÃO
+    document.getElementById('form-editar-tarefa').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      document.getElementById('loading').style.display = 'block';
+      
+      const tarefaId = document.getElementById('edit-tarefa-id').value;
+      const dadosAtualizados = {
+        data: document.getElementById('edit-data').value,
+        livro: document.getElementById('edit-livro').value,
+        impressa: document.getElementById('edit-impressa').value,
+        observacao: document.getElementById('edit-observacao').value
+      };
+      
+      try {
+        await updateDoc(doc(db, 'tarefas', tarefaId), dadosAtualizados);
+        showAlert('Alteração salva com sucesso!');
+        
+        fecharModalEditar();
+        document.getElementById('historico-modal').style.display = 'none';
+        await carregarHistorico();
+        
+      } catch (error) {
+        console.error('Erro ao salvar:', error);
+        showAlert('Erro ao salvar tarefa');
+      } finally {
+        document.getElementById('loading').style.display = 'none';
       }
     });
-  });
 
-  document.getElementById('btn-historico').addEventListener('click', async () => {
-  document.getElementById('loading').style.display = 'block';
-  const professorUid = auth.currentUser.uid;
-  const q = query(collection(db, 'tarefas'), where('professor', '==', professorUid), orderBy('criadoEm', 'desc'), limit(20));
-  const querySnapshot = await getDocs(q);
-  let lista = '';
-  if (querySnapshot.empty) {
-    lista = '<li>Nenhuma tarefa encontrada.</li>';
-  } else {
-    querySnapshot.forEach((doc) => {
-      const tarefa = doc.data();
-      const dataFormatada = tarefa.data.split('-').reverse().join('/');
-      const altura = 800;
-      const largura = 500;
-      const top = (screen.height - altura) / 2;
-      const left = (screen.width - largura) / 2;
-      lista += `<li><a href="#" onclick="document.getElementById('historico-modal').style.display = 'none'; window.open('editar-tarefa.html?id=${doc.id}', 'Editar Tarefa', 'width=${largura},height=${altura},left=${left},top=${top},resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,status=no'); return false;" class="link-modal">Editar - ${dataFormatada} - ${tarefa.disciplina}</a></li>`;
+    // EXCLUIR
+    document.getElementById('btn-excluir-tarefa').addEventListener('click', () => {
+      const tarefaId = document.getElementById('edit-tarefa-id').value;
+      
+      showConfirm('Tem certeza que deseja excluir esta tarefa?', async (confirmado) => {
+        if (!confirmado) return;
+        
+        document.getElementById('loading').style.display = 'block';
+        try {
+          await deleteDoc(doc(db, 'tarefas', tarefaId));
+          showAlert('Tarefa excluída com sucesso!');
+          
+          fecharModalEditar();
+          document.getElementById('historico-modal').style.display = 'none';
+          await carregarHistorico();
+          
+        } catch (error) {
+          console.error('Erro ao excluir:', error);
+          showAlert('Erro ao excluir tarefa');
+        } finally {
+          document.getElementById('loading').style.display = 'none';
+        }
+      });
     });
-  }
-  document.getElementById('historico-lista').innerHTML = lista;
-  document.getElementById('historico-modal').style.display = 'block';
-  document.getElementById('loading').style.display = 'none';
-});
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.querySelector('#historico-modal');
-    const closeBtn = modal.querySelector('.btn-fechar-modal');
-    closeBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
+    $(document).ready(function() {
+      $('#btn-tarefa-impressa').click(function() {
+        $('#opcoes-impressa').toggle();
+      });
+      $(document).click(function(e) {
+        if (!$(e.target).closest('#btn-tarefa-impressa, #opcoes-impressa').length) {
+          $('#opcoes-impressa').hide();
+        }
+      });
     });
-  });
   </script>
-  <div id="historico-modal" style="display: none; border: 1px solid green; border-radius: 10px; padding: 20px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white;">
-    <button class="btn-fechar-modal">X</button>
-    <h3>Histórico</h3>
-    <ul id="historico-lista"></ul>
-  </div>
-  <div id="loading" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.5); color: white; padding: 20px; border-radius: 10px;">Carregando...</div>
 </body>
 </html>
