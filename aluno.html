@@ -19,13 +19,13 @@
       padding-bottom: 90px;
     }
 
-  .header-aluno {
+ .header-aluno {
       background: linear-gradient(135deg, #1a5c3a 0%, #2E865F 100%);
       padding: 22px 15px 18px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
 
-  .perfil-container {
+ .perfil-container {
       max-width: 1100px;
       margin: 0 auto;
       display: flex;
@@ -33,7 +33,7 @@
       gap: 18px;
     }
 
-  .foto-aluno {
+ .foto-aluno {
       width: 88px;
       height: 88px;
       border-radius: 50%;
@@ -44,13 +44,13 @@
       background: #ccc;
     }
 
-  .info-aluno {
+ .info-aluno {
       flex: 1;
       color: white;
       min-width: 0;
     }
 
-  .nome-aluno {
+ .nome-aluno {
       font-size: 23px;
       font-weight: 700;
       letter-spacing: 0.3px;
@@ -60,7 +60,7 @@
       word-wrap: break-word;
     }
 
-  .detalhes-aluno {
+ .detalhes-aluno {
       font-size: 13px;
       font-weight: 500;
       opacity: 0.95;
@@ -69,12 +69,12 @@
       gap: 2px;
     }
 
-  .detalhes-aluno i {
+ .detalhes-aluno i {
       margin-right: 6px;
       font-size: 11px;
     }
 
-  .menu-desktop {
+ .menu-desktop {
       background: white;
       max-width: 1100px;
       margin: -10px auto 18px;
@@ -85,7 +85,7 @@
       padding: 14px;
     }
 
-  .menu-desktop button {
+ .menu-desktop button {
       background: none;
       border: none;
       font-family: 'Poppins', sans-serif;
@@ -102,39 +102,55 @@
       position: relative;
     }
 
-  .menu-desktop button:hover {
+ .menu-desktop button:hover {
       background: #e8f5e9;
       transform: translateY(-2px);
     }
 
-  .menu-desktop button i {
+ .menu-desktop button i {
       font-size: 17px;
     }
 
-  .alerta-prova {
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      width: 10px;
-      height: 10px;
-      background: #00ff00;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #00ff00;
-      animation: pulse 2s infinite;
-    }
+.alerta-prova {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 18px;
+  height: 18px;
+  background: #dc2626;
+  border-radius: 10px;
+  border: 2px solid white;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-shadow: 0 0 8px rgba(220, 38, 38, 0.6);
+  animation: pulse 1.5s infinite;
+}
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(1.2); }
-    }
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1);
+    box-shadow: 0 0 8px rgba(220, 38, 38, 0.6);
+  }
+  50% { 
+    opacity: 0.5; 
+    transform: scale(0.9);
+    box-shadow: 0 0 12px rgba(220, 38, 38, 0.9);
+  }
+}
 
-  .container-tarefas {
+ .container-tarefas {
       max-width: 1100px;
       margin: 0 auto;
       padding: 0 12px;
     }
 
-  .titulo-secao {
+ .titulo-secao {
       background: #6b9b6b;
       color: white;
       text-align: center;
@@ -145,33 +161,31 @@
       margin-bottom: 18px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.15);
       letter-spacing: 0.5px;
-      
     }
 
-  .grid-tarefas {
+ .grid-tarefas {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 18px;
       margin-bottom: 20px;
     }
 
-  .card-tarefa {
+ .card-tarefa {
       background: white;
       border-radius: 12px;
       display: flex;
       overflow: hidden;
       box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-     
     }
 
-    .lado-esquerdo{
+   .lado-esquerdo{
        padding-top:30px;
        width: 130px;
        color:white;
        text-align: center;
     }
 
-  .card-tarefa.lado-esquerdo {
+ .card-tarefa.lado-esquerdo {
       color: white;
       padding: 20px 15px;
       width: 160px;
@@ -181,75 +195,72 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      
     }
 
-  .card-tarefa.lado-esquerdo h3 {
+ .card-tarefa.lado-esquerdo h3 {
       font-size: 18px;
       font-weight: 700;
       text-align: center;
     }
 
-  .card-tarefa.lado-esquerdo.icone-principal {
+ .card-tarefa.lado-esquerdo.icone-principal {
       font-size: 40px;
     }
 
-  .card-tarefa.lado-esquerdo.icones {
+ .card-tarefa.lado-esquerdo.icones {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
       font-size: 22px;
-     
     }
 
-  .matematica { background: #2c5f5d; }
-  .portugues { background: #3498DB; }
-  .geografia { background: #E67E73; }
-  .fisica { background: #1ABC9C; }
-  .quimica { background: #9B59B6; }
-  .ingles { background: #F1C40F; }
-  .historia { background: #7A288A; }
-  .artes { background: #8E44AD; }
-  .redacao { background: #E74C3C; }
-  .religiao { background: #34495E; }
-  .edfisica { background: #16A085; }
-  .default { background: #7f8c8d; }
+ .matematica { background: #2c5f5d; }
+ .portugues { background: #3498DB; }
+ .geografia { background: #E67E73; }
+ .fisica { background: #1ABC9C; }
+ .quimica { background: #9B59B6; }
+ .ingles { background: #F1C40F; }
+ .historia { background: #7A288A; }
+ .artes { background: #8E44AD; }
+ .redacao { background: #E74C3C; }
+ .religiao { background: #34495E; }
+ .edfisica { background: #16A085; }
+ .default { background: #7f8c8d; }
 
-  .lado-direito {
+ .lado-direito {
       flex: 1;
       padding: 18px;
       display: flex;
       flex-direction: column;
       gap: 8px;
       font-size: 13px;
-     
     }
 
-    .observacao{
+   .observacao{
      color: green;
     }
 
-  .lado-direito.linha {
+ .lado-direito.linha {
       color: #333;
     }
 
-  .lado-direito.observacao {
+ .lado-direito.observacao {
       color: #1a5c3a;
       font-weight: 600;
       margin: 5px 0;
     }
 
-    .professor{
+   .professor{
       color: #0c466d;
     }
 
-  .lado-direito.professor {
+ .lado-direito.professor {
       font-size: 12px;
       color: #666;
       margin-top: auto;
     }
 
-  .loading-tarefas {
+ .loading-tarefas {
       text-align: center;
       padding: 40px;
       color: #1a5c3a;
@@ -257,7 +268,7 @@
       grid-column: 1 / -1;
     }
 
-  .sem-tarefas {
+ .sem-tarefas {
       text-align: center;
       padding: 40px;
       background: white;
@@ -266,7 +277,7 @@
       grid-column: 1 / -1;
     }
 
-  .menu-mobile {
+ .menu-mobile {
       display: none;
       position: fixed;
       bottom: 0;
@@ -279,7 +290,7 @@
       height: 65px;
     }
 
-  .menu-mobile-items {
+ .menu-mobile-items {
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -288,7 +299,7 @@
       height: 100%;
     }
 
-  .menu-mobile button {
+ .menu-mobile button {
       background: none;
       border: none;
       display: flex;
@@ -304,11 +315,11 @@
       position: relative;
     }
 
-  .menu-mobile button i {
+ .menu-mobile button i {
       font-size: 20px;
     }
 
-  .modal-provas {
+ .modal-provas {
       display: none;
       position: fixed;
       top: 0;
@@ -321,13 +332,13 @@
       padding: 20px;
     }
 
-  .modal-provas.ativo {
+ .modal-provas.ativo {
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-  .modal-content {
+ .modal-content {
       background: white;
       border-radius: 15px;
       max-width: 700px;
@@ -337,7 +348,7 @@
       box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     }
 
-  .modal-header {
+ .modal-header {
       background: linear-gradient(135deg, #1a5c3a 0%, #2E865F 100%);
       color: white;
       padding: 20px;
@@ -347,12 +358,12 @@
       align-items: center;
     }
 
-  .modal-header h2 {
+ .modal-header h2 {
       font-size: 22px;
       font-weight: 700;
     }
 
-  .btn-fechar {
+ .btn-fechar {
       background: rgba(255,255,255,0.2);
       border: none;
       color: white;
@@ -364,16 +375,16 @@
       transition: 0.2s;
     }
 
-  .btn-fechar:hover {
+ .btn-fechar:hover {
       background: rgba(255,255,255,0.3);
       transform: rotate(90deg);
     }
 
-  .modal-body {
+ .modal-body {
       padding: 20px;
     }
 
-  .card-prova {
+ .card-prova {
       background: #f8f9fa;
       border-left: 4px solid #2E865F;
       padding: 15px;
@@ -382,30 +393,30 @@
       transition: 0.2s;
     }
 
-  .card-prova:hover {
+ .card-prova:hover {
       box-shadow: 0 3px 10px rgba(0,0,0,0.1);
       transform: translateX(5px);
     }
 
-  .card-prova.data-prova {
+ .card-prova.data-prova {
       font-size: 18px;
       font-weight: 700;
       color: #1a5c3a;
       margin-bottom: 8px;
     }
 
-  .card-prova.info-prova {
+ .card-prova.info-prova {
       font-size: 14px;
       color: #333;
       margin: 4px 0;
     }
 
-  .card-prova.info-prova i {
+ .card-prova.info-prova i {
       width: 20px;
       color: #2E865F;
     }
 
-  .btn-pdf {
+ .btn-pdf {
       width: 100%;
       background: #1a5c3a;
       color: white;
@@ -420,7 +431,7 @@
       transition: 0.2s;
     }
 
-  .btn-pdf:hover {
+ .btn-pdf:hover {
       background: #2E865F;
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(46,134,95,0.3);
@@ -431,28 +442,28 @@
     }
 
     @media (max-width: 768px) {
-    .menu-desktop {
+   .menu-desktop {
         display: none;
       }
-    .menu-mobile {
+   .menu-mobile {
         display: block;
       }
-    .perfil-container {
+   .perfil-container {
         flex-direction: column;
         text-align: center;
         gap: 12px;
       }
-    .foto-aluno {
+   .foto-aluno {
         width: 95px;
         height: 95px;
       }
-    .nome-aluno {
+   .nome-aluno {
         font-size: 19px;
       }
-    .detalhes-aluno {
+   .detalhes-aluno {
         align-items: center;
       }
-    .grid-tarefas {
+   .grid-tarefas {
         grid-template-columns: 1fr;
       }
       body {
@@ -461,32 +472,32 @@
     }
 
     @media (max-width: 480px) {
-    .foto-aluno {
+   .foto-aluno {
         width: 80px;
         height: 80px;
         border-width: 3px;
       }
-    .nome-aluno {
+   .nome-aluno {
         font-size: 17px;
       }
-    .card-tarefa.lado-esquerdo {
+   .card-tarefa.lado-esquerdo {
         width: 130px;
         padding: 15px 10px;
       }
-    .card-tarefa.lado-esquerdo h3 {
+   .card-tarefa.lado-esquerdo h3 {
         font-size: 15px;
       }
-    .lado-direito {
+   .lado-direito {
         padding: 14px;
         font-size: 12px;
       }
-    .modal-content {
+   .modal-content {
         margin: 10px;
       }
     }
 
     @media (min-width: 600px) and (max-width: 800px) {
-    .grid-tarefas {
+   .grid-tarefas {
         grid-template-columns: repeat(2, 1fr);
       }
     }
@@ -645,15 +656,25 @@
           collection(db, 'provas'),
           where('serie', '==', serie),
           where('turno', '==', turnoLimpo),
-          where('dataProva', '>=', hoje),
-          limit(1)
+          where('dataProva', '>=', hoje)
         );
 
         const snap = await getDocs(q);
-        const temProva =!snap.empty;
+        const qtdProvas = snap.size;
 
-        document.getElementById('alerta-prova-desktop').style.display = temProva? 'block' : 'none';
-        document.getElementById('alerta-prova-mobile').style.display = temProva? 'block' : 'none';
+        const alertaDesktop = document.getElementById('alerta-prova-desktop');
+        const alertaMobile = document.getElementById('alerta-prova-mobile');
+
+        if (qtdProvas > 0) {
+          const texto = qtdProvas > 9? '9+' : qtdProvas;
+          alertaDesktop.textContent = texto;
+          alertaMobile.textContent = texto;
+          alertaDesktop.style.display = 'flex';
+          alertaMobile.style.display = 'flex';
+        } else {
+          alertaDesktop.style.display = 'none';
+          alertaMobile.style.display = 'none';
+        }
       } catch (error) {
         console.log('Erro ao checar provas:', error);
       }
