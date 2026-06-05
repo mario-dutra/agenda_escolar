@@ -3,66 +3,356 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Professor</title>
-  <link rel="stylesheet" href="./css/style.css">
+  <title>Professor - Agenda</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
-    body {
-      background-color: aquamarine;
+    :root {
+      --verde-header:#B8E6D1;
+      --verde-escuro: #2C4A46;
+      --verde-claro: #C5E1DA;
+      --cinza-bg: #f0f2f5;
+      --sombra: 0 4px 12px rgba(0,0,0,0.08);
     }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--cinza-bg);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #2d3748;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    .header-app {
+      background: var(--verde-header);
+      padding: 16px 24px;
+      box-shadow: var(--sombra);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     
+    }
+
+    .logo img {
+      height: 80px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+   
+
+    .user-info {
+      text-align: right;
+    }
+
+    #nome-professor {
+      font-family: 'verdana', cursive;
+      font-size: 24px;
+      color: var(--verde-escuro);
+      display: block;
+      font-weight: bold;
+    }
+
+    #disciplinas-professor {
+      font-size: 13px;
+      color: #4a5568;
+    }
+
+    #logout-button {
+      background: white;
+      border: 2px solid var(--verde-escuro);
+      color: var(--verde-escuro);
+      padding: 8px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    #logout-button:hover {
+      background: var(--verde-escuro);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* CONTAINER PRINCIPAL */
+    .main-container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .page-title h2 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--verde-escuro);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .page-title h2 i {
+      margin-right: 10px;
+      color: var(--verde-header);
+    }
+
+    /* CARD DO FORM */
+    .form-card {
+      background: white;
+      border-radius: 16px;
+      padding: 35px;
+      box-shadow: var(--sombra);
+    }
+
+    /* GRID MODERNO */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 10px;
+    }
+
+    .form-field {
+      position: relative;
+    }
+
+    .form-field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #4a5568;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-field label i {
+      margin-right: 6px;
+      color: var(--verde-header);
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 15px;
+      transition: 0.3s;
+      background: #f7fafc;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      outline: none;
+      border-color: var(--verde-header);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(168, 196, 190, 0.2);
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 120px;
+      font-family: inherit;
+    }
+
+    /* CHECKBOX IMPRESSA */
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: #f7fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .checkbox-wrapper:hover {
+      border-color: var(--verde-header);
+    }
+
+    .checkbox-wrapper input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: var(--verde-escuro);
+    }
+
+    .checkbox-wrapper span {
+      font-size: 14px;
+      font-weight: 600;
+      color: #4a5568;
+    }
+
+    /* BOTÕES AÇÃO */
+    .action-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 14px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .btn-primary {
+      background: var(--verde-escuro);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--verde-claro);
+      color: var(--verde-escuro);
+    }
+
+    .btn-outline {
+      background: white;
+      color: var(--verde-escuro);
+      border: 2px solid var(--verde-escuro);
+    }
+
+    /* MODAL HISTÓRICO */
     #historico-modal {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       background: white;
-      padding: 20px;
-      border-radius: 5px !important;
-      width: 500px;
-      max-height: 60vh; 
+      padding: 30px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 550px;
+      max-height: 70vh;
       overflow-y: auto;
       z-index: 9998;
-      border: 1px solid green;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     }
 
-    #historico-modal::-webkit-scrollbar {
-      width: 8px;
+    #historico-modal h3 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: var(--verde-escuro);
     }
 
-    #historico-modal::-webkit-scrollbar-thumb {
-      background: aquamarine;
-      border-radius: 10px;
+  .item-historico {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  padding: 16px 20px;
+  margin: 12px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-left: 4px solid var(--verde-escuro);
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+    .item-historico:hover {
+      transform: translateX(8px);
+      box-shadow: 0 4px 12px rgba(44, 74, 70, 0.2);
     }
 
-    /* MODAL EDITAR - IDÊNTICO AO PRINT */
+  .btn-fechar-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  color: #718096;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.btn-fechar-modal:hover {
+  background: #e53e3e;
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+   
+
+    /* MODAL EDITAR TAREFA */
     #modal-editar-tarefa {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
       z-index: 10000;
       display: none;
       overflow: auto;
-      padding: 20px 0;
+      padding: 20px;
     }
 
     .modal-editar-content {
       background: #fff;
-      max-width: 650px;
-      margin: 20px auto;
-      border-radius: 8px;
+      max-width: 750px;
+      margin: 40px auto;
+      border-radius: 16px;
       position: relative;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
     }
 
     .modal-editar-header {
-      background: #93dfb8;
-      color: rgb(5, 104, 13);
-      padding: 15px 20px;
-      border-radius: 8px 8px 0 0;
+      background: var(--verde-header);
+      color: var(--verde-escuro);
+      padding: 18px 25px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -70,251 +360,495 @@
 
     .modal-editar-header h2 {
       margin: 0;
-      font-size: 18px;
-      font-weight: 600;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .modal-editar-header h2 i {
+      margin-right: 10px;
     }
 
     .fechar-modal-editar {
-      font-size: 28px;
+      font-size: 30px;
       cursor: pointer;
-      color: white;
+      color: var(--verde-escuro);
       font-weight: bold;
       line-height: 1;
+      transition: 0.2s;
+    }
+
+    .fechar-modal-editar:hover {
+      transform: rotate(90deg);
     }
 
     .modal-editar-body {
-      padding: 25px;
+      padding: 30px;
     }
 
-    .form-grid {
+    .form-grid-edit {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      margin-bottom: 15px;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
     }
 
-    .form-grid-2 {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 15px;
-      margin-bottom: 15px;
+    .form-group-edit {
+      display: flex;
+      flex-direction: column;
     }
 
-    .form-group label {
+    .form-group-edit label {
       display: block;
-      margin-bottom: 6px;
-      font-weight: 600;
-      color: #333;
-      font-size: 14px;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: #4a5568;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .form-group input, 
-    .form-group select, 
-    .form-group textarea {
+    .form-group-edit label i {
+      margin-right: 6px;
+      color: var(--verde-header);
+    }
+
+    .form-group-edit input,
+    .form-group-edit select,
+    .form-group-edit textarea {
       width: 100%;
-      padding: 9px 12px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
-      box-sizing: border-box;
+      padding: 12px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 15px;
+      background: #f7fafc;
+      transition: 0.3s;
+      font-family: inherit;
+    }
+
+    .form-group-edit input:focus,
+    .form-group-edit select:focus,
+    .form-group-edit textarea:focus {
+      outline: none;
+      border-color: var(--verde-header);
       background: white;
+      box-shadow: 0 0 0 3px rgba(168, 196, 190, 0.2);
     }
 
-    .form-group input:disabled {
-      background: #f0f0f0;
+    .form-group-edit input:disabled {
+      background: #edf2f7;
       cursor: not-allowed;
-      color: #555;
+      color: #718096;
+      font-weight: 600;
     }
 
-    .form-group textarea {
+    .form-group-edit textarea {
       resize: vertical;
-      min-height: 90px;
-      margin-bottom: 15px;
+      min-height: 100px;
+    }
+
+    .form-group-full {
+      grid-column: 1 / -1;
     }
 
     .botoes-modal-editar {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 25px;
     }
 
     .botoes-modal-editar button {
-      padding: 10px 25px;
+      padding: 14px;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
+      font-size: 15px;
+      font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      gap: 8px;
+      transition: 0.3s;
+      text-transform: uppercase;
     }
 
-    .btn-salvar { background: #17a2b8; color: white; }
-    .btn-excluir { background: #dc3545; color: white; }
-    .btn-fechar { background: #5a6268; color: white; }
-    .btn-salvar:hover { background: #138496; }
-    .btn-excluir:hover { background: #c82333; }
-    .btn-fechar:hover { background: #4e555b; }
-
-    .item-historico {
-      background: #d4edda;
-      padding: 12px 15px;
-      margin: 8px 0;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: 0.2s;
-      border-left: 4px solid #2E865F;
-      font-size: 14px;
+    .botoes-modal-editar button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     }
 
-    .item-historico:hover {
-      background: #c3e6cb;
-      transform: translateX(5px);
+    .btn-salvar { 
+      background: var(--verde-escuro); 
+      color: white; 
     }
 
-    .btn-fechar-modal {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      background: none;
+    .btn-excluir { 
+      background: #dc3545; 
+      color: white; 
+    }
+
+    .btn-fechar { 
+      background: var(--verde-claro); 
+      color: var(--verde-escuro); 
+    }
+
+    /* MODAL ALERTA CUSTOM */
+    .modal-alerta-custom {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(3px);
+      z-index: 10005;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .alerta-content {
+      background: white;
+      padding: 35px 40px;
+      border-radius: 16px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: popIn 0.3s ease;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .alerta-content i {
+      font-size: 50px;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .alerta-content.sucesso i { color: #28a745; }
+    .alerta-content.erro i { color: #dc3545; }
+    .alerta-content.aviso i { color: #ffc107; }
+
+    .alerta-content p {
+      font-size: 18px;
+      color: #2d3748;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    .alerta-content button {
+      padding: 12px 40px;
       border: none;
-      font-size: 24px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
-      color: #666;
+      transition: 0.3s;
+      margin: 0 5px;
     }
 
-    @keyframes slideDown {
-      from { opacity: 0; transform: translate(-50%, -20px); }
-      to { opacity: 1; transform: translate(-50%, 0); }
+    .alerta-content .btn-ok {
+      background: var(--verde-escuro);
+      color: white;
+    }
+
+    .alerta-content .btn-sim {
+      background: #dc3545;
+      color: white;
+    }
+
+    .alerta-content .btn-nao {
+      background: #6c757d;
+      color: white;
+    }
+
+    .alerta-content button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    #loading {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 20px 40px;
+      border-radius: 12px;
+      z-index: 99999;
+      font-weight: 600;
     }
 
     /* RESPONSIVO */
     @media (max-width: 768px) {
-      #historico-modal {
-        width: 90%;
-        max-height: 70vh;
+      .header-content {
+        justify-content: center;
+        text-align: center;
       }
+
+      .user-info {
+        text-align: center;
+        width: 100%;
+      }
+
+      .form-card {
+        padding: 25px 20px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .action-buttons {
+        grid-template-columns: 1fr;
+      }
+
+      #historico-modal {
+        width: 95%;
+        padding: 25px 20px;
+      }
+
       .modal-editar-content {
         width: 95%;
-        margin: 10px auto;
+        margin: 20px auto;
       }
-      .form-grid, .form-grid-2 {
+      
+      .form-grid-edit {
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 15px;
       }
+      
       .modal-editar-body {
-        padding: 20px 15px;
+        padding: 25px 20px;
+      }
+      
+      .botoes-modal-editar {
+        grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 480px) {
-      #historico-modal {
-        width: 95%;
-        padding: 15px;
+      .page-title h2 {
+        font-size: 22px;
       }
-      .botoes-modal-editar {
-        flex-direction: column;
-      }
-      .botoes-modal-editar button {
-        width: 100%;
-        justify-content: center;
+
+      #nome-professor {
+        font-size: 20px;
       }
     }
 
-    @media (min-width: 1080px) {
-      #historico-modal {
-        top: 26% !important;
-        max-height: 40vh; 
-      }
-    }
+    .sub-header {
+            background: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #B8E6D1;
+        }
+
+        .sub-header h2 {
+            font-size: 20px;
+            color: #1A4D2E;
+        }
+
+          .btn-voltar {
+            background: #B8E6D1;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #1A4D2E;
+        }
+
+    .historico-header {
+  margin-bottom: 20px;
+  padding-right: 50px;
+}
+
+.historico-header h3 {
+  margin: 0 0 15px 0;
+  font-size: 22px;
+  color: var(--verde-escuro);
+}
+
+.filtros-historico {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filtro-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f7fafc;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
+  flex: 1;
+  min-width: 180px;
+}
+
+.filtro-item i {
+  color: var(--verde-escuro);
+  font-size: 14px;
+}
+
+.filtro-item select {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--verde-escuro);
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .filtros-historico {
+    flex-direction: column;
+  }
+  .filtro-item {
+    min-width: 100%;
+  }
+}
+
   </style>
 </head>
+
 <body>
-  <!-- Section 1: Header -->
-  <header>
-    <div class="logo">
-      <img src="./img/logo.png" alt="" class="logo-img">
+  <!-- HEADER -->
+  <header class="header-app">
+    <div class="header-content">
+      <div class="logo">
+        <img src="./img/logo.png" alt="Logo">
+       
+      </div>
+      <div class="user-info">
+        <span id="nome-professor" class="nome"></span>
+        <span id="disciplinas-professor" class="disciplinas"></span>
+      </div>
+      <button id="logout-button"><i class="fas fa-sign-out-alt"></i> Sair</button>
     </div>
-    <div class="info-professor">
-      <span id="nome-professor" class="nome"></span>
-      <span id="disciplinas-professor" class="disciplinas"></span>
-    </div>
-    <button id="logout-button">Sair</button>
   </header>
-  
-  <!-- Section 2: Agendamento Tarefas -->
-  <section class="agendamento">
-    <h2>Agendamento Tarefas</h2>
-    <form id="form-tarefa">
-      <div class="container">
-        <div class="col">
-          <div>
-            <label>Data:</label>
-            <input type="date" id="data-agendamento" class="form-control" style="width: 50%;" required>
+
+   <!-- SUB HEADER -->
+    <div class="sub-header">
+        <button class="btn-voltar" onclick="history.back()">← Voltar</button>
+       
+        <div></div>
+    </div>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="main-container">
+    <div class="page-title">
+      <h2><i class="fas fa-tasks"></i> Agendamento de Tarefas</h2>
+    </div>
+
+    <div class="form-card">
+      <form id="form-tarefa">
+        <div class="form-grid">
+          <div class="form-field">
+            <label><i class="fas fa-calendar"></i> Data</label>
+            <input type="date" id="data-agendamento" class="form-control" required>
           </div>
-          <div>
-            <label>Disciplina:</label>
+
+          <div class="form-field">
+            <label><i class="fas fa-book"></i> Disciplina</label>
             <select id="disciplina-select" name="disciplina" required></select>
           </div>
-          <div>
-            <label>Turno:</label>
+
+          <div class="form-field">
+            <label><i class="fas fa-clock"></i> Turno</label>
             <select name="turno">
               <option value="manha">Manhã</option>
               <option value="tarde">Tarde</option>
             </select>
           </div>
-          <div>
-            <label>Livro:</label>
-            <input type="text" name="livro">
+
+          <div class="form-field">
+            <label><i class="fas fa-book-open"></i> Livro</label>
+            <input type="text" name="livro" placeholder="Digite o nome do livro">
           </div>
-        </div>
-        <div class="col">
-          <div>
-            <label>Série:</label>
+
+          <div class="form-field">
+            <label><i class="fas fa-graduation-cap"></i> Série</label>
             <select name="serie">
-              <option value="Jardim I">Jardim I</option>
-              <option value="Jardim II">Jardim II</option>
-              <option value="Jardim III">Jardim III</option>
-              <option value="Jardim VI">Jardim VI</option>
-              <option value="Jardim V">Jardim V</option>    
-               <option value="1° ANO">1° ANO</option>
+              <option value="JARDIM I">Jardim I</option>
+              <option value="JARDIM II">Jardim II</option>
+              <option value="JARDIM III">Jardim III</option>
+              <option value="JARDIM IV">Jardim VI</option>
+              <option value="JARDIM V">Jardim V</option>    
+              <option value="1° ANO">1° ANO</option>
               <option value="2° ANO">2° ANO</option>
-               <option value="3° ANO">3° ANO</option>
-               <option value="4° ANO">4° ANO</option>
-               <option value="5° ANO">5° ANO</option>
-               <option value="6° ANO">6° ANO</option>
-                <option value="7° ANO">7° ANO</option>
-               <option value="8° ANO">8° ANO</option>
-               <option value="9° ANO">9° ANO</option>
+              <option value="3° ANO">3° ANO</option>
+              <option value="4° ANO">4° ANO</option>
+              <option value="5° ANO">5° ANO</option>
+              <option value="6° ANO">6° ANO</option>
+              <option value="7° ANO">7° ANO</option>
+              <option value="8° ANO">8° ANO</option>
+              <option value="9° ANO">9° ANO</option>
             </select>
           </div>
-          <div>
-            <label>Observação:</label>
-            <textarea name="observacao"></textarea>
-          </div>
-          <div class="inline-row" style="position: relative;">
-            <button id="btn-tarefa-impressa" type="button">Tarefa Impressa</button>
-            <div id="opcoes-impressa" style="display: none; position: absolute; top:0px;width: 100px; left: 125px; padding:0px; border: 0px solid #ddd;height: 30px;">
+
+          <div class="form-field">
+            <label><i class="fas fa-print"></i> Tarefa Impressa</label>
+            <div class="checkbox-wrapper">
               <input type="checkbox" id="impressa" name="impressa" value="sim">
-              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sim
+              <span>Sim, tarefa impressa</span>
             </div>
           </div>
+
+          <div class="form-field" style="grid-column: 1 / -1;">
+            <label><i class="fas fa-comment"></i> Observação</label>
+            <textarea name="observacao" placeholder="Digite observações sobre a tarefa..."></textarea>
+          </div>
         </div>
-      </div>
-      <div class="botoes">
-        <button type="submit">Salvar</button>
-        <button type="reset">Limpar</button>
-        <button id="btn-historico" type="button">Histórico</button>
-      </div>
-    </form>
-  </section>
+
+        <div class="action-buttons">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Salvar
+          </button>
+          <button type="reset" class="btn btn-secondary">
+            <i class="fas fa-eraser"></i> Limpar
+          </button>
+          <button id="btn-historico" type="button" class="btn btn-outline">
+            <i class="fas fa-history"></i> Histórico
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
 
   <!-- MODAL HISTÓRICO -->
   <div id="historico-modal" style="display: none;">
     <button class="btn-fechar-modal">&times;</button>
-    <h3>Histórico</h3>
+    <div class="historico-header">
+      <h3><i class="fas fa-history"></i> Histórico de Tarefas</h3>
+      
+      <div class="filtros-historico">
+        <div class="filtro-item">
+          <i class="fas fa-users"></i>
+          <select id="filtro-serie-select">
+            <option value="todas">Todas as séries</option>
+          </select>
+        </div>
+        
+        <div class="filtro-item">
+          <i class="fas fa-book"></i>
+          <select id="filtro-disciplina-select">
+            <option value="todas">Todas as disciplinas</option>
+          </select>
+        </div>
+      </div>
+    </div>
     <ul id="historico-lista"></ul>
   </div>
 
@@ -329,43 +863,44 @@
         <form id="form-editar-tarefa">
           <input type="hidden" id="edit-tarefa-id">
           
-          <div class="form-grid">
-            <div class="form-group">
-              <label>Data:</label>
+          <div class="form-grid-edit">
+            <div class="form-group-edit">
+              <label><i class="fas fa-calendar"></i> Data</label>
               <input type="date" id="edit-data" required>
             </div>
-            <div class="form-group">
-              <label>Disciplina:</label>
+            
+            <div class="form-group-edit">
+              <label><i class="fas fa-book"></i> Disciplina</label>
               <input type="text" id="edit-disciplina" disabled>
             </div>
-            <div class="form-group">
-              <label>Turno:</label>
+            
+            <div class="form-group-edit">
+              <label><i class="fas fa-clock"></i> Turno</label>
               <input type="text" id="edit-turno" disabled>
             </div>
-          </div>
-          
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label>Livro:</label>
-              <input type="text" id="edit-livro">
-            </div>
-            <div class="form-group">
-              <label>Série:</label>
+            
+            <div class="form-group-edit">
+              <label><i class="fas fa-graduation-cap"></i> Série</label>
               <input type="text" id="edit-serie" disabled>
             </div>
-          </div>
-          
-          <div class="form-group">
-            <label>Observação:</label>
-            <textarea id="edit-observacao"></textarea>
-          </div>
-          
-          <div class="form-group">
-            <label>Tarefa Impressa:</label>
-            <select id="edit-impressa">
-              <option value="Sim">Sim</option>
-              <option value="Não">Não</option>
-            </select>
+            
+            <div class="form-group-edit">
+              <label><i class="fas fa-book-open"></i> Livro</label>
+              <input type="text" id="edit-livro" placeholder="Ex: pág 18-20">
+            </div>
+            
+            <div class="form-group-edit">
+              <label><i class="fas fa-print"></i> Tarefa Impressa</label>
+              <select id="edit-impressa">
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+              </select>
+            </div>
+            
+            <div class="form-group-edit form-group-full">
+              <label><i class="fas fa-comment"></i> Observação</label>
+              <textarea id="edit-observacao" placeholder="Digite observações sobre a tarefa..."></textarea>
+            </div>
           </div>
           
           <div class="botoes-modal-editar">
@@ -383,8 +918,16 @@
       </div>
     </div>
   </div>
+    <!-- MODAL ALERTA CUSTOM -->
+  <div id="modal-alerta-custom" class="modal-alerta-custom">
+    <div class="alerta-content" id="alerta-content">
+      <i class="fas fa-check-circle"></i>
+      <p id="alerta-mensagem"></p>
+      <div id="alerta-botoes"></div>
+    </div>
+  </div>
 
-  <div id="loading" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.5); color: white; padding: 20px; border-radius: 10px; z-index:99999;">Carregando...</div>
+  <div id="loading" style="display: none;">Carregando...</div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script type="module">
@@ -448,13 +991,13 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       document.getElementById('loading').style.display = 'block';
-      const data = document.querySelector('input[type="date"]').value;
+      const data = document.getElementById('data-agendamento').value;
       const disciplina = document.getElementById('disciplina-select').value;
       const turno = document.querySelector('select[name="turno"]').value;
       const livro = document.querySelector('input[name="livro"]').value;
       const serie = document.querySelector('select[name="serie"]').value;
       const observacao = document.querySelector('textarea[name="observacao"]').value;
-      const impressa = document.querySelector('input[name="impressa"]').checked ? 'Sim' : 'Não';
+      const impressa = document.getElementById('impressa').checked ? 'Sim' : 'Não';
       const nomeProfessor = document.getElementById('nome-professor').textContent;
       const tarefa = {
         data, disciplina, turno, livro, serie, observacao, impressa,
@@ -464,67 +1007,74 @@
       };
       try {
         await addDoc(collection(db, 'tarefas'), tarefa);
-        showAlert('Tarefa salva com sucesso!');
+        showAlert('Tarefa salva com sucesso!', 'sucesso');
         form.reset();
       } catch (error) {
         console.error('Erro:', error);
-        showAlert('Erro ao salvar tarefa: ' + error.message);
+        showAlert('Erro ao salvar tarefa: ' + error.message, 'erro');
       } finally {
         document.getElementById('loading').style.display = 'none';
       }
     });
 
-    // ALERTA CORRIGIDO
-    function showAlert(msg) {
-      const alertaAntigo = document.getElementById('alerta-custom');
-      if (alertaAntigo) alertaAntigo.remove();
-
-      const div = document.createElement('div');
-      div.id = 'alerta-custom';
-      div.style.cssText = `
-        position: fixed;
-        top: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #1a5c3a;
-        color: white;
-        padding: 18px 35px;
-        border-radius: 8px;
-        z-index: 10003;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-        font-weight: 600;
-        font-size: 16px;
-        text-align: center;
-        min-width: 280px;
-        animation: slideDown 0.3s ease;
-      `;
+    // ALERTA NOVO COM BOTÃO OK
+    function showAlert(msg, tipo = 'sucesso', callback = null) {
+      const modal = document.getElementById('modal-alerta-custom');
+      const content = document.getElementById('alerta-content');
+      const mensagem = document.getElementById('alerta-mensagem');
+      const botoes = document.getElementById('alerta-botoes');
       
-      div.innerHTML = `<i class="fas fa-check-circle" style="margin-right:8px;"></i>${msg}`;
-      document.body.appendChild(div);
+      content.className = `alerta-content ${tipo}`;
       
-      setTimeout(() => {
-        div.style.opacity = '0';
-        div.style.transition = 'opacity 0.3s';
-        setTimeout(() => div.remove(), 300);
-      }, 2500);
+      let icone = 'fa-check-circle';
+      if(tipo === 'erro') icone = 'fa-times-circle';
+      if(tipo === 'aviso') icone = 'fa-exclamation-triangle';
+      
+      content.querySelector('i').className = `fas ${icone}`;
+      mensagem.textContent = msg;
+      
+      botoes.innerHTML = '<button class="btn-ok">OK</button>';
+      
+      modal.style.display = 'flex';
+      
+      botoes.querySelector('.btn-ok').onclick = () => {
+        modal.style.display = 'none';
+        if(callback) callback();
+      };
     }
 
+    // CONFIRMAÇÃO NOVA
     function showConfirm(msg, callback) {
-      const modal = document.createElement('div');
-      modal.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:10002; display:flex; align-items:center; justify-content:center;';
-      modal.innerHTML = `
-        <div style="background:white; padding:25px; border-radius:10px; max-width:400px; text-align:center;">
-          <p style="margin-bottom:20px; font-size:16px; color:#333;">${msg}</p>
-          <button id="confirmYes" style="background:#dc3545; color:white; padding:10px 25px; border:none; border-radius:5px; margin:0 5px; cursor:pointer; font-weight:600;">Sim</button>
-          <button id="confirmNo" style="background:#6c757d; color:white; padding:10px 25px; border:none; border-radius:5px; margin:0 5px; cursor:pointer; font-weight:600;">Não</button>
-        </div>
+      const modal = document.getElementById('modal-alerta-custom');
+      const content = document.getElementById('alerta-content');
+      const mensagem = document.getElementById('alerta-mensagem');
+      const botoes = document.getElementById('alerta-botoes');
+      
+      content.className = 'alerta-content aviso';
+      content.querySelector('i').className = 'fas fa-question-circle';
+      mensagem.textContent = msg;
+      
+      botoes.innerHTML = `
+        <button class="btn-sim">Sim</button>
+        <button class="btn-nao">Não</button>
       `;
-      document.body.appendChild(modal);
-      document.getElementById('confirmYes').onclick = () => { callback(true); modal.remove(); };
-      document.getElementById('confirmNo').onclick = () => { callback(false); modal.remove(); };
+      
+      modal.style.display = 'flex';
+      
+      botoes.querySelector('.btn-sim').onclick = () => {
+        modal.style.display = 'none';
+        callback(true);
+      };
+      
+      botoes.querySelector('.btn-nao').onclick = () => {
+        modal.style.display = 'none';
+        callback(false);
+      };
     }
 
     // HISTÓRICO
+    let todasTarefasHistorico = [];
+
     async function carregarHistorico() {
       document.getElementById('loading').style.display = 'block';
       const professorUid = auth.currentUser.uid;
@@ -537,27 +1087,43 @@
           limit(20)
         );
         const querySnapshot = await getDocs(q);
-        let lista = '';
         
-        if (querySnapshot.empty) {
-          lista = '<li style="padding:10px; text-align:center; color:#666; list-style:none;">Nenhuma tarefa encontrada.</li>';
-        } else {
-          querySnapshot.forEach((doc) => {
-            const tarefa = doc.data();
-            const dataFormatada = tarefa.data.split('-').reverse().join('/');
-            lista += `
-              <div class="item-historico" onclick="abrirModalEditar('${doc.id}')">
-                <i class="fas fa-edit"></i> <b>Editar</b> - ${dataFormatada} - ${tarefa.disciplina}
-              </div>
-            `;
-          });
-        }
+        todasTarefasHistorico = [];
+        const seriesUnicas = new Set();
+        const disciplinasUnicas = new Set();
         
-        document.getElementById('historico-lista').innerHTML = lista;
+        querySnapshot.forEach((doc) => {
+          const tarefa = { id: doc.id, ...doc.data() };
+          todasTarefasHistorico.push(tarefa);
+          seriesUnicas.add(tarefa.serie);
+          disciplinasUnicas.add(tarefa.disciplina);
+        });
+        
+        // Popula select de SÉRIE
+        const selectSerie = document.getElementById('filtro-serie-select');
+        selectSerie.innerHTML = '<option value="todas">Todas as séries</option>';
+        [...seriesUnicas].sort().forEach(serie => {
+          const opt = document.createElement('option');
+          opt.value = serie;
+          opt.textContent = serie;
+          selectSerie.appendChild(opt);
+        });
+        
+        // Popula select de DISCIPLINA
+        const selectDisciplina = document.getElementById('filtro-disciplina-select');
+        selectDisciplina.innerHTML = '<option value="todas">Todas as disciplinas</option>';
+        [...disciplinasUnicas].sort().forEach(disc => {
+          const opt = document.createElement('option');
+          opt.value = disc;
+          opt.textContent = disc;
+          selectDisciplina.appendChild(opt);
+        });
+        
+        renderizarHistorico(todasTarefasHistorico);
         
       } catch (error) {
         console.error('Erro ao buscar histórico:', error);
-        showAlert('Erro ao carregar histórico');
+        showAlert('Erro ao carregar histórico', 'erro');
         if (error.message.includes('index')) {
           console.log('>>> CLIQUE AQUI PRA CRIAR O ÍNDICE NECESSÁRIO <<<');
           console.log(error.message);
@@ -566,6 +1132,48 @@
         document.getElementById('loading').style.display = 'none';
       }
     }
+
+    // Função pra renderizar a lista
+    function renderizarHistorico(tarefas) {
+      let lista = '';
+      
+      if (tarefas.length === 0) {
+        lista = '<li style="padding:15px; text-align:center; color:#666; list-style:none;">Nenhuma tarefa encontrada.</li>';
+      } else {
+        tarefas.forEach((tarefa) => {
+          const dataFormatada = tarefa.data.split('-').reverse().join('/');
+          lista += `
+            <div class="item-historico" onclick="abrirModalEditar('${tarefa.id}')">
+              <i class="fas fa-edit"></i> <b>Editar</b> - ${dataFormatada} - ${tarefa.disciplina} - ${tarefa.serie}
+            </div>
+          `;
+        });
+      }
+      
+      document.getElementById('historico-lista').innerHTML = lista;
+    }
+
+    // NOVA FUNÇÃO: filtra por série E disciplina
+    function aplicarFiltros() {
+      const serieSelecionada = document.getElementById('filtro-serie-select').value;
+      const disciplinaSelecionada = document.getElementById('filtro-disciplina-select').value;
+      
+      let tarefasFiltradas = todasTarefasHistorico;
+      
+      if (serieSelecionada !== 'todas') {
+        tarefasFiltradas = tarefasFiltradas.filter(t => t.serie === serieSelecionada);
+      }
+      
+      if (disciplinaSelecionada !== 'todas') {
+        tarefasFiltradas = tarefasFiltradas.filter(t => t.disciplina === disciplinaSelecionada);
+      }
+      
+      renderizarHistorico(tarefasFiltradas);
+    }
+
+    // Eventos dos 2 filtros
+    document.getElementById('filtro-serie-select').addEventListener('change', aplicarFiltros);
+    document.getElementById('filtro-disciplina-select').addEventListener('change', aplicarFiltros);
 
     document.getElementById('btn-historico').addEventListener('click', async () => {
       await carregarHistorico();
@@ -584,7 +1192,7 @@
         const docSnap = await getDoc(tarefaRef);
         
         if (!docSnap.exists()) {
-          showAlert('Tarefa não encontrada');
+          showAlert('Tarefa não encontrada', 'erro');
           return;
         }
         
@@ -601,7 +1209,7 @@
         document.getElementById('modal-editar-tarefa').style.display = 'block';
       } catch (error) {
         console.error('Erro ao abrir edição:', error);
-        showAlert('Erro ao carregar tarefa');
+        showAlert('Erro ao carregar tarefa', 'erro');
       } finally {
         document.getElementById('loading').style.display = 'none';
       }
@@ -615,7 +1223,7 @@
       document.getElementById('modal-editar-tarefa').style.display = 'none';
     }
 
-    // SALVAR EDIÇÃO
+    // SALVAR EDIÇÃO - COM ALERTA NOVO
     document.getElementById('form-editar-tarefa').addEventListener('submit', async (e) => {
       e.preventDefault();
       document.getElementById('loading').style.display = 'block';
@@ -630,21 +1238,23 @@
       
       try {
         await updateDoc(doc(db, 'tarefas', tarefaId), dadosAtualizados);
-        showAlert('Alteração salva com sucesso!');
         
-        fecharModalEditar();
-        document.getElementById('historico-modal').style.display = 'none';
-        await carregarHistorico();
+        // MOSTRA ALERTA E SÓ FECHA QUANDO CLICAR OK
+        showAlert('Salvo com sucesso!', 'sucesso', () => {
+          fecharModalEditar();
+          document.getElementById('historico-modal').style.display = 'none';
+          carregarHistorico();
+        });
         
       } catch (error) {
         console.error('Erro ao salvar:', error);
-        showAlert('Erro ao salvar tarefa');
+        showAlert('Erro ao salvar tarefa', 'erro');
       } finally {
         document.getElementById('loading').style.display = 'none';
       }
     });
 
-    // EXCLUIR
+    // EXCLUIR - COM CONFIRMAÇÃO NOVA
     document.getElementById('btn-excluir-tarefa').addEventListener('click', () => {
       const tarefaId = document.getElementById('edit-tarefa-id').value;
       
@@ -654,31 +1264,34 @@
         document.getElementById('loading').style.display = 'block';
         try {
           await deleteDoc(doc(db, 'tarefas', tarefaId));
-          showAlert('Tarefa excluída com sucesso!');
           
-          fecharModalEditar();
-          document.getElementById('historico-modal').style.display = 'none';
-          await carregarHistorico();
+          showAlert('Tarefa excluída com sucesso!', 'sucesso', () => {
+            fecharModalEditar();
+            document.getElementById('historico-modal').style.display = 'none';
+            carregarHistorico();
+          });
           
         } catch (error) {
           console.error('Erro ao excluir:', error);
-          showAlert('Erro ao excluir tarefa');
+          showAlert('Erro ao excluir tarefa', 'erro');
         } finally {
           document.getElementById('loading').style.display = 'none';
         }
       });
     });
 
-    $(document).ready(function() {
-      $('#btn-tarefa-impressa').click(function() {
-        $('#opcoes-impressa').toggle();
-      });
-      $(document).click(function(e) {
-        if (!$(e.target).closest('#btn-tarefa-impressa, #opcoes-impressa').length) {
-          $('#opcoes-impressa').hide();
-        }
-      });
-    });
+    // FECHAR MODAL CLICANDO FORA
+    window.onclick = function(event) {
+      const modalEditar = document.getElementById('modal-editar-tarefa');
+      const modalHistorico = document.getElementById('historico-modal');
+      
+      if (event.target === modalEditar) {
+        fecharModalEditar();
+      }
+      if (event.target === modalHistorico) {
+        modalHistorico.style.display = 'none';
+      }
+    }
   </script>
 </body>
 </html>
