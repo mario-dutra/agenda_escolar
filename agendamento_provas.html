@@ -4,293 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
     <title>Agendamento de Provas - Instituto Marito Dutra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-
-        body {
-            background: #f5f5f5;
-            color: #1A4D2E;
-        }
-
-        .header {
-            background: #B8E6D1;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .header-logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .header-logo img {
-            height: 50px;
-        }
-
-        .header-title {
-            text-align: center;
-            flex: 1;
-        }
-
-        .header-title h1 {
-            font-family: 'Brush Script MT', cursive;
-            font-size: clamp(18px, 4vw, 28px);
-            color: #1A4D2E;
-            font-weight: 400;
-        }
-
-        .header-title p {
-            font-size: 14px;
-            color: #1A4D2E;
-        }
-
-        .header-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-sair {
-            background: white;
-            border: 1px solid #1A4D2E;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            color: #1A4D2E;
-        }
-
-        .sub-header {
-            background: white;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 2px solid #B8E6D1;
-        }
-
-        .sub-header h2 {
-            font-size: 20px;
-            color: #1A4D2E;
-        }
-
-        .btn-voltar {
-            background: #B8E6D1;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            color: #1A4D2E;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-
-        .form-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group.full {
-            grid-column: 1 / -1;
-        }
-
-        label {
-            font-weight: 600;
-            margin-bottom: 6px;
-            font-size: 14px;
-            color: #1A4D2E;
-        }
-
-        input, select, textarea {
-            padding: 10px;
-            border: 2px solid #B8E6D1;
-            border-radius: 6px;
-            font-size: 15px;
-            outline: none;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: #1A4D2E;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .form-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            flex: 1;
-            min-width: 120px;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .btn-salvar {
-            background: #1A4D2E;
-            color: white;
-        }
-
-        .btn-limpar {
-            background: #B8E6D1;
-            color: #1A4D2E;
-        }
-
-        .btn-lista {
-            background: white;
-            border: 2px solid #1A4D2E;
-            color: #1A4D2E;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .btn-fechar {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        #loading {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 20px 40px;
-            border-radius: 10px;
-            z-index: 2000;
-        }
-
-        @media (max-width: 1280px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .header-title h1 {
-                font-size: 22px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .header {
-                justify-content: center;
-                text-align: center;
-            }
-            
-            .header-logo {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .form-buttons {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background: #f5f5f5; color: #1A4D2E; }
+     .header { background: #B8E6D1; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; }
+     .header-logo { display: flex; align-items: center; gap: 15px; }
+     .header-logo img { height: 50px; }
+     .header-title { text-align: center; flex: 1; }
+     .header-title h1 { font-family: 'Brush Script MT', cursive; font-size: clamp(18px, 4vw, 28px); color: #1A4D2E; font-weight: 400; }
+     .header-title p { font-size: 14px; color: #1A4D2E; }
+     .header-user { display: flex; align-items: center; gap: 10px; }
+     .btn-sair { background: white; border: 1px solid #1A4D2E; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; color: #1A4D2E; }
+     .sub-header { background: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #B8E6D1; }
+     .sub-header h2 { font-size: 20px; color: #1A4D2E; }
+     .btn-voltar { background: #B8E6D1; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; color: #1A4D2E; }
+     .container { max-width: 900px; margin: 20px auto; padding: 0 20px; }
+     .form-card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+     .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px; }
+     .form-group { display: flex; flex-direction: column; }
+     .form-group.full { grid-column: 1 / -1; }
+        label { font-weight: 600; margin-bottom: 6px; font-size: 14px; color: #1A4D2E; }
+        input, select, textarea { padding: 10px; border: 2px solid #B8E6D1; border-radius: 6px; font-size: 15px; outline: none; }
+        input:focus, select:focus, textarea:focus { border-color: #1A4D2E; }
+        textarea { resize: vertical; min-height: 100px; }
+     .form-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
+     .btn { flex: 1; min-width: 120px; padding: 12px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 15px; }
+     .btn-salvar { background: #1A4D2E; color: white; }
+     .btn-limpar { background: #B8E6D1; color: #1A4D2E; }
+     .btn-lista { background: white; border: 2px solid #1A4D2E; color: #1A4D2E; }
+     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+     .modal.active { display: flex; }
+     .modal-content { background: white; padding: 25px; border-radius: 10px; max-width: 800px; width: 100%; max-height: 80vh; overflow-y: auto; }
+     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+     .btn-fechar { background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+        #loading { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; padding: 20px 40px; border-radius: 10px; z-index: 2000; }
+     .item-historico { padding: 12px; border: 1px solid #B8E6D1; border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: 0.3s; }
+     .item-historico:hover { background: #B8E6D1; }
+        @media (max-width: 1280px) {.form-grid { grid-template-columns: 1fr; }.header-title h1 { font-size: 22px; } }
+        @media (max-width: 600px) {.header { justify-content: center; text-align: center; }.header-logo { width: 100%; justify-content: center; }.form-buttons { flex-direction: column; }.btn { width: 100%; } }
     </style>
 </head>
 <body>
-    <!-- HEADER -->
     <div class="header">
-        <div class="header-logo">
-            <img src="logo.png" alt="Logo">
-        </div>
+        <div class="header-logo"><img src="logo.png" alt="Logo"></div>
         <div class="header-title">
             <h1>Instituto Educacional Marito Dutra</h1>
             <p id="nome-professor">Carregando...</p>
         </div>
-        <div class="header-user">
-            <button class="btn-sair" id="btn-sair">Sair</button>
-        </div>
+        <div class="header-user"><button class="btn-sair" id="btn-sair">Sair</button></div>
     </div>
 
-    <!-- SUB HEADER -->
     <div class="sub-header">
         <button class="btn-voltar" onclick="history.back()">← Voltar</button>
         <h2>AGENDAMENTO DE PROVAS</h2>
         <div></div>
     </div>
 
-    <!-- FORM -->
     <div class="container">
         <div class="form-card">
             <form id="formProva">
@@ -301,39 +71,39 @@
                             <option value="">Carregando...</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>TURNO *</label>
                         <select name="turno" required>
                             <option value="">Selecione</option>
-                            <option>Manhã</option>
-                            <option>Tarde</option>
+                            <option value="manha">Manhã</option>
+                            <option value="tarde">Tarde</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>SÉRIE *</label>
                         <select name="serie" required>
                             <option value="">Selecione</option>
-                            <option>1ª Série</option>
-                            <option>2ª Série</option>
-                            <option>3ª Série</option>
-                            <option>4ª Série</option>
-                            <option>5ª Série</option>
+                            <option value="JARDIM I">JARDIM I</option>
+                            <option value="JARDIM II">JARDIM II</option>
+                            <option value="JARDIM III">JARDIM III</option>
+                            <option value="JARDIM IV">JARDIM IV</option>
+                            <option value="JARDIM V">JARDIM V</option>
+                            <option value="1° ANO">1ª Série</option>
+                            <option value="2° ANO">2ª Série</option>
+                            <option value="3° ANO">3ª Série</option>
+                            <option value="4° ANO">4ª Série</option>
+                            <option value="5° ANO">5ª Série</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>DATA DA PROVA *</label>
                         <input type="date" name="data_prova" required>
                     </div>
-
                     <div class="form-group full">
                         <label>ASSUNTO *</label>
                         <textarea name="assunto" placeholder="Ex: Prova de Geografia - Cap 1 a 3, páginas 13, 16 e 18" required></textarea>
                     </div>
                 </div>
-
                 <div class="form-buttons">
                     <button type="submit" class="btn btn-salvar">Salvar</button>
                     <button type="reset" class="btn btn-limpar">Limpar</button>
@@ -343,16 +113,13 @@
         </div>
     </div>
 
-    <!-- MODAL -->
     <div class="modal" id="modalLista">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Provas Agendadas</h3>
                 <button class="btn-fechar" onclick="fecharModal()">X</button>
             </div>
-            <div id="listaProvas">
-                <p>Carregando...</p>
-            </div>
+            <div id="listaProvas"><p>Carregando...</p></div>
         </div>
     </div>
 
@@ -361,7 +128,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  import { getFirestore, doc, getDoc, collection, addDoc, query, where, getDocs, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  import { getFirestore, doc, getDoc, collection, addDoc, query, where, getDocs, limit, updateDoc, deleteDoc, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
@@ -385,7 +152,6 @@
       if (docSnap.exists()) {
         const data = docSnap.data();
         document.getElementById('nome-professor').textContent = `Prof. ${data.nome}`;
-        
         const select = document.getElementById('disciplina-select');
         select.innerHTML = '<option value="">Selecione</option>';
         data.disciplinas.forEach(d => {
@@ -406,75 +172,181 @@
   });
 
   document.getElementById('btn-sair').addEventListener('click', () => {
-    signOut(auth).then(() => {
-      window.location.href = 'index.html';
-    });
+    signOut(auth).then(() => { window.location.href = 'index.html'; });
   });
 
   document.getElementById('formProva').addEventListener('submit', async (e) => {
     e.preventDefault();
     document.getElementById('loading').style.display = 'block';
-    
     const formData = new FormData(e.target);
     const prova = {
       disciplina: formData.get('disciplina'),
       turno: formData.get('turno'),
       serie: formData.get('serie'),
-      data_prova: formData.get('data_prova'),
+      dataProva: formData.get('data_prova'),
       assunto: formData.get('assunto'),
-      professor: auth.currentUser.uid,
+      professorId: auth.currentUser.uid,
       nome_professor: document.getElementById('nome-professor').textContent,
       criadoEm: new Date()
     };
-
     try {
       await addDoc(collection(db, 'provas'), prova);
-      alert('✅ Prova agendada com sucesso!');
+      showAlert('Prova agendada com sucesso!', 'sucesso');
       e.target.reset();
     } catch (error) {
       console.error('Erro:', error);
-      alert('❌ Erro ao salvar prova');
+      showAlert('Erro ao salvar prova', 'erro');
     } finally {
       document.getElementById('loading').style.display = 'none';
     }
   });
 
+  let todasProvasHistorico = [];
   document.getElementById('btn-lista').addEventListener('click', async () => {
     document.getElementById('modalLista').classList.add('active');
+    await carregarHistoricoProvas();
+  });
+
+  async function carregarHistoricoProvas() {
     const listaDiv = document.getElementById('listaProvas');
     listaDiv.innerHTML = '<p>Carregando...</p>';
-    
-    const q = query(
-      collection(db, 'provas'), 
-      where('professor', '==', auth.currentUser.uid), 
-      limit(20)
-    );
-    
-    const querySnapshot = await getDocs(q);
-    let html = '';
-    
-    if (querySnapshot.empty) {
-      html = '<p>Nenhuma prova agendada ainda.</p>';
-    } else {
-      const provas = [];
+    try {
+      const q = query(collection(db, 'provas'), where('professorId', '==', auth.currentUser.uid), orderBy('criadoEm', 'desc'), limit(20));
+      const querySnapshot = await getDocs(q);
+      todasProvasHistorico = [];
+      const seriesUnicas = new Set();
+      const disciplinasUnicas = new Set();
       querySnapshot.forEach((doc) => {
-        provas.push(doc.data());
+        const prova = { id: doc.id,...doc.data() };
+        todasProvasHistorico.push(prova);
+        seriesUnicas.add(prova.serie);
+        disciplinasUnicas.add(prova.disciplina);
       });
-      provas.sort((a, b) => b.criadoEm - a.criadoEm);
-      
+      if (!document.getElementById('filtros-prova')) {
+        const filtrosHTML = `<div id="filtros-prova" style="display:flex; gap:10px; margin-bottom:15px; flex-wrap:wrap;"><select id="filtro-serie-prova" style="flex:1; padding:8px; border:2px solid #B8E6D1; border-radius:6px;"><option value="todas">Todas as séries</option></select><select id="filtro-disciplina-prova" style="flex:1; padding:8px; border:2px solid #B8E6D1; border-radius:6px;"><option value="todas">Todas as disciplinas</option></select></div>`;
+        listaDiv.insertAdjacentHTML('beforebegin', filtrosHTML);
+        document.getElementById('filtro-serie-prova').addEventListener('change', aplicarFiltrosProva);
+        document.getElementById('filtro-disciplina-prova').addEventListener('change', aplicarFiltrosProva);
+      }
+      const selectSerie = document.getElementById('filtro-serie-prova');
+      selectSerie.innerHTML = '<option value="todas">Todas as séries</option>';
+      [...seriesUnicas].sort().forEach(serie => { selectSerie.innerHTML += `<option value="${serie}">${serie}</option>`; });
+      const selectDisc = document.getElementById('filtro-disciplina-prova');
+      selectDisc.innerHTML = '<option value="todas">Todas as disciplinas</option>';
+      [...disciplinasUnicas].sort().forEach(disc => { selectDisc.innerHTML += `<option value="${disc}">${disc}</option>`; });
+      renderizarHistoricoProvas(todasProvasHistorico);
+   } catch (error) {
+  listaDiv.innerHTML = '<p>Erro ao carregar. Crie o índice clicando no link do console.</p>';
+  console.error(error); // Mudei de console.log pra console.error
+}
+  }
+
+  function aplicarFiltrosProva() {
+    const serieSel = document.getElementById('filtro-serie-prova').value;
+    const discSel = document.getElementById('filtro-disciplina-prova').value;
+    let filtradas = todasProvasHistorico;
+    if (serieSel!== 'todas') filtradas = filtradas.filter(p => p.serie === serieSel);
+    if (discSel!== 'todas') filtradas = filtradas.filter(p => p.disciplina === discSel);
+    renderizarHistoricoProvas(filtradas);
+  }
+
+  function renderizarHistoricoProvas(provas) {
+    const listaDiv = document.getElementById('listaProvas');
+    let html = '';
+    if (provas.length === 0) {
+      html = '<p style="text-align:center; color:#666; padding:20px;">Nenhuma prova encontrada.</p>';
+    } else {
       provas.forEach((p) => {
-        const dataFormatada = p.data_prova.split('-').reverse().join('/');
-        html += `<div style="padding:10px; border-bottom:1px solid #B8E6D1; margin-bottom:10px;">
-          <strong>${dataFormatada}</strong> - ${p.disciplina} - ${p.serie} - ${p.turno}<br>
-          <small>${p.assunto}</small>
-        </div>`;
+        const dataFormatada = p.dataProva.split('-').reverse().join('/');
+        html += `<div class="item-historico" onclick="abrirModalEditarProva('${p.id}')"><div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;"><i class="fas fa-edit" style="color:#1A4D2E;"></i><strong style="color:#1A4D2E;">${dataFormatada}</strong> - ${p.disciplina} - ${p.serie} - ${p.turno}</div><small style="color:#666; padding-left:24px;">${p.assunto}</small></div>`;
       });
     }
     listaDiv.innerHTML = html;
+  }
+
+  window.fecharModal = () => { document.getElementById('modalLista').classList.remove('active'); }
+
+  if (!document.getElementById('modal-editar-prova')) {
+    document.body.insertAdjacentHTML('beforeend', `<div class="modal" id="modal-editar-prova"><div class="modal-content" style="max-width:600px;"><div class="modal-header"><h3>Editar Prova</h3><button class="btn-fechar" onclick="fecharModalEditarProva()">X</button></div><form id="form-editar-prova"><input type="hidden" id="edit-prova-id"><div class="form-grid"><div class="form-group"><label>Disciplina</label><input type="text" id="edit-disciplina-prova" readonly style="background:#f0f0f0;"></div><div class="form-group"><label>Data da Prova *</label><input type="date" id="edit-data-prova" required></div><div class="form-group"><label>Turno</label><input type="text" id="edit-turno-prova" readonly style="background:#f0f0f0;"></div><div class="form-group"><label>Série</label><input type="text" id="edit-serie-prova" readonly style="background:#f0f0f0;"></div><div class="form-group full"><label>Assunto *</label><textarea id="edit-assunto-prova" required style="min-height:100px;"></textarea></div></div><div class="form-buttons"><button type="submit" class="btn btn-salvar">Salvar</button><button type="button" class="btn btn-limpar" id="btn-excluir-prova" style="background:#dc3545; color:white;">Excluir</button><button type="button" class="btn btn-lista" onclick="fecharModalEditarProva()">Fechar</button></div></form></div></div>`);
+  }
+
+  window.abrirModalEditarProva = async (provaId) => {
+    document.getElementById('loading').style.display = 'block';
+    try {
+      const provaRef = doc(db, 'provas', provaId);
+      const docSnap = await getDoc(provaRef);
+      if (!docSnap.exists()) { showAlert('Prova não encontrada', 'erro'); return; }
+      const dados = docSnap.data();
+      document.getElementById('edit-prova-id').value = provaId;
+      document.getElementById('edit-disciplina-prova').value = dados.disciplina;
+      document.getElementById('edit-data-prova').value = dados.dataProva;
+      document.getElementById('edit-turno-prova').value = dados.turno;
+      document.getElementById('edit-serie-prova').value = dados.serie;
+      document.getElementById('edit-assunto-prova').value = dados.assunto;
+      document.getElementById('modal-editar-prova').classList.add('active');
+    } catch (error) { showAlert('Erro ao carregar prova', 'erro'); }
+    finally { document.getElementById('loading').style.display = 'none'; }
+  }
+
+  window.fecharModalEditarProva = () => { document.getElementById('modal-editar-prova').classList.remove('active'); }
+
+  document.getElementById('form-editar-prova').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    document.getElementById('loading').style.display = 'block';
+    const provaId = document.getElementById('edit-prova-id').value;
+    const dadosAtualizados = { dataProva: document.getElementById('edit-data-prova').value, assunto: document.getElementById('edit-assunto-prova').value, atualizadoEm: new Date() };
+    try {
+      await updateDoc(doc(db, 'provas', provaId), dadosAtualizados);
+      showAlert('Prova atualizada com sucesso!', 'sucesso', () => { fecharModalEditarProva(); fecharModal(); carregarHistoricoProvas(); });
+    } catch (error) { showAlert('Erro ao salvar', 'erro'); }
+    finally { document.getElementById('loading').style.display = 'none'; }
   });
 
-  window.fecharModal = () => {
-    document.getElementById('modalLista').classList.remove('active');
+  document.getElementById('btn-excluir-prova').addEventListener('click', () => {
+    const provaId = document.getElementById('edit-prova-id').value;
+    showConfirm('Tem certeza que deseja excluir esta prova?', async (confirmado) => {
+      if (!confirmado) return;
+      document.getElementById('loading').style.display = 'block';
+      try {
+        await deleteDoc(doc(db, 'provas', provaId));
+        showAlert('Prova excluída com sucesso!', 'sucesso', () => { fecharModalEditarProva(); fecharModal(); carregarHistoricoProvas(); });
+      } catch (error) { showAlert('Erro ao excluir', 'erro'); }
+      finally { document.getElementById('loading').style.display = 'none'; }
+    });
+  });
+
+  if (!document.getElementById('modal-alerta-custom')) {
+    document.body.insertAdjacentHTML('beforeend', `<div id="modal-alerta-custom" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:3000; align-items:center; justify-content:center;"><div id="alerta-content" style="background:white; padding:30px; border-radius:12px; max-width:400px; width:90%; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.3);"><i class="fas fa-check-circle" style="font-size:48px; margin-bottom:15px;"></i><p id="alerta-mensagem" style="font-size:16px; margin-bottom:20px; color:#333;"></p><div id="alerta-botoes"></div></div></div>`);
+  }
+
+  function showAlert(msg, tipo = 'sucesso', callback = null) {
+    const modal = document.getElementById('modal-alerta-custom');
+    const content = document.getElementById('alerta-content');
+    const mensagem = document.getElementById('alerta-mensagem');
+    const botoes = document.getElementById('alerta-botoes');
+    let cor = '#1A4D2E', icone = 'fa-check-circle';
+    if(tipo === 'erro') { cor = '#dc3545'; icone = 'fa-times-circle'; }
+    if(tipo === 'aviso') { cor = '#ffc107'; icone = 'fa-exclamation-triangle'; }
+    content.querySelector('i').className = `fas ${icone}`;
+    content.querySelector('i').style.color = cor;
+    mensagem.textContent = msg;
+    botoes.innerHTML = `<button style="background:${cor}; color:white; border:none; padding:10px 30px; border-radius:6px; font-weight:600; cursor:pointer;">OK</button>`;
+    modal.style.display = 'flex';
+    botoes.querySelector('button').onclick = () => { modal.style.display = 'none'; if(callback) callback(); };
+  }
+
+  function showConfirm(msg, callback) {
+    const modal = document.getElementById('modal-alerta-custom');
+    const content = document.getElementById('alerta-content');
+    const mensagem = document.getElementById('alerta-mensagem');
+    const botoes = document.getElementById('alerta-botoes');
+    content.querySelector('i').className = 'fas fa-question-circle';
+    content.querySelector('i').style.color = '#ffc107';
+    mensagem.textContent = msg;
+    botoes.innerHTML = `<button style="background:#1A4D2E; color:white; border:none; padding:10px 20px; border-radius:6px; margin:5px; cursor:pointer;">Sim</button><button style="background:#6c757d; color:white; border:none; padding:10px 20px; border-radius:6px; margin:5px; cursor:pointer;">Não</button>`;
+    modal.style.display = 'flex';
+    botoes.children[0].onclick = () => { modal.style.display = 'none'; callback(true); };
+    botoes.children[1].onclick = () => { modal.style.display = 'none'; callback(false); };
   }
 </script>
 </body>
