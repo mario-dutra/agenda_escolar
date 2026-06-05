@@ -19,13 +19,13 @@
       padding-bottom: 90px;
     }
 
-    .header-aluno {
+  .header-aluno {
       background: linear-gradient(135deg, #1a5c3a 0%, #2E865F 100%);
       padding: 22px 15px 18px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
 
-    .perfil-container {
+  .perfil-container {
       max-width: 1100px;
       margin: 0 auto;
       display: flex;
@@ -33,7 +33,7 @@
       gap: 18px;
     }
 
-    .foto-aluno {
+  .foto-aluno {
       width: 88px;
       height: 88px;
       border-radius: 50%;
@@ -44,13 +44,13 @@
       background: #ccc;
     }
 
-    .info-aluno {
+  .info-aluno {
       flex: 1;
       color: white;
       min-width: 0;
     }
 
-    .nome-aluno {
+  .nome-aluno {
       font-size: 23px;
       font-weight: 700;
       letter-spacing: 0.3px;
@@ -60,7 +60,7 @@
       word-wrap: break-word;
     }
 
-    .detalhes-aluno {
+  .detalhes-aluno {
       font-size: 13px;
       font-weight: 500;
       opacity: 0.95;
@@ -69,12 +69,12 @@
       gap: 2px;
     }
 
-    .detalhes-aluno i {
+  .detalhes-aluno i {
       margin-right: 6px;
       font-size: 11px;
     }
 
-    .menu-desktop {
+  .menu-desktop {
       background: white;
       max-width: 1100px;
       margin: -10px auto 18px;
@@ -85,7 +85,7 @@
       padding: 14px;
     }
 
-    .menu-desktop button {
+  .menu-desktop button {
       background: none;
       border: none;
       font-family: 'Poppins', sans-serif;
@@ -99,24 +99,42 @@
       padding: 8px 14px;
       border-radius: 8px;
       transition: 0.2s;
+      position: relative;
     }
 
-    .menu-desktop button:hover {
+  .menu-desktop button:hover {
       background: #e8f5e9;
       transform: translateY(-2px);
     }
 
-    .menu-desktop button i {
+  .menu-desktop button i {
       font-size: 17px;
     }
 
-    .container-tarefas {
+  .alerta-prova {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 10px;
+      height: 10px;
+      background: #00ff00;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00ff00;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.2); }
+    }
+
+  .container-tarefas {
       max-width: 1100px;
       margin: 0 auto;
       padding: 0 12px;
     }
 
-    .titulo-secao {
+  .titulo-secao {
       background: #6b9b6b;
       color: white;
       text-align: center;
@@ -127,91 +145,111 @@
       margin-bottom: 18px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.15);
       letter-spacing: 0.5px;
+      
     }
 
-    .grid-tarefas {
+  .grid-tarefas {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 18px;
       margin-bottom: 20px;
     }
 
-    .card-tarefa {
+  .card-tarefa {
       background: white;
       border-radius: 12px;
       display: flex;
       overflow: hidden;
       box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+     
     }
 
-    .card-tarefa .lado-esquerdo {
+    .lado-esquerdo{
+      
+       padding: 20px;
+       color:white;
+       text-align: center;
+    }
+
+  .card-tarefa.lado-esquerdo {
       color: white;
       padding: 20px 15px;
-      width: 140px;
+      width: 160px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 12px;
+      
     }
 
-    .card-tarefa .lado-esquerdo h3 {
+  .card-tarefa.lado-esquerdo h3 {
       font-size: 18px;
       font-weight: 700;
       text-align: center;
     }
 
-    .card-tarefa .lado-esquerdo .icone-principal {
+  .card-tarefa.lado-esquerdo.icone-principal {
       font-size: 40px;
     }
 
-    .card-tarefa .lado-esquerdo .icones {
+  .card-tarefa.lado-esquerdo.icones {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
       font-size: 22px;
+     
     }
 
-    .matematica { background: #2c5f5d; }
-    .portugues { background: #3498DB; }
-    .geografia { background: #E67E73; }
-    .fisica { background: #1ABC9C; }
-    .quimica { background: #9B59B6; }
-    .ingles { background: #F1C40F; }
-    .historia { background: #7A288A; }
-    .artes { background: #8E44AD; }
-    .redacao { background: #E74C3C; }
-    .religiao { background: #34495E; }
-    .edfisica { background: #16A085; }
-    .default { background: #7f8c8d; }
+  .matematica { background: #2c5f5d; }
+  .portugues { background: #3498DB; }
+  .geografia { background: #E67E73; }
+  .fisica { background: #1ABC9C; }
+  .quimica { background: #9B59B6; }
+  .ingles { background: #F1C40F; }
+  .historia { background: #7A288A; }
+  .artes { background: #8E44AD; }
+  .redacao { background: #E74C3C; }
+  .religiao { background: #34495E; }
+  .edfisica { background: #16A085; }
+  .default { background: #7f8c8d; }
 
-    .lado-direito {
+  .lado-direito {
       flex: 1;
       padding: 18px;
       display: flex;
       flex-direction: column;
       gap: 8px;
       font-size: 13px;
+     
     }
 
-    .lado-direito .linha {
+    .observacao{
+     color: green;
+    }
+
+  .lado-direito.linha {
       color: #333;
     }
 
-    .lado-direito .observacao {
+  .lado-direito.observacao {
       color: #1a5c3a;
       font-weight: 600;
       margin: 5px 0;
     }
 
-    .lado-direito .professor {
+    .professor{
+      color: #0c466d;
+    }
+
+  .lado-direito.professor {
       font-size: 12px;
       color: #666;
       margin-top: auto;
     }
 
-    .loading-tarefas {
+  .loading-tarefas {
       text-align: center;
       padding: 40px;
       color: #1a5c3a;
@@ -219,7 +257,7 @@
       grid-column: 1 / -1;
     }
 
-    .sem-tarefas {
+  .sem-tarefas {
       text-align: center;
       padding: 40px;
       background: white;
@@ -228,7 +266,7 @@
       grid-column: 1 / -1;
     }
 
-    .menu-mobile {
+  .menu-mobile {
       display: none;
       position: fixed;
       bottom: 0;
@@ -241,7 +279,7 @@
       height: 65px;
     }
 
-    .menu-mobile-items {
+  .menu-mobile-items {
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -250,7 +288,7 @@
       height: 100%;
     }
 
-    .menu-mobile button {
+  .menu-mobile button {
       background: none;
       border: none;
       display: flex;
@@ -263,40 +301,158 @@
       font-weight: 600;
       cursor: pointer;
       padding: 4px 12px;
+      position: relative;
     }
 
-    .menu-mobile button i {
+  .menu-mobile button i {
       font-size: 20px;
     }
 
-    /* LOADER MATEI O PRETO - AGORA É INVISÍVEL */
+  .modal-provas {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 10000;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+  .modal-provas.ativo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+  .modal-content {
+      background: white;
+      border-radius: 15px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+  .modal-header {
+      background: linear-gradient(135deg, #1a5c3a 0%, #2E865F 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 15px 15px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+  .modal-header h2 {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+  .btn-fechar {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      font-size: 24px;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+  .btn-fechar:hover {
+      background: rgba(255,255,255,0.3);
+      transform: rotate(90deg);
+    }
+
+  .modal-body {
+      padding: 20px;
+    }
+
+  .card-prova {
+      background: #f8f9fa;
+      border-left: 4px solid #2E865F;
+      padding: 15px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      transition: 0.2s;
+    }
+
+  .card-prova:hover {
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      transform: translateX(5px);
+    }
+
+  .card-prova.data-prova {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a5c3a;
+      margin-bottom: 8px;
+    }
+
+  .card-prova.info-prova {
+      font-size: 14px;
+      color: #333;
+      margin: 4px 0;
+    }
+
+  .card-prova.info-prova i {
+      width: 20px;
+      color: #2E865F;
+    }
+
+  .btn-pdf {
+      width: 100%;
+      background: #1a5c3a;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: 0.2s;
+    }
+
+  .btn-pdf:hover {
+      background: #2E865F;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(46,134,95,0.3);
+    }
+
     #loader {
-      display: none !important;
+      display: none!important;
     }
 
     @media (max-width: 768px) {
-      .menu-desktop {
+    .menu-desktop {
         display: none;
       }
-      .menu-mobile {
+    .menu-mobile {
         display: block;
       }
-      .perfil-container {
+    .perfil-container {
         flex-direction: column;
         text-align: center;
         gap: 12px;
       }
-      .foto-aluno {
+    .foto-aluno {
         width: 95px;
         height: 95px;
       }
-      .nome-aluno {
+    .nome-aluno {
         font-size: 19px;
       }
-      .detalhes-aluno {
+    .detalhes-aluno {
         align-items: center;
       }
-      .grid-tarefas {
+    .grid-tarefas {
         grid-template-columns: 1fr;
       }
       body {
@@ -305,29 +461,32 @@
     }
 
     @media (max-width: 480px) {
-      .foto-aluno {
+    .foto-aluno {
         width: 80px;
         height: 80px;
         border-width: 3px;
       }
-      .nome-aluno {
+    .nome-aluno {
         font-size: 17px;
       }
-      .card-tarefa .lado-esquerdo {
-        width: 110px;
+    .card-tarefa.lado-esquerdo {
+        width: 130px;
         padding: 15px 10px;
       }
-      .card-tarefa .lado-esquerdo h3 {
+    .card-tarefa.lado-esquerdo h3 {
         font-size: 15px;
       }
-      .lado-direito {
+    .lado-direito {
         padding: 14px;
         font-size: 12px;
+      }
+    .modal-content {
+        margin: 10px;
       }
     }
 
     @media (min-width: 600px) and (max-width: 800px) {
-      .grid-tarefas {
+    .grid-tarefas {
         grid-template-columns: repeat(2, 1fr);
       }
     }
@@ -352,6 +511,7 @@
   <div class="menu-desktop">
     <button onclick="abrirProvas()">
       <i class="fas fa-calendar-check"></i> Provas
+      <span class="alerta-prova" id="alerta-prova-desktop" style="display:none;"></span>
     </button>
     <button onclick="abrirAvisos()">
       <i class="fas fa-bell"></i> Avisos
@@ -377,6 +537,7 @@
       <button onclick="abrirProvas()">
         <i class="fas fa-calendar-check"></i>
         <span>Provas</span>
+        <span class="alerta-prova" id="alerta-prova-mobile" style="display:none;"></span>
       </button>
       <button onclick="abrirAvisos()">
         <i class="fas fa-bell"></i>
@@ -389,10 +550,27 @@
     </div>
   </div>
 
+  <div class="modal-provas" id="modal-provas">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-calendar-check"></i> Agenda de Provas</h2>
+        <button class="btn-fechar" onclick="fecharProvas()">×</button>
+      </div>
+      <div class="modal-body" id="lista-provas">
+        <div class="loading-tarefas">
+          <i class="fas fa-spinner fa-spin"></i> Carregando provas...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, collection, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
@@ -408,6 +586,9 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    let dadosAlunoGlobal = null;
+    let provasGlobal = [];
+
     const DISCIPLINAS = {
       'matematica': { cor: 'matematica', icone: '<div class="icones"><i class="fas fa-plus"></i><i class="fas fa-minus"></i><i class="fas fa-times"></i><i class="fas fa-divide"></i></div>', nome: 'Matemática' },
       'portugues': { cor: 'portugues', icone: '<i class="fas fa-book-open icone-principal"></i>', nome: 'Português' },
@@ -420,7 +601,6 @@
       'redacao': { cor: 'redacao', icone: '<i class="fas fa-pen-fancy icone-principal"></i>', nome: 'Redação' },
       'religiao': { cor: 'religiao', icone: '<i class="fas fa-cross icone-principal"></i>', nome: 'Religião' },
       'edfisica': { cor: 'edfisica', icone: '<i class="fas fa-futbol icone-principal"></i>', nome: 'Ed. Física' },
-     
     };
 
     function formatarData() {
@@ -445,21 +625,153 @@
       });
     };
 
-    window.abrirProvas = () => alert('Provas em breve!');
     window.abrirAvisos = () => alert('Avisos em breve!');
+
+    window.abrirProvas = async () => {
+      document.getElementById('modal-provas').classList.add('ativo');
+      await carregarProvas();
+    };
+
+    window.fecharProvas = () => {
+      document.getElementById('modal-provas').classList.remove('ativo');
+    };
+
+    async function checarProvasNovas(serie, turno) {
+      const hoje = formatarDataFirebase();
+      const turnoLimpo = turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+      try {
+        const q = query(
+          collection(db, 'provas'),
+          where('serie', '==', serie),
+          where('turno', '==', turnoLimpo),
+          where('dataProva', '>=', hoje),
+          limit(1)
+        );
+
+        const snap = await getDocs(q);
+        const temProva =!snap.empty;
+
+        document.getElementById('alerta-prova-desktop').style.display = temProva? 'block' : 'none';
+        document.getElementById('alerta-prova-mobile').style.display = temProva? 'block' : 'none';
+      } catch (error) {
+        console.log('Erro ao checar provas:', error);
+      }
+    }
+
+    async function carregarProvas() {
+      const lista = document.getElementById('lista-provas');
+      const hoje = formatarDataFirebase();
+      const turnoLimpo = dadosAlunoGlobal.turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+      try {
+        const q = query(
+          collection(db, 'provas'),
+          where('serie', '==', dadosAlunoGlobal.serie),
+          where('turno', '==', turnoLimpo),
+          where('dataProva', '>=', hoje),
+          orderBy('dataProva', 'asc')
+        );
+
+        const querySnapshot = await getDocs(q);
+        provasGlobal = [];
+
+        if (querySnapshot.empty) {
+          lista.innerHTML = `
+            <div class="sem-tarefas">
+              <i class="fas fa-calendar-times" style="font-size:50px;margin-bottom:15px;color:#ccc;"></i>
+              <p>Nenhuma prova agendada!</p>
+              <p style="font-size:12px;margin-top:10px;color:#999;">Aproveita pra revisar a matéria 📚</p>
+            </div>
+          `;
+          return;
+        }
+
+        let html = '';
+        querySnapshot.forEach((doc) => {
+          const p = doc.data();
+          provasGlobal.push({ id: doc.id,...p });
+
+          const dataFormatada = new Date(p.dataProva + 'T00:00:00').toLocaleDateString('pt-BR', {
+            weekday: 'long', day: '2-digit', month: 'long', year: 'numeric'
+          });
+
+          html += `
+            <div class="card-prova">
+              <div class="data-prova">
+                <i class="fas fa-calendar-day"></i> ${dataFormatada}
+              </div>
+              <div class="info-prova">
+                <i class="fas fa-book"></i> <strong>Disciplina:</strong> ${p.disciplina}
+              </div>
+              <div class="info-prova">
+                <i class="fas fa-file-alt"></i> <strong>Assunto:</strong> ${p.assunto}
+              </div>
+              <div class="info-prova">
+                <i class="fas fa-chalkboard-teacher"></i> <strong>Professor:</strong> ${p.nome_professor || 'Não informado'}
+              </div>
+            </div>
+          `;
+        });
+
+        html += `<button class="btn-pdf" onclick="gerarPDF()"><i class="fas fa-file-pdf"></i> Gerar PDF da Agenda</button>`;
+        lista.innerHTML = html;
+
+      } catch (error) {
+        console.error('ERRO AO CARREGAR PROVAS:', error);
+        lista.innerHTML = `
+          <div class="sem-tarefas">
+            <i class="fas fa-exclamation-triangle" style="font-size:50px;margin-bottom:15px;color:#dc3545;"></i>
+            <p>Erro ao carregar provas</p>
+            <p style="font-size:11px;margin-top:10px;color:#999;">${error.message}</p>
+            <p style="font-size:11px;margin-top:10px;color:#999;">Provavelmente precisa criar um índice. Olha o console!</p>
+          </div>
+        `;
+      }
+    }
+
+    window.gerarPDF = () => {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFontSize(18);
+      doc.text(`Agenda de Provas - ${dadosAlunoGlobal.serie}`, 14, 20);
+      doc.setFontSize(11);
+      doc.text(`Aluno: ${dadosAlunoGlobal.nome} | Turno: ${dadosAlunoGlobal.turno}`, 14, 28);
+
+      const dadosTabela = provasGlobal.map(p => [
+        new Date(p.dataProva + 'T00:00:00').toLocaleDateString('pt-BR'),
+        p.disciplina,
+        p.assunto,
+        p.nome_professor || 'N/I'
+      ]);
+
+      doc.autoTable({
+        head: [['Data', 'Disciplina', 'Assunto', 'Professor']],
+        body: dadosTabela,
+        startY: 35,
+        theme: 'grid',
+        headStyles: { fillColor: [46, 134, 95] }
+      });
+
+      doc.save(`agenda_provas_${dadosAlunoGlobal.nome.replace(/\s/g, '_')}.pdf`);
+    };
 
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const alunoRef = doc(db, "alunos", user.uid);
         const alunoSnap = await getDoc(alunoRef);
-        
+
         if (alunoSnap.exists()) {
           const dados = alunoSnap.data();
+          dadosAlunoGlobal = dados;
+
           document.getElementById('nome-aluno').textContent = dados.nome.toUpperCase();
           document.getElementById('serie-turno').textContent = `${dados.serie} - ${dados.turno}`;
           document.getElementById('foto-aluno').src = dados.foto || dados.fotoURL || dados.avatar || './img/aluna.png';
-          
+
           carregarTarefas(dados.serie, dados.turno);
+          checarProvasNovas(dados.serie, dados.turno);
         } else {
           window.location.href = 'index.html';
         }
@@ -472,7 +784,7 @@
       const grid = document.getElementById('grid-tarefas');
       const dataHoje = formatarDataFirebase();
       const turnoLimpo = turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      
+
       try {
         const q = query(
           collection(db, 'tarefas'),
@@ -480,9 +792,9 @@
           where('turno', '==', turnoLimpo),
           where('data', '==', dataHoje)
         );
-        
+
         const querySnapshot = await getDocs(q);
-        
+
         if (querySnapshot.empty) {
           grid.innerHTML = `
             <div class="sem-tarefas">
@@ -492,13 +804,13 @@
           `;
           return;
         }
-        
+
         let html = '';
         querySnapshot.forEach((doc) => {
           const t = doc.data();
           const disciplinaKey = t.disciplina.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s/g, '');
           const disc = DISCIPLINAS[disciplinaKey] || { cor: 'default', icone: '<i class="fas fa-book icone-principal"></i>', nome: t.disciplina };
-          
+
           html += `
             <div class="card-tarefa">
               <div class="lado-esquerdo ${disc.cor}">
@@ -516,9 +828,9 @@
             </div>
           `;
         });
-        
+
         grid.innerHTML = html;
-        
+
       } catch (error) {
         console.error('ERRO:', error);
         grid.innerHTML = `
