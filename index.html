@@ -105,8 +105,8 @@
         if(!docSnap.exists()) {
           await setDoc(docRef, {
             userId: user.uid,
-            email: dadosUsuario.email,
-            nome: dadosUsuario.nome,
+            email: dadosUsuario.email || user.email || "", // USA O EMAIL DO AUTH SE NÃO TIVER NO DOC
+            nome: dadosUsuario.nome || "Sem nome",
             tipo_usuario: dadosUsuario.tipo_usuario,
             serie: dadosUsuario.serie || "",
             turno: dadosUsuario.turno || "",
@@ -121,7 +121,7 @@
           console.log("ℹ️ Usuário já acessou hoje. Não contabilizou de novo.");
         }
       } catch(error) {
-        console.error("❌ Erro ao registrar analytics:", error.code, error.message);
+        console.error("❌ ERRO GRAVE AO REGISTRAR:", error); // MOSTRA O ERRO COMPLETO
       }
     }
     // ================= FIM ANALYTICS =================
