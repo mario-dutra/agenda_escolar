@@ -89,33 +89,37 @@
     }
 
     async function registrarAcesso(user, dadosUsuario) {
-      const agora = new Date();
-      const dia = agora.toISOString().split('T')[0];
-      const mes = agora.toISOString().slice(0, 7);
-      const ano = agora.getFullYear().toString();
-      const semana = getWeekNumber(agora);
+      try {
+        const agora = new Date();
+        const dia = agora.toISOString().split('T')[0];
+        const mes = agora.toISOString().slice(0, 7);
+        const ano = agora.getFullYear().toString();
+        const semana = getWeekNumber(agora);
 
-      const q = query(collection(db, "analytics_access"),
-        where("userId", "==", user.uid),
-        where("dia", "==", dia)
-      );
-      const jaEntrou = await getDocs(q);
+        const q = query(collection(db, "analytics_access"),
+          where("userId", "==", user.uid),
+          where("dia", "==", dia)
+        );
+        const jaEntrou = await getDocs(q);
 
-      if(jaEntrou.empty) {
-        await addDoc(collection(db, "analytics_access"), {
-          userId: user.uid,
-          email: dadosUsuario.email,
-          nome: dadosUsuario.nome,
-          tipo_usuario: dadosUsuario.tipo_usuario,
-          serie: dadosUsuario.serie || "",
-          turno: dadosUsuario.turno || "",
-          data: serverTimestamp(),
-          dia: dia,
-          semana: semana,
-          mes: mes,
-          ano: ano
-        });
-        console.log("Acesso registrado:", dadosUsuario.nome);
+        if(jaEntrou.empty) {
+          await addDoc(collection(db, "analytics_access"), {
+            userId: user.uid,
+            email: dadosUsuario.email,
+            nome: dadosUsuario.nome,
+            tipo_usuario: dadosUsuario.tipo_usuario,
+            serie: dadosUsuario.serie || "",
+            turno: dadosUsuario.turno || "",
+            data: serverTimestamp(),
+            dia: dia,
+            semana: semana,
+            mes: mes,
+            ano: ano
+          });
+          console.log("Acesso registrado:", dadosUsuario.nome);
+        }
+      } catch(error) {
+        console.error("Erro ao registrar analytics:", error);
       }
     }
     // ================= FIM ANALYTICS =================
@@ -154,6 +158,8 @@
         localStorage.setItem('uid', user.uid);
         localStorage.setItem('nomeAluno', alunoDoc.data().nome);
 
+        // DELAY PRA GARANTIR QUE O AUTH ATUALIZOU
+        await new Promise(resolve => setTimeout(resolve, 300));
         await registrarAcesso(user, alunoDoc.data()); // REGISTRA ACESSO AQUI
 
         window.location.href = 'aluno.html';
@@ -197,6 +203,8 @@
         localStorage.setItem('uid', user.uid);
         localStorage.setItem('nomeProfessor', professorDoc.data().nome);
 
+        // DELAY PRA GARANTIR QUE O AUTH ATUALIZOU
+        await new Promise(resolve => setTimeout(resolve, 300));
         await registrarAcesso(user, professorDoc.data()); // REGISTRA ACESSO AQUI
 
         window.location.href = 'agendamento.html';
