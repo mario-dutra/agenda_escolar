@@ -88,6 +88,38 @@
       opacity: 0.95;
     }
 
+    /* BOTAO ANALYTICS */
+.btn-analytics {
+      background: linear-gradient(135deg, #036618, #1abc9c);
+      color: white;
+      border: none;
+      padding: 15px 35px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(3, 102, 24, 0.4);
+      transition: all 0.3s ease;
+      margin-bottom: 30px;
+    }
+.btn-analytics:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 12px 25px rgba(3, 102, 24, 0.6);
+    }
+
+    /* AREA ESCONDIDA */
+.analytics-area {
+      display: none;
+      animation: fadeInUp 0.6s ease;
+    }
+.analytics-area.show {
+      display: block;
+    }
+@keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* CARDS DE MÉTRICAS */
 .metricas {
       display: grid;
@@ -96,14 +128,17 @@
       margin-bottom: 40px;
     }
 .card-metrica {
-      background: #fff;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
       padding: 25px 20px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
       transition: 0.3s;
+      border: 1px solid rgba(255,255,255,0.3);
     }
 .card-metrica:hover {
-      transform: translateY(-5px);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
     }
 .card-metrica.titulo {
       color: #666;
@@ -114,7 +149,7 @@
     }
 .card-metrica.numero {
       color: #036618;
-      font-size: 36px;
+      font-size: 42px;
       font-weight: bold;
       margin: 10px 0;
     }
@@ -122,14 +157,16 @@
 .card-metrica.prof { border-top: 4px solid #9b59b6; }
 
     /* GRAFICO */
- .grafico-box {
-      background: #fff;
+.grafico-box {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
       margin-bottom: 40px;
+      border: 1px solid rgba(255,255,255,0.3);
     }
- .grafico-box h3 {
+.grafico-box h3 {
       color: #036618;
       margin-bottom: 20px;
       font-size: 20px;
@@ -142,7 +179,8 @@
       gap: 30px;
     }
 .card {
-      background: #fff;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
       padding: 40px 25px;
       border-radius: 15px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.15);
@@ -152,6 +190,7 @@
       text-decoration: none;
       color: inherit;
       border-bottom: 4px solid transparent;
+      border: 1px solid rgba(255,255,255,0.3);
     }
 .card:hover {
       transform: translateY(-10px);
@@ -176,17 +215,17 @@
 .card-prof.icon { color: #9b59b6; }
 
     @media (max-width: 700px) {
-  .menu {
+ .menu {
         flex-direction: column;
         gap: 15px;
         padding: 15px;
       }
-  .links {
+ .links {
         width: 100%;
         justify-content: center;
         flex-wrap: wrap;
       }
-  .conteudo h2 {
+ .conteudo h2 {
         font-size: 24px;
       }
     }
@@ -207,35 +246,44 @@
 
   <div class="conteudo">
     <h2>Bem-vindo, <span id="nome-admin">Admin</span>! 👋</h2>
-    <p>Visão geral de acessos da plataforma</p>
+    <p>Gerencie sua plataforma IEMD</p>
 
-    <!-- CARDS DE METRICAS -->
-    <div class="metricas">
-      <div class="card-metrica aluno">
-        <div class="titulo">Hoje - Alunos</div>
-        <div class="numero" id="contador-dia-aluno">0</div>
+    <button class="btn-analytics" id="btnMostrarAnalytics">
+      📊 Ver Analytics de Acessos
+    </button>
+
+    <!-- AREA ESCONDIDA -->
+    <div class="analytics-area" id="analyticsArea">
+      <h3 style="color:#fff; margin-bottom: 20px; font-size:24px;">Visão Geral de Acessos</h3>
+
+      <!-- CARDS DE METRICAS -->
+      <div class="metricas">
+        <div class="card-metrica aluno">
+          <div class="titulo">Hoje - Alunos</div>
+          <div class="numero" id="contador-dia-aluno">0</div>
+        </div>
+        <div class="card-metrica prof">
+          <div class="titulo">Hoje - Professores</div>
+          <div class="numero" id="contador-dia-prof">0</div>
+        </div>
+        <div class="card-metrica aluno">
+          <div class="titulo">Esse Mês - Alunos</div>
+          <div class="numero" id="contador-mes-aluno">0</div>
+        </div>
+        <div class="card-metrica prof">
+          <div class="titulo">Esse Mês - Professores</div>
+          <div class="numero" id="contador-mes-prof">0</div>
+        </div>
       </div>
-      <div class="card-metrica prof">
-        <div class="titulo">Hoje - Professores</div>
-        <div class="numero" id="contador-dia-prof">0</div>
-      </div>
-      <div class="card-metrica aluno">
-        <div class="titulo">Esse Mês - Alunos</div>
-        <div class="numero" id="contador-mes-aluno">0</div>
-      </div>
-      <div class="card-metrica prof">
-        <div class="titulo">Esse Mês - Professores</div>
-        <div class="numero" id="contador-mes-prof">0</div>
+
+      <!-- GRAFICO ULTIMOS 7 DIAS -->
+      <div class="grafico-box">
+        <h3>📈 Acessos nos Últimos 7 Dias</h3>
+        <canvas id="graficoAcessos"></canvas>
       </div>
     </div>
 
-    <!-- GRAFICO ULTIMOS 7 DIAS -->
-    <div class="grafico-box">
-      <h3>📊 Acessos nos Últimos 7 Dias</h3>
-      <canvas id="graficoAcessos"></canvas>
-    </div>
-
-    <p style="margin-top: -10px; margin-bottom: 20px;">Escolha uma opção abaixo para gerenciar</p>
+    <p style="margin-bottom: 20px;">Escolha uma opção abaixo para gerenciar</p>
 
     <div class="cards">
       <a href="cadastro_aluno.html" class="card card-aluno">
@@ -271,15 +319,27 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Pega nome do admin
 document.getElementById('nome-admin').textContent = localStorage.getItem('nomeAdmin') || 'Admin';
 
 onAuthStateChanged(auth, (user) => {
   if (!user) {
     window.location.href = 'index.html';
-  } else {
+  }
+});
+
+// BOTAO MOSTRAR/OCULTAR
+document.getElementById('btnMostrarAnalytics').addEventListener('click', () => {
+  const area = document.getElementById('analyticsArea');
+  const btn = document.getElementById('btnMostrarAnalytics');
+
+  area.classList.toggle('show');
+
+  if(area.classList.contains('show')) {
+    btn.innerHTML = '📉 Ocultar Analytics';
     carregarMetricas();
     carregarGrafico();
+  } else {
+    btn.innerHTML = '📊 Ver Analytics de Acessos';
   }
 });
 
@@ -303,10 +363,10 @@ async function carregarMetricas() {
 
   } catch(error) {
     console.error("Erro ao carregar métricas:", error);
-    Swal.fire('Erro', 'Não consegui carregar as métricas. Confere as regras do Firestore', 'error');
   }
 }
 
+let graficoInstance = null;
 async function carregarGrafico() {
   const labels = [];
   const dadosAlunos = [];
@@ -327,7 +387,9 @@ async function carregarGrafico() {
   }
 
   const ctx = document.getElementById('graficoAcessos');
-  new Chart(ctx, {
+  if(graficoInstance) graficoInstance.destroy(); // evita duplicar
+
+  graficoInstance = new Chart(ctx, {
     type: 'line',
     data: {
       labels: labels,
@@ -350,7 +412,7 @@ async function carregarGrafico() {
     options: {
       responsive: true,
       plugins: { legend: { position: 'top' } },
-      scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+      scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } }
     }
   });
 }
@@ -372,8 +434,6 @@ document.getElementById('logout-button').addEventListener('click', async () => {
     signOut(auth).then(() => {
       localStorage.clear();
       window.location.href = 'index.html';
-    }).catch((error) => {
-      console.error('Erro ao sair:', error);
     });
   }
 });
