@@ -50,11 +50,12 @@ border-style: none;
   border: 0px solid black;
   width: 65%;
   text-align: center;
+  margin-left: 5%;
 }
 
 .area-aluno, .area-professor {
   margin-top: 30px;
-  border: 0px solid black;
+  border: 1px solid black;
   height: 45px;
   width: 70px;
   margin-left: 5px;
@@ -138,6 +139,8 @@ header {
 
 .logo {
   font-weight: bold;
+  border: 0px solid white;
+  margin-left: 5%;
 }
 
 .info-professor {
