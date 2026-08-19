@@ -75,9 +75,9 @@
       appId: "1:460998217684:web:98e4a2cc23b467124bd041",
       measurementId: "G-RL4NVD2Y1C"
     };
-    initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const db = getFirestore();
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
     // ================= ANALYTICS =================
     function getWeekNumber(d) {
@@ -116,10 +116,10 @@
             mes: mes,
             ano: ano
           });
-          console.log("Acesso registrado:", dadosUsuario.nome);
+          console.log("✅ Acesso registrado:", dadosUsuario.nome);
         }
       } catch(error) {
-        console.error("Erro ao registrar analytics:", error);
+        console.error("❌ Erro ao registrar analytics:", error);
       }
     }
     // ================= FIM ANALYTICS =================
@@ -158,11 +158,13 @@
         localStorage.setItem('uid', user.uid);
         localStorage.setItem('nomeAluno', alunoDoc.data().nome);
 
-        // DELAY PRA GARANTIR QUE O AUTH ATUALIZOU
-        await new Promise(resolve => setTimeout(resolve, 300));
-        await registrarAcesso(user, alunoDoc.data()); // REGISTRA ACESSO AQUI
-
+        // 1. REGISTRA PRIMEIRO
+        await registrarAcesso(user, alunoDoc.data());
+        // 2. ESPERA 500ms PRA GARANTIR QUE GRAVOU
+        await new Promise(resolve => setTimeout(resolve, 500));
+        // 3. DEPOIS REDIRECIONA
         window.location.href = 'aluno.html';
+
       } catch (error) {
         console.error('Erro:', error);
         Swal.fire({icon: 'error', title: 'Erro', text: 'Matrícula ou senha inválidos'});
@@ -203,11 +205,13 @@
         localStorage.setItem('uid', user.uid);
         localStorage.setItem('nomeProfessor', professorDoc.data().nome);
 
-        // DELAY PRA GARANTIR QUE O AUTH ATUALIZOU
-        await new Promise(resolve => setTimeout(resolve, 300));
-        await registrarAcesso(user, professorDoc.data()); // REGISTRA ACESSO AQUI
-
+        // 1. REGISTRA PRIMEIRO
+        await registrarAcesso(user, professorDoc.data());
+        // 2. ESPERA 500ms PRA GARANTIR QUE GRAVOU
+        await new Promise(resolve => setTimeout(resolve, 500));
+        // 3. DEPOIS REDIRECIONA
         window.location.href = 'agendamento.html';
+
       } catch (error) {
         console.error('Erro:', error);
         Swal.fire({icon: 'error', title: 'Erro', text: 'Email ou senha inválidos'});
