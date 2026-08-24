@@ -6,186 +6,69 @@
   <title>Painel Admin - IEMD</title>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Arial, sans-serif;
-    }
-
-    body {
-      background: linear-gradient(135deg, #7fffd4 0%, #1abc9c 100%);
-      min-height: 100vh;
-    }
-
-  .menu {
-      background: #fff;
-      color: #036618;
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      flex-wrap: wrap;
-    }
-  .menu.logo-area {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: bold;
-      font-size: 18px;
-    }
-  .menu.links {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-  .menu a {
-      color: #036618;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: 600;
-      padding: 8px 12px;
-      border-radius: 6px;
-      transition: 0.3s;
-    }
-  .menu a:hover {
-      background: #e8f5e9;
-    }
-    #logout-button {
-      background: #e74c3c;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 15px;
-      transition: 0.3s;
-    }
-    #logout-button:hover {
-      background: #c0392b;
-      transform: scale(1.05);
-    }
-
-  .conteudo {
-      padding: 40px 20px;
-      text-align: center;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-  .conteudo h2 {
-      color: #fff;
-      font-size: 32px;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-      margin-bottom: 10px;
-    }
-  .conteudo p {
-      color: #fff;
-      font-size: 18px;
-      margin-bottom: 30px;
-      opacity: 0.95;
-    }
-
-    /* CARDS DE MÉTRICAS */
-  .metricas {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      margin-bottom: 40px;
-    }
-  .card-metrica {
-      background: #fff;
-      padding: 25px 20px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-      transition: 0.3s;
-    }
-  .card-metrica:hover {
-      transform: translateY(-5px);
-    }
-  .card-metrica.titulo {
-      color: #666;
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-  .card-metrica.numero {
-      color: #036618;
-      font-size: 36px;
-      font-weight: bold;
-      margin: 10px 0;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+    body { background: linear-gradient(135deg, #7fffd4 0%, #1abc9c 100%); min-height: 100vh; }
+  .menu { background: #fff; color: #036618; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); flex-wrap: wrap; }
+  .menu.logo-area { display: flex; align-items: center; gap: 12px; font-weight: bold; font-size: 18px; }
+  .menu.links { display: flex; gap: 20px; align-items: center; }
+  .menu a { color: #036618; text-decoration: none; font-size: 16px; font-weight: 600; padding: 8px 12px; border-radius: 6px; transition: 0.3s; cursor:pointer; }
+  .menu a:hover { background: #e8f5e9; }
+    #logout-button { background: #e74c3c; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px; }
+    #logout-button:hover { background: #c0392b; }
+  .conteudo { padding: 40px 20px; text-align: center; max-width: 1200px; margin: 0 auto; }
+  .conteudo h2 { color: #fff; font-size: 32px; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); margin-bottom: 10px; }
+  .conteudo p { color: #fff; font-size: 18px; margin-bottom: 30px; opacity: 0.95; }
+  .metricas { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 40px; }
+  .card-metrica { background: #fff; padding: 25px 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+  .card-metrica.titulo { color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; }
+  .card-metrica.numero { color: #036618; font-size: 36px; font-weight: bold; margin: 10px 0; }
   .card-metrica.aluno { border-top: 4px solid #3498db; }
   .card-metrica.prof { border-top: 4px solid #9b59b6; }
-
-    /* CARDS */
-  .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-    }
-  .card {
-      background: #fff;
-      padding: 40px 25px;
-      border-radius: 15px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      color: inherit;
-      border-bottom: 4px solid transparent;
-    }
-  .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-    }
-  .card.icon {
-      font-size: 60px;
-      margin-bottom: 20px;
-    }
-  .card h3 {
-      color: #036618;
-      margin-bottom: 12px;
-      font-size: 22px;
-    }
-  .card p {
-      color: #666;
-      font-size: 15px;
-    }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+  .card { background: #fff; padding: 40px 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); text-align: center; cursor: pointer; transition: 0.3s; text-decoration: none; color: inherit; border-bottom: 4px solid transparent; }
+  .card:hover { transform: translateY(-10px); }
+  .card h3 { color: #036618; margin-bottom: 12px; font-size: 22px; }
+  .card p { color: #666; font-size: 15px; }
   .card-aluno { border-color: #3498db; }
-  .card-aluno.icon { color: #3498db; }
   .card-prof { border-color: #9b59b6; }
-  .card-prof.icon { color: #9b59b6; }
 
-    @media (max-width: 700px) {
-    .menu {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px;
-      }
-    .menu.links {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-    .conteudo h2 {
-        font-size: 24px;
-      }
-    }
+    /* FIX SWEETALERT NA FRENTE */
+    div.swal2-container { z-index: 99999!important; }
+
+    /* MODAL AVISOS_GERAL */
+    #modal-aviso-geral { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:2000; justify-content:center; align-items:center; padding:20px; }
+    #modal-aviso-geral.ativo { display:flex; }
+  .modal-conteudo { background:#fff; width:100%; max-width:600px; border-radius:16px; padding:25px; max-height:90vh; overflow-y:auto; position:relative; border-left:6px solid #63e89f; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .modal-conteudo h3 { color:#036618; margin-bottom:15px; padding-right:35px; }
+  .modal-conteudo label { display:block; text-align:left; margin:10px 0 5px; font-weight:600; color:#333; font-size:14px; }
+  .modal-conteudo input,.modal-conteudo textarea { width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-size:15px; }
+  .modal-conteudo textarea { resize:vertical; min-height:100px; }
+  .modal-botoes { display:flex; gap:10px; margin-top:20px; }
+  .btn-salvar { flex:1; background:#036618; color:#fff; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; }
+  .btn-cancelar { flex:1; background:#e0e0e0; color:#333; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; }
+  .lista-avisos { margin-top:25px; text-align:left; }
+  .item-aviso { background:#f8f9fa; border:1px solid #ddd; border-left:4px solid #63e89f; border-radius:8px; padding:12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .item-aviso.info { flex:1; }
+  .item-aviso.datas { font-size:12px; color:#036618; font-weight:bold; }
+  .item-aviso.msg { font-size:14px; color:#333; margin-top:4px; }
+  .item-aviso.acoes button { border:none; padding:6px 10px; border-radius:5px; cursor:pointer; font-size:12px; font-weight:bold; margin-left:5px; }
+  .btn-editar { background:#3498db; color:#fff; }
+  .btn-excluir { background:#e74c3c; color:#fff; }
+
+   /* BOTÃO X REDONDINHO */
+  .btn-fechar-x { position:absolute; top:14px; right:14px; width:34px; height:34px; border-radius:50%; background:#ff4d4d; color:#fff; border:none; font-size:18px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; transition:0.2s; }
+  .btn-fechar-x:hover { background:#c0392b; transform:rotate(90deg); }
+
+    @media (max-width: 700px) {.menu { flex-direction: column; gap: 15px; }.menu.links { width: 100%; justify-content: center; flex-wrap: wrap; } }
   </style>
 </head>
 <body>
   <div class="menu">
-    <div class="logo-area">
-      <img src="./img/logo.png" width="40" height="40" alt="Logo">
-      Painel Admin
-    </div>
+    <div class="logo-area"><img src="./img/logo.png" width="40" height="40" alt="Logo"> Painel Admin</div>
     <div class="links">
       <a href="cadastro_aluno.html">👨‍🎓 Alunos</a>
       <a href="cadastro_professor.html">👨‍🏫 Professores</a>
+      <a id="btn-abrir-aviso">🔔 Avisos</a>
       <button id="logout-button">Sair</button>
     </div>
   </div>
@@ -193,48 +76,39 @@
   <div class="conteudo">
     <h2>Bem-vindo, <span id="nome-admin">Admin</span>! </h2>
     <p>Visão geral de acessos da plataforma</p>
-
-    <!-- CARDS DE METRICAS -->
     <div class="metricas">
-      <div class="card-metrica aluno">
-        <div class="titulo">Hoje - Alunos</div>
-        <div class="numero" id="contador-dia-aluno">0</div>
-      </div>
-      <div class="card-metrica prof">
-        <div class="titulo">Hoje - Professores</div>
-        <div class="numero" id="contador-dia-prof">0</div>
-      </div>
-      <div class="card-metrica aluno">
-        <div class="titulo">Esse Mês - Alunos</div>
-        <div class="numero" id="contador-mes-aluno">0</div>
-      </div>
-      <div class="card-metrica prof">
-        <div class="titulo">Esse Mês - Professores</div>
-        <div class="numero" id="contador-mes-prof">0</div>
-      </div>
+      <div class="card-metrica aluno"><div class="titulo">Hoje - Alunos</div><div class="numero" id="contador-dia-aluno">0</div></div>
+      <div class="card-metrica prof"><div class="titulo">Hoje - Professores</div><div class="numero" id="contador-dia-prof">0</div></div>
+      <div class="card-metrica aluno"><div class="titulo">Esse Mês - Alunos</div><div class="numero" id="contador-mes-aluno">0</div></div>
+      <div class="card-metrica prof"><div class="titulo">Esse Mês - Professores</div><div class="numero" id="contador-mes-prof">0</div></div>
     </div>
-
-    <p style="margin-top: -10px; margin-bottom: 20px;">Escolha uma opção abaixo para gerenciar</p>
-
     <div class="cards">
-      <a href="cadastro_aluno.html" class="card card-aluno">
-       
-        <h3>Cadastro de Aluno</h3>
-        <p>Cadastrar, editar e visualizar alunos</p>
-      </a>
-
-      <a href="cadastro_professor.html" class="card card-prof">
-        
-        <h3>Cadastro de Professor</h3>
-        <p>Cadastrar, editar e visualizar professores</p>
-      </a>
+      <a href="cadastro_aluno.html" class="card card-aluno"><h3>Cadastro de Aluno</h3><p>Cadastrar, editar e visualizar alunos</p></a>
+      <a href="cadastro_professor.html" class="card card-prof"><h3>Cadastro de Professor</h3><p>Cadastrar, editar e visualizar professores</p></a>
     </div>
   </div>
 
-  <script type="module">
+  <!-- MODAL AVISOS_GERAL -->
+  <div id="modal-aviso-geral">
+    <div class="modal-conteudo">
+      <button class="btn-fechar-x" id="btn-x-fechar">✕</button>
+      <h3 id="titulo-modal-aviso">Adicionar Aviso Geral</h3>
+      <input type="hidden" id="aviso-id">
+      <label>Data Início (quando começa a mostrar)</label><input type="date" id="aviso-inicio" required>
+      <label>Data Fim (quando some do index)</label><input type="date" id="aviso-fim" required>
+      <label>Mensagem do Aviso</label><textarea id="aviso-msg" placeholder="Ex: Recesso dia 25/08 - Não haverá aula"></textarea>
+      <div class="modal-botoes">
+        <button class="btn-salvar" id="btn-salvar-aviso">Salvar Aviso</button>
+        <button class="btn-cancelar" id="btn-fechar-aviso">Fechar</button>
+      </div>
+      <div class="lista-avisos" id="lista-avisos-geral"></div>
+    </div>
+  </div>
+
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, getDocs, query, collection, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, getDocs, getDoc, query, collection, where, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
@@ -242,7 +116,7 @@ const firebaseConfig = {
   projectId: "agenda-escolar-19fda",
   storageBucket: "agenda-escolar-19fda.firebasestorage.app",
   messagingSenderId: "460998217684",
-  appId: "1:460998217684:web:98e4a2cc23b467124bd041", // <-- CORRIGI AQUI
+  appId: "1:460998217684:web:98e4a2cc23b467124bd041",
   measurementId: "G-RL4NVD2Y1C"
 };
 
@@ -250,63 +124,113 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Pega nome do admin
-//document.getElementById('nome-admin').textContent = localStorage.getItem('nomeAdmin') || 'Admin';
-
 onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.href = 'index.html'; // <-- CORRIGI PRA VOLTAR PRO INDEX
-  } else {
-    carregarMetricas();
-  }
+  if (!user) window.location.href = 'index.html';
+  else carregarMetricas();
 });
 
-// ============ FUNÇÕES DE ANALYTICS ============
 async function carregarMetricas() {
   try {
     const hoje = new Date().toISOString().split('T')[0];
     const mesAtual = new Date().toISOString().slice(0, 7);
-
     const [qDiaAluno, qDiaProf, qMesAluno, qMesProf] = await Promise.all([
       getDocs(query(collection(db, "analytics_access"), where("dia", "==", hoje), where("tipo_usuario", "==", "aluno"))),
       getDocs(query(collection(db, "analytics_access"), where("dia", "==", hoje), where("tipo_usuario", "==", "professor"))),
       getDocs(query(collection(db, "analytics_access"), where("mes", "==", mesAtual), where("tipo_usuario", "==", "aluno"))),
       getDocs(query(collection(db, "analytics_access"), where("mes", "==", mesAtual), where("tipo_usuario", "==", "professor")))
     ]);
-
     document.getElementById("contador-dia-aluno").innerText = qDiaAluno.size;
     document.getElementById("contador-dia-prof").innerText = qDiaProf.size;
     document.getElementById("contador-mes-aluno").innerText = qMesAluno.size;
     document.getElementById("contador-mes-prof").innerText = qMesProf.size;
+  } catch(e) { console.error(e); }
+}
 
-  } catch(error) {
-    console.error("Erro ao carregar métricas:", error);
-    Swal.fire('Erro', 'Não consegui carregar as métricas. Confere as regras do Firestore', 'error');
+// ===== AVISOS_GERAL =====
+const modal = document.getElementById('modal-aviso-geral');
+document.getElementById('btn-abrir-aviso').onclick = () => { modal.classList.add('ativo'); carregarAvisosGeral(); };
+document.getElementById('btn-fechar-aviso').onclick = () => { modal.classList.remove('ativo'); limparForm(); };
+document.getElementById('btn-x-fechar').onclick = () => { modal.classList.remove('ativo'); limparForm(); };
+
+function limparForm(){
+  document.getElementById('aviso-id').value='';
+  document.getElementById('aviso-inicio').value='';
+  document.getElementById('aviso-fim').value='';
+  document.getElementById('aviso-msg').value='';
+  document.getElementById('titulo-modal-aviso').innerText='Adicionar Aviso Geral';
+}
+
+async function carregarAvisosGeral(){
+  const lista = document.getElementById('lista-avisos-geral');
+  lista.innerHTML='Carregando...';
+  try{
+    const snap = await getDocs(query(collection(db, "avisos_geral"), orderBy("inicio","desc")));
+    lista.innerHTML='';
+    if(snap.empty){ lista.innerHTML='<p style="text-align:center;color:#888;margin-top:15px">Nenhum aviso cadastrado</p>'; return; }
+    snap.forEach(d=>{
+      const av = d.data();
+      const div = document.createElement('div');
+      div.className='item-aviso';
+      div.innerHTML=`
+        <div class="info">
+          <div class="datas">${av.inicio.split('-').reverse().join('/')} até ${av.fim.split('-').reverse().join('/')}</div>
+          <div class="msg">${av.mensagem}</div>
+        </div>
+        <div class="acoes">
+          <button class="btn-editar" data-id="${d.id}">Editar</button>
+          <button class="btn-excluir" data-id="${d.id}">Excluir</button>
+        </div>`;
+      lista.appendChild(div);
+    });
+    lista.querySelectorAll('.btn-editar').forEach(b=> b.onclick = () => editarAviso(b.dataset.id));
+    lista.querySelectorAll('.btn-excluir').forEach(b=> b.onclick = () => excluirAviso(b.dataset.id));
+  }catch(e){ console.error(e); lista.innerHTML='Erro ao carregar: '+e.message; }
+}
+
+document.getElementById('btn-salvar-aviso').onclick = async () => {
+  const id = document.getElementById('aviso-id').value;
+  const inicio = document.getElementById('aviso-inicio').value;
+  const fim = document.getElementById('aviso-fim').value;
+  const mensagem = document.getElementById('aviso-msg').value.trim();
+  if(!inicio ||!fim ||!mensagem){ Swal.fire('Atenção','Preencha todas as datas e a mensagem','warning'); return; }
+  if(fim < inicio){ Swal.fire('Atenção','Data Fim não pode ser antes do Início','warning'); return; }
+  try{
+    if(id){
+      await updateDoc(doc(db, "avisos_geral", id), { inicio, fim, mensagem });
+      Swal.fire('Atualizado!','Aviso editado','success');
+    }else{
+      await addDoc(collection(db, "avisos_geral"), { inicio, fim, mensagem, criadoEm: serverTimestamp() });
+      Swal.fire('Salvo!','Aviso criado e já aparece no index','success');
+    }
+    limparForm(); carregarAvisosGeral();
+  }catch(e){ console.error(e); Swal.fire('Erro', e.message, 'error'); }
+};
+
+async function editarAviso(id){
+  const docRef = doc(db, "avisos_geral", id);
+  const d = await getDoc(docRef);
+  if(d.exists()){
+    const av = d.data();
+    document.getElementById('aviso-id').value = d.id;
+    document.getElementById('aviso-inicio').value = av.inicio;
+    document.getElementById('aviso-fim').value = av.fim;
+    document.getElementById('aviso-msg').value = av.mensagem;
+    document.getElementById('titulo-modal-aviso').innerText='Editar Aviso Geral';
   }
 }
-// ============ FIM ANALYTICS ============
+
+async function excluirAviso(id){
+  const conf = await Swal.fire({ title:'Excluir?', text:'Deseja apagar esse aviso?', icon:'warning', showCancelButton:true, confirmButtonColor:'#e74c3c', confirmButtonText:'Sim, excluir', cancelButtonText:'Cancelar' });
+  if(!conf.isConfirmed) return;
+  await deleteDoc(doc(db, "avisos_geral", id));
+  Swal.fire('Excluído!','','success');
+  carregarAvisosGeral();
+}
 
 document.getElementById('logout-button').addEventListener('click', async () => {
-  const result = await Swal.fire({
-    title: 'Deseja sair?',
-    text: 'Você será redirecionado para a tela de login',
-    icon: 'question',
-    showCancelButton: true,
-    confirmButtonColor: '#4CAF50',
-    cancelButtonColor: '#e74c3c',
-    confirmButtonText: 'Sim, sair',
-    cancelButtonText: 'Cancelar'
-  });
-
-  if (result.isConfirmed) {
-    signOut(auth).then(() => {
-      localStorage.clear();
-      window.location.href = 'index.html';
-    }).catch((error) => {
-      console.error('Erro ao sair:', error);
-    });
-  }
+  const result = await Swal.fire({ title: 'Deseja sair?', icon: 'question', showCancelButton: true, confirmButtonText: 'Sim, sair', cancelButtonText: 'Cancelar' });
+  if (result.isConfirmed) { signOut(auth).then(() => { localStorage.clear(); window.location.href = 'index.html'; }); }
 });
-  </script>
+</script>
 </body>
 </html>
