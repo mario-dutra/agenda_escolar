@@ -640,12 +640,31 @@
             
             <div class="form-group-edit">
               <label><i class="fas fa-clock"></i> Turno</label>
-              <input type="text" id="edit-turno" disabled>
+               <select id="edit-turno">
+              <option value="manha">Manhã</option>
+              <option value="tarde">Tarde</option>
+            </select>
             </div>
             
             <div class="form-group-edit">
               <label><i class="fas fa-graduation-cap"></i> Série</label>
-              <input type="text" id="edit-serie" disabled>
+             
+              <select  id="edit-serie">
+                <option value="JARDIM I">Jardim I</option>
+              <option value="JARDIM II">Jardim II</option>
+              <option value="JARDIM III">Jardim III</option>
+              <option value="JARDIM IV">Jardim VI</option>
+              <option value="JARDIM V">Jardim V</option>    
+              <option value="1° ANO">1° ANO</option>
+              <option value="2° ANO">2° ANO</option>
+              <option value="3° ANO">3° ANO</option>
+              <option value="4° ANO">4° ANO</option>
+              <option value="5° ANO">5° ANO</option>
+              <option value="6° ANO">6° ANO</option>
+              <option value="7° ANO">7° ANO</option>
+              <option value="8° ANO">8° ANO</option>
+              <option value="9° ANO">9° ANO</option>
+              </select>
             </div>
             
             <div class="form-group-edit">
@@ -984,6 +1003,8 @@
       const tarefaId = document.getElementById('edit-tarefa-id').value;
       const dadosAtualizados = {
         data: document.getElementById('edit-data').value,
+        serie: document.getElementById('edit-serie').value,
+        turno: document.getElementById('edit-turno').value,
         livro: document.getElementById('edit-livro').value,
         impressa: document.getElementById('edit-impressa').value,
         observacao: document.getElementById('edit-observacao').value
