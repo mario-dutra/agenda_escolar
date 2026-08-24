@@ -4,211 +4,412 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro Aluno</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: aquamarine;
-      padding: 20px;
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+    body { background: linear-gradient(135deg, #7fffd4 0%, #1abc9c 100%); padding: 20px; min-height: 100vh; font-size: 14px; }
+.container { max-width: 1100px; margin: 0 auto; }
+.header { background: #fff; padding: 12px 18px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.header h2 { color: #036618; font-size: 18px; }
+.btn-voltar,.btn-sair { padding: 8px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; color: white; font-size: 13px; }
+.btn-voltar { background: #3498db; }
+.btn-sair { background: #e74c3c; }
+    form { background: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    form h3 { color: #036618; margin-bottom: 15px; font-size: 16px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    label { font-weight: 600; color: #333; font-size: 13px; }
+    input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+.foto-box { display: flex; align-items: center; gap: 10px; }
+.foto-preview { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd; }
+.botoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
+.btn { padding: 10px 18px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; }
+.btn-salvar { background: #4CAF50; color: white; }
+.btn-limpar { background: #95a5a6; color: white; }
+.tabela-container { background: white; padding: 18px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow-x: auto; }
+.tabela-container h3 { color: #036618; margin-bottom: 15px; font-size: 16px; }
+.toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 10px; flex-wrap: wrap; }
+.toolbar select { max-width: 220px; padding: 8px; font-size: 13px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    table th { background: #036618; color: white; padding: 10px; text-align: left; font-size: 13px; }
+    table td { padding: 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
+    tbody tr:nth-child(even) { background-color: #e8f8f3; }
+    tbody tr:hover { background-color: #d1f2e5; }
+.acoes { display: flex; gap: 6px; justify-content: center; }
+.btn-acao { border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 600; font-size: 12px; transition: 0.2s; }
+.btn-editar { background: #3498db; color: white; }
+.btn-editar:hover { background: #2980b9; transform: translateY(-1px); }
+.btn-excluir { background: #e74c3c; color: white; }
+.btn-excluir:hover { background: #c0392b; transform: translateY(-1px); }
+.paginacao { display: flex; justify-content: center; gap: 5px; margin-top: 15px; flex-wrap: wrap; }
+.paginacao button { padding: 6px 12px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 12px; }
+.paginacao button.ativo { background: #036618; color: white; border-color: #036618; }
+.paginacao button:disabled { opacity: 0.5; cursor: not-allowed; }
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0.5); justify-content: center; align-items: center; }
+.modal-conteudo { background: white; padding: 25px; border-radius: 10px; width: 90%; max-width: 700px; max-height: 90vh; overflow-y: auto; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.modal-header h3 { color: #036618; }
+.fechar-modal { font-size: 28px; cursor: pointer; color: #aaa; }
+.fechar-modal:hover { color: #000; }
+.alerta { background: #fff3cd; border: 1px solid #ffeaa7; padding: 8px; border-radius: 5px; font-size: 12px; color: #856404; margin-top: 5px; }
+    @media (max-width: 800px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .header { flex-direction: column; gap: 10px; }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .toolbar select { max-width: 100%; }
     }
-    form {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 400px;
-      margin: auto;
-    }
-    input, select {
-      width: 100%;
-      padding: 8px;
-      margin: 10px 0;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    button {
-      padding: 10px 15px;
-      background: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin: 5px;
-    }
-    button:disabled { background: #ccc; cursor: not-allowed; }
-    #sair { background-color: #f44336; }
-   .botoes { display: flex; gap: 10px; flex-wrap: wrap; }
-    #msg { margin-top: 10px; font-weight: bold; text-align: center; }
   </style>
 </head>
 <body>
-  <form id="form-aluno">
-    <h2>Cadastro Aluno</h2>
-    <label>Nome:</label>
-    <input type="text" id="nome" required>
-
-    <label>Foto:</label>
-    <input type="file" id="foto-aluno">
-
-    <label>Série:</label>
-    <select id="serie" required>
-      <option value="">Selecione</option>
-      <option value="Jardim I">Jardim I</option>
-      <option value="Jardim II">Jardim II</option>
-      <option value="Jardim III">Jardim III</option>
-      <option value="Jardim VI">Jardim IV</option>
-      <option value="Jardim V">Jardim V</option>
-      <option value="1° ANO">1° ANO</option>
-      <option value="2° ANO">2° ANO</option>
-      <option value="3° ANO">3° ANO</option>
-      <option value="4° ANO">4° ANO</option>
-      <option value="5° ANO">5° ANO</option>
-      <option value="6° ANO">6° ANO</option>
-      <option value="7° ANO">7° ANO</option>
-      <option value="8° ANO">8° ANO</option>
-      <option value="9° ANO">9° ANO</option>
-    </select>
-
-    <label>Turno:</label>
-    <select id="turno" required>
-      <option value="">Selecione</option>
-      <option value="manha">Manhã</option>
-      <option value="tarde">Tarde</option>
-    </select>
-
-    <label>Email do aluno:</label>
-    <input type="email" id="email" placeholder="aluno@email.com" required>
-
-    <label>Senha:</label>
-   <input type="password" id="senha" placeholder="Digite a senha do aluno" required>
-    <div class="botoes">
-      <button type="submit" id="btn-salvar">Salvar</button>
-      <button type="reset">Limpar</button>
-      <button type="button" onclick="history.back()">Voltar</button>
-      <button id="sair" type="button">Sair</button>
+  <div class="container">
+    <div class="header">
+      <h2>👨‍🎓 Gerenciar Alunos</h2>
+      <div>
+        <button class="btn-voltar" onclick="history.back()">Voltar</button>
+        <button class="btn-sair" id="logout-button">Sair</button>
+      </div>
     </div>
-    <div id="msg"></div>
-  </form>
 
-  <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
-  
- <script type="module">
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-  import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-  import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    <form id="form-aluno">
+      <h3 id="form-titulo">Cadastrar Novo Aluno</h3>
+      <div class="form-grid">
+        <div><label>Nome Completo:</label><input type="text" id="nome" required></div>
+        <div>
+          <label>Série:</label>
+          <select id="serie" required>
+            <option value="">Selecione</option>
+            <option value="JARDIM I">Jardim I</option><option value="JARDIM II">Jardim II</option><option value="JARDIM III">Jardim III</option>
+            <option value="JARDIM IV">Jardim IV</option><option value="JARDIM V">Jardim V</option>
+            <option value="1° ANO">1° ANO</option><option value="2° ANO">2° ANO</option><option value="3° ANO">3° ANO</option>
+            <option value="4° ANO">4° ANO</option><option value="5° ANO">5° ANO</option><option value="6° ANO">6° ANO</option>
+            <option value="7° ANO">7° ANO</option><option value="8° ANO">8° ANO</option><option value="9° ANO">9° ANO</option>
+          </select>
+        </div>
+        <div>
+          <label>Turno:</label>
+          <select id="turno" required>
+            <option value="">Selecione</option>
+            <option value="manha">Manhã</option>
+            <option value="tarde">Tarde</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div>
+          <label>Foto:</label>
+          <div class="foto-box">
+            <button type="button" id="btn-upload-foto" class="btn btn-limpar">Escolher Foto</button>
+            <img id="preview-foto" class="foto-preview" style="display:none">
+            <input type="hidden" id="url-foto">
+          </div>
+        </div>
+        <div><label>Email do aluno:</label><input type="email" id="email" required></div>
+        <div><label>Senha:</label><input type="password" id="senha" placeholder="Mínimo 6 caracteres" required></div>
+      </div>
+      <div class="botoes"><button type="submit" id="salvar-btn" class="btn btn-salvar">Salvar</button></div>
+    </form>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
-    authDomain: "agenda-escolar-19fda.firebaseapp.com",
-    projectId: "agenda-escolar-19fda",
-    storageBucket: "agenda-escolar-19fda.firebasestorage.app",
-    messagingSenderId: "460998217684",
-    appId: "1:460998217684:web:98e4a2cc23b467124bd041"
-  };
+    <div class="tabela-container">
+      <div class="toolbar">
+        <h3>Alunos Cadastrados</h3>
+        <select id="filtro-serie">
+          <option value="Todos">Todas as Séries</option>
+          <option value="JARDIM I">Jardim I</option><option value="JARDIM II">Jardim II</option><option value="JARDIM III">Jardim III</option>
+          <option value="JARDIM IV">Jardim IV</option><option value="JARDIM V">Jardim V</option>
+          <option value="1° ANO">1° ANO</option><option value="2° ANO">2° ANO</option><option value="3° ANO">3° ANO</option>
+          <option value="4° ANO">4° ANO</option><option value="5° ANO">5° ANO</option><option value="6° ANO">6° ANO</option>
+          <option value="7° ANO">7° ANO</option><option value="8° ANO">8° ANO</option><option value="9° ANO">9° ANO</option>
+        </select>
+      </div>
+      <table id="tabela-alunos">
+        <thead><tr><th>Foto</th><th>Nome</th><th>Série</th><th>Turno</th><th>Email</th><th style="text-align:center">Ações</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="paginacao" class="paginacao"></div>
+    </div>
+  </div>
 
-  // App principal = admin logado
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+  <div id="modal-edicao" class="modal">
+    <div class="modal-conteudo">
+      <div class="modal-header"><h3>Editar Aluno</h3><span class="fechar-modal" onclick="fecharModal()">&times;</span></div>
+      <form id="form-edicao">
+        <input type="hidden" id="edit-id">
+        <div class="form-grid">
+          <div><label>Nome Completo:</label><input type="text" id="edit-nome" required></div>
+          <div>
+            <label>Série:</label>
+            <!-- CORRIGIDO: AGORA TEM TODAS AS OPÇÕES -->
+            <select id="edit-serie" required>
+              <option value="JARDIM I">Jardim I</option><option value="JARDIM II">Jardim II</option><option value="JARDIM III">Jardim III</option>
+              <option value="JARDIM IV">Jardim IV</option><option value="JARDIM V">Jardim V</option>
+              <option value="1° ANO">1° ANO</option><option value="2° ANO">2° ANO</option><option value="3° ANO">3° ANO</option>
+              <option value="4° ANO">4° ANO</option><option value="5° ANO">5° ANO</option><option value="6° ANO">6° ANO</option>
+              <option value="7° ANO">7° ANO</option><option value="8° ANO">8° ANO</option><option value="9° ANO">9° ANO</option>
+            </select>
+          </div>
+          <div>
+            <label>Turno:</label>
+            <select id="edit-turno" required>
+              <option value="manha">Manhã</option><option value="tarde">Tarde</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div>
+            <label>Trocar Foto:</label>
+            <div class="foto-box">
+              <button type="button" id="btn-edit-upload-foto" class="btn btn-limpar">Trocar Foto</button>
+              <img id="edit-preview-foto" class="foto-preview" style="display:none">
+              <input type="hidden" id="edit-url-foto">
+            </div>
+          </div>
+          <div><label>Email do aluno:</label><input type="email" id="edit-email" required></div>
+          <div><label>Nova Senha: <small style="color:#777">(vazio = mantém)</small></label><input type="password" id="edit-senha"></div>
+        </div>
+        <div class="alerta">⚠️ Se trocar o email, será criado um novo login com senha provisória: 123456</div>
 
-  // App secundário = só pra criar aluno, não mexe no login do admin
-  const secondaryApp = initializeApp(firebaseConfig, "Secondary");
-  const secondaryAuth = getAuth(secondaryApp);
+        <div class="botoes">
+          <button type="submit" class="btn btn-salvar">Salvar Alterações</button>
+          <button type="button" class="btn btn-limpar" onclick="fecharModal()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-  const cloudName = 'dxca9xqzs';
-  const uploadPreset = 'avatar';
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      window.location.href = 'admin.html';
-    }
-  });
-
-  document.getElementById('form-aluno').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('btn-salvar');
-    const msg = document.getElementById('msg');
-
-    const nome = document.getElementById('nome').value;
-    const fotoInput = document.getElementById('foto-aluno');
-    const serie = document.getElementById('serie').value;
-    const turno = document.getElementById('turno').value;
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha').value;
-
-    btn.disabled = true;
-    btn.textContent = 'Salvando...';
-    msg.textContent = '';
-
-    const criarAluno = async (imageUrl = './img/aluna.png') => {
-      try {
-        // 1. Cria o usuário usando o APP SECUNDÁRIO - não desloga o admin
-        const userCredential = await createUserWithEmailAndPassword(secondaryAuth, email, senha);
-        const uid = userCredential.user.uid;
-
-        // 2. Cria no Firestore usando o APP PRINCIPAL - admin ainda tá logado
-        await setDoc(doc(db, 'alunos', uid), {
-          nome: nome,
-          foto: imageUrl,
-          serie: serie,
-          turno: turno,
-          email: email,
-          tipo_usuario: 'aluno',
-          usuario: email.split('@')[0]
-        });
-
-        // 3. Desloga só o app secundário
-        await signOut(secondaryAuth);
-
-        msg.style.color = 'green';
-        msg.textContent = 'Aluno cadastrado com sucesso!';
-        document.getElementById('form-aluno').reset();
-
-      } catch (error) {
-        console.error(error);
-        if (error.code === 'auth/email-already-in-use') {
-          msg.style.color = 'red';
-          msg.textContent = 'Esse email já está cadastrado!';
-        } else {
-          msg.style.color = 'red';
-          msg.textContent = 'Erro: ' + error.message;
-        }
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Salvar';
-      }
+    const firebaseConfig = {
+      apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
+      authDomain: "agenda-escolar-19fda.firebaseapp.com",
+      projectId: "agenda-escolar-19fda",
+      storageBucket: "agenda-escolar-19fda.firebasestorage.app",
+      messagingSenderId: "460998217684",
+      appId: "1:460998217684:web:98e4a2cc23b467124bd041"
     };
 
-    if (fotoInput.files.length > 0) {
-      const uploadWidget = cloudinary.openUploadWidget({
-        cloudName,
-        uploadPreset,
-        sources: ['local'],
-        multiple: false,
-        cropping: true,
-        resourceType: 'image',
-      }, (error, result) => {
-        if (!error && result.event === 'success') {
-          criarAluno(result.info.secure_url);
-        }
-        if (error) {
-          msg.style.color = 'red';
-          msg.textContent = 'Erro no upload da foto';
-          btn.disabled = false;
-          btn.textContent = 'Salvar';
-        }
-      });
-      uploadWidget.open();
-    } else {
-      criarAluno();
-    }
-  });
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const secondaryApp = initializeApp(firebaseConfig, "Secondary");
+    const secondaryAuth = getAuth(secondaryApp);
 
-  document.getElementById('sair').addEventListener('click', () => {
-    signOut(auth).then(() => {
-      window.location.href = 'admin.html';
+    const cloudName = 'dxca9xqzs';
+    const uploadPreset = 'avatar';
+
+    let todosAlunos = [];
+    let alunosFiltrados = [];
+    let paginaAtual = 1;
+    const itensPorPagina = 5;
+    let alunoEditando = null;
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) window.location.href = 'admin.html';
+      else carregarAlunos();
     });
-  });
-</script>
 
+    function abrirWidgetUpload(callback) {
+      cloudinary.openUploadWidget({ cloudName, uploadPreset, sources: ['local'], multiple: false, cropping: true, resourceType: 'image' },
+      (error, result) => {
+        if (!error && result.event === 'success') { callback(result.info.secure_url); }
+        if (error) { Swal.fire('Erro', 'Erro no upload da foto', 'error'); }
+      }).open();
+    }
+
+    document.getElementById('btn-upload-foto').addEventListener('click', () => {
+      abrirWidgetUpload((url) => {
+        document.getElementById('url-foto').value = url;
+        document.getElementById('preview-foto').src = url;
+        document.getElementById('preview-foto').style.display = 'block';
+      });
+    });
+
+    document.getElementById('btn-edit-upload-foto').addEventListener('click', () => {
+      abrirWidgetUpload((url) => {
+        document.getElementById('edit-url-foto').value = url;
+        document.getElementById('edit-preview-foto').src = url;
+        document.getElementById('edit-preview-foto').style.display = 'block';
+      });
+    });
+
+    document.getElementById('filtro-serie').addEventListener('change', () => { aplicarFiltro(); });
+
+    function aplicarFiltro() {
+      const filtro = document.getElementById('filtro-serie').value;
+      alunosFiltrados = filtro === 'Todos'? [...todosAlunos] : todosAlunos.filter(a => a.serie === filtro);
+      paginaAtual = 1; renderizarTabela();
+    }
+
+    function renderizarTabela() {
+      const tbody = document.querySelector('#tabela-alunos tbody');
+      tbody.innerHTML = '';
+      const inicio = (paginaAtual - 1) * itensPorPagina;
+      const alunosDaPagina = alunosFiltrados.slice(inicio, inicio + itensPorPagina);
+
+      if(alunosFiltrados.length === 0){
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">Nenhum aluno encontrado</td></tr>';
+      } else {
+        alunosDaPagina.forEach(a => {
+          tbody.innerHTML += `
+            <tr>
+              <td><img src="${a.foto || './img/aluna.png'}" class="foto-preview"></td>
+              <td>${a.nome || '-'}</td><td>${a.serie || '-'}</td><td>${a.turno === 'manha'? 'Manhã' : 'Tarde'}</td><td>${a.email || '-'}</td>
+              <td><div class="acoes">
+                <button class="btn-acao btn-editar" onclick='abrirModalEdicao("${a.id}", ${JSON.stringify(a).replace(/"/g, '&quot;')})'>✏️ Editar</button>
+                <button class="btn-acao btn-excluir" onclick='excluirAluno("${a.id}")'>🗑️ Excluir</button>
+              </div></td>
+            </tr>`;
+        });
+      }
+      renderizarPaginacao();
+    }
+
+    function renderizarPaginacao() {
+      const totalPaginas = Math.ceil(alunosFiltrados.length / itensPorPagina);
+      const divPaginacao = document.getElementById('paginacao'); divPaginacao.innerHTML = '';
+      if (totalPaginas <= 1) return;
+      divPaginacao.innerHTML += `<button onclick="mudarPagina(${paginaAtual - 1})" ${paginaAtual === 1? 'disabled' : ''}>Anterior</button>`;
+      for(let i = 1; i <= totalPaginas; i++) { divPaginacao.innerHTML += `<button class="${i === paginaAtual? 'ativo' : ''}" onclick="mudarPagina(${i})">${i}</button>`; }
+      divPaginacao.innerHTML += `<button onclick="mudarPagina(${paginaAtual + 1})" ${paginaAtual === totalPaginas? 'disabled' : ''}>Próximo</button>`;
+    }
+
+    window.mudarPagina = (novaPagina) => {
+      const totalPaginas = Math.ceil(alunosFiltrados.length / itensPorPagina);
+      if (novaPagina < 1 || novaPagina > totalPaginas) return;
+      paginaAtual = novaPagina; renderizarTabela();
+    }
+
+    document.getElementById('form-aluno').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('salvar-btn'); btn.disabled = true; btn.textContent = 'Salvando...';
+
+      const nome = document.getElementById('nome').value;
+      const serie = document.getElementById('serie').value;
+      const turno = document.getElementById('turno').value;
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+      const foto = document.getElementById('url-foto').value || './img/aluna.png';
+
+      const emailJaExiste = todosAlunos.some(a => a.email === email);
+      if(emailJaExiste){
+        Swal.fire('Erro', 'Esse e-mail já existe. Use outro e-mail.', 'error');
+        btn.disabled = false; btn.textContent = 'Salvar';
+        return;
+      }
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(secondaryAuth, email, senha);
+        const uid = userCredential.user.uid;
+        await setDoc(doc(db, "alunos", uid), { nome, serie, turno, email, foto, tipo_usuario: 'aluno', usuario: email.split('@')[0] });
+        await signOut(secondaryAuth);
+        Swal.fire('Sucesso', 'Aluno cadastrado!', 'success');
+        document.getElementById('form-aluno').reset();
+        document.getElementById('preview-foto').style.display = 'none';
+        carregarAlunos();
+      } catch (error) {
+        if(error.code === 'auth/email-already-in-use'){
+          Swal.fire('Erro', 'Esse e-mail já existe. Use outro e-mail.', 'error');
+        } else { Swal.fire('Erro', error.message, 'error'); }
+      }
+      finally { btn.disabled = false; btn.textContent = 'Salvar'; }
+    });
+
+    window.abrirModalEdicao = (id, dados) => {
+      alunoEditando = dados;
+      document.getElementById('modal-edicao').style.display = 'flex';
+      document.getElementById('edit-id').value = id;
+      document.getElementById('edit-nome').value = dados.nome;
+      document.getElementById('edit-serie').value = dados.serie; // AGORA VAI SELECIONAR CERTO
+      document.getElementById('edit-turno').value = dados.turno;
+      document.getElementById('edit-email').value = dados.email;
+      document.getElementById('edit-senha').value = '';
+      document.getElementById('edit-url-foto').value = dados.foto;
+      if(dados.foto){
+        document.getElementById('edit-preview-foto').src = dados.foto;
+        document.getElementById('edit-preview-foto').style.display = 'block';
+      }
+    }
+
+    window.fecharModal = () => {
+      document.getElementById('modal-edicao').style.display = 'none';
+      document.getElementById('form-edicao').reset();
+      document.getElementById('edit-preview-foto').style.display = 'none';
+      alunoEditando = null;
+    }
+
+    document.getElementById('form-edicao').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const idAntigo = document.getElementById('edit-id').value;
+      const nome = document.getElementById('edit-nome').value;
+      const serie = document.getElementById('edit-serie').value;
+      const turno = document.getElementById('edit-turno').value;
+      const emailNovo = document.getElementById('edit-email').value;
+      const senhaNova = document.getElementById('edit-senha').value;
+      const foto = document.getElementById('edit-url-foto').value;
+
+      const emailMudou = emailNovo!== alunoEditando.email;
+
+      if(emailMudou){
+        const emailJaExiste = todosAlunos.some(a => a.email === emailNovo && a.id!== idAntigo);
+        if(emailJaExiste){ Swal.fire('Erro', 'Esse e-mail já existe. Use outro e-mail.', 'error'); return; }
+      }
+
+      let textoConfirmacao = `<b>Nome:</b> ${nome}<br><b>Email:</b> ${emailNovo}`;
+      if(emailMudou) textoConfirmacao += `<br><br><b style="color:#e74c3c">ATENÇÃO: O email será alterado!</b><br>Um novo login será criado com senha: <b>${senhaNova || '123456'}</b>`;
+
+      const { isConfirmed } = await Swal.fire({ title: 'Confirmar Alteração?', html: textoConfirmacao, icon: 'warning', showCancelButton: true, confirmButtonText: 'Sim, Alterar' });
+      if(!isConfirmed) return;
+
+      try {
+        Swal.fire({title: 'Salvando...', allowOutsideClick: false, didOpen: () => Swal.showLoading()});
+
+        if(emailMudou){
+          const senhaParaUsar = senhaNova || "123456";
+          const userCredential = await createUserWithEmailAndPassword(secondaryAuth, emailNovo, senhaParaUsar);
+          const novoUid = userCredential.user.uid;
+          await signOut(secondaryAuth);
+          await deleteDoc(doc(db, "alunos", idAntigo));
+          await setDoc(doc(db, "alunos", novoUid), { nome, serie, turno, email: emailNovo, foto, tipo_usuario: 'aluno', usuario: emailNovo.split('@')[0] });
+          Swal.fire('Sucesso!', `Login alterado! Nova senha: ${senhaParaUsar}`, 'success');
+        } else {
+          await updateDoc(doc(db, "alunos", idAntigo), { nome, serie, turno, email: emailNovo, foto });
+          Swal.fire('Sucesso!', 'Dados atualizados!', 'success');
+        }
+
+        fecharModal();
+        carregarAlunos();
+      } catch (error) {
+        if(error.code === 'auth/email-already-in-use'){ Swal.fire('Erro', 'Esse e-mail já existe.', 'error'); }
+        else { Swal.fire('Erro', error.message, 'error'); }
+      }
+    });
+
+    async function carregarAlunos() {
+      const tbody = document.querySelector('#tabela-alunos tbody');
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">Carregando...</td></tr>';
+      try {
+        const snapshot = await getDocs(collection(db, "alunos"));
+        todosAlunos = [];
+        snapshot.forEach(docSnap => { todosAlunos.push({ id: docSnap.id,...docSnap.data() }); });
+        aplicarFiltro();
+      } catch(err){ console.error(err); tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:red">Erro ao carregar</td></tr>'; }
+    }
+
+    window.excluirAluno = async (id) => {
+      const result = await Swal.fire({ title: 'Tem certeza?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#e74c3c', confirmButtonText: 'Sim, excluir!' });
+      if (result.isConfirmed) {
+        await deleteDoc(doc(db, "alunos", id));
+        Swal.fire('Excluído!', 'Aluno removido.', 'success');
+        carregarAlunos();
+      }
+    }
+
+    document.getElementById('logout-button').addEventListener('click', async () => {
+      const result = await Swal.fire({ title: 'Deseja sair?', icon: 'question', showCancelButton: true, confirmButtonText: 'Sim, sair' });
+      if (result.isConfirmed) { signOut(auth).then(() => { localStorage.clear(); window.location.href = 'admin.html'; }); }
+    });
+  </script>
 </body>
 </html>
