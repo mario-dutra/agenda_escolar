@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
-    /* AVISOS DESCOLADOS + BORDA #63e89f */
     #container-avisos-geral {
       max-width: 900px;
       margin: 25px auto;
@@ -17,7 +16,7 @@
       flex-direction: column;
       gap: 18px;
     }
-   .aviso-geral-card {
+  .aviso-geral-card {
       background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
       border-left: 6px solid #63e89f;
       border-radius: 16px;
@@ -31,10 +30,15 @@
       overflow: hidden;
     }
     @keyframes slideDown { from{opacity:0; transform:translateY(-15px)} to{opacity:1; transform:translateY(0)} }
-   .aviso-geral-badge { background:#63e89f; color:#033618; font-size:10px; font-weight:900; padding:5px 12px; border-radius:20px; text-transform:uppercase; display:inline-block; margin-bottom:6px; }
-   .aviso-geral-texto { color:#1b3a2a; font-size:16px; font-weight:600; white-space:pre-wrap; line-height:1.5; text-align: justify;}
-   .aviso-geral-datas { margin-top:10px; font-size:12px; background:#dff8e7; padding:5px 10px; border-radius:8px; display:inline-block; font-weight:700; color:#2d5a3d; }
+  .aviso-geral-badge { background:#63e89f; color:#033618; font-size:10px; font-weight:900; padding:5px 12px; border-radius:20px; text-transform:uppercase; display:inline-block; margin-bottom:6px; }
+  .aviso-geral-texto { color:#1b3a2a; font-size:16px; font-weight:600; white-space:pre-wrap; line-height:1.5; text-align: justify;}
+  .aviso-geral-datas { margin-top:10px; font-size:12px; background:#dff8e7; padding:5px 10px; border-radius:8px; display:inline-block; font-weight:700; color:#2d5a3d; }
     div.swal2-container{ z-index:99999!important; }
+
+    /* ESQUECEU A SENHA - IGUAL DO ADMIN */
+   .forgot-password { text-align: center; margin-top: 12px; }
+   .forgot-password a { color: #4CAF50; text-decoration: none; font-size: 13px; font-weight: bold; }
+   .forgot-password a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -55,6 +59,7 @@
       <input type="text" id="aluno-matricula" placeholder="Email" required>
       <div class="password-wrapper"><input type="password" id="aluno-senha" placeholder="Senha" required><span class="toggle-password" data-target="aluno-senha">👁️</span></div>
       <button type="submit">Entrar</button><button type="button" onclick="fecharModal('aluno')">Fechar</button>
+      <p class="forgot-password"><a href="#" class="esqueci-senha">Esqueceu a senha?</a></p>
     </form>
   </div>
   <div id="modal-professor" class="modal">
@@ -63,16 +68,21 @@
       <input type="email" id="professor-email" placeholder="Email" required>
       <div class="password-wrapper"><input type="password" id="professor-senha" placeholder="Senha" required><span class="toggle-password" data-target="professor-senha">👁️</span></div>
       <button type="submit">Entrar</button><button type="button" onclick="fecharModal('professor')">Fechar</button>
+      <p class="forgot-password"><a href="#" class="esqueci-senha">Esqueceu a senha?</a></p>
     </form>
   </div>
 
   <script src="js/script.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
     const firebaseConfig = { apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg", authDomain: "agenda-escolar-19fda.firebaseapp.com", projectId: "agenda-escolar-19fda", storageBucket: "agenda-escolar-19fda.firebasestorage.app", messagingSenderId: "460998217684", appId: "1:460998217684:web:98e4a2cc23b467124bd041" };
-    const appInst = initializeApp(firebaseConfig); const auth = getAuth(appInst); const db = getFirestore(appInst);
+    const appInst = initializeApp(firebaseConfig);
+    const auth = getAuth(appInst);
+    const db = getFirestore(appInst);
+
     async function mostrarAvisosGerais(){
       const snap = await getDocs(collection(db, "avisos_geral"));
       const container = document.getElementById('container-avisos-geral');
@@ -87,11 +97,59 @@
         }
       });
       if(html){ container.innerHTML=html; container.style.display='flex'; }
-    }                                                                                                                                                                                                                                                                  
+    }
     mostrarAvisosGerais();
+
     document.querySelectorAll('.toggle-password').forEach(el=>{ el.onclick=()=>{ const i=document.getElementById(el.dataset.target); i.type=i.type==='password'?'text':'password'; }});
+
     document.getElementById('aluno-login-form').addEventListener('submit', async (e)=>{ e.preventDefault(); try{ const c=await signInWithEmailAndPassword(auth, document.getElementById('aluno-matricula').value, document.getElementById('aluno-senha').value); const d=await getDoc(doc(db,'alunos',c.user.uid)); localStorage.setItem('uid',c.user.uid); localStorage.setItem('nomeAluno',d.data().nome); location.href='aluno.html'; }catch(err){ Swal.fire('Erro','Email ou senha inválidos','error'); } });
     document.getElementById('professor-login-form').addEventListener('submit', async (e)=>{ e.preventDefault(); try{ const c=await signInWithEmailAndPassword(auth, document.getElementById('professor-email').value, document.getElementById('professor-senha').value); const d=await getDoc(doc(db,'professores',c.user.uid)); localStorage.setItem('uid',c.user.uid); localStorage.setItem('nomeProfessor',d.data().nome); location.href='agendamento.html'; }catch(err){ Swal.fire('Erro','Email ou senha inválidos','error'); } });
+
+    // ESQUECEU A SENHA - MESMA LÓGICA DO ADMIN
+    document.querySelectorAll('.esqueci-senha').forEach(link => {
+      link.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const { value: email } = await Swal.fire({
+          title: 'Recuperar senha',
+          input: 'email',
+          inputLabel: 'Digite seu email',
+          inputPlaceholder: 'seu@email.com',
+          confirmButtonText: 'Enviar link',
+          confirmButtonColor: '#4CAF50',
+          cancelButtonText: 'Cancelar',
+          showCancelButton: true,
+          inputValidator: (value) => {
+            if (!value) return 'digite um email valido!';
+          }
+        });
+
+        if (!email) return;
+        Swal.fire({title: 'Verificando...', didOpen: () => Swal.showLoading(), allowOutsideClick: false, showConfirmButton: false});
+
+        try {
+          await sendPasswordResetEmail(auth, email.trim());
+          Swal.fire({
+            icon: 'success',
+            title: 'Enviado!',
+            text: 'Link de recuperação enviado. Checa teu email e o spam',
+            confirmButtonColor: '#4CAF50'
+          });
+        } catch (error) {
+          console.log(error);
+          let msgErro = 'Erro ao enviar email. Tenta de novo';
+          if (error.code === 'auth/user-not-found') msgErro = 'Email não existe no Firebase Auth';
+          else if (error.code === 'auth/invalid-email') msgErro = 'Email inválido';
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Deu ruim',
+            text: msgErro,
+            confirmButtonColor: '#4CAF50'
+          });
+        }
+      });
+    });
+
   </script>
 </body>
 </html>
