@@ -83,11 +83,11 @@
         if(hoje <= av.fim){
           const iBR=av.inicio.split('-').reverse().join('/'); const fBR=av.fim.split('-').reverse().join('/');
           const periodo=iBR===fBR?`Dia ${iBR}`:`De ${iBR} até ${fBR}`;
-          html+=`<div class="aviso-geral-card"><div style="font-size:28px">📢</div><div><span class="aviso-geral-badge">Aviso da Direção</span><div class="aviso-geral-texto">${av.mensagem}</div><div class="aviso-geral-datas">📅 ${periodo}</div></div></div>`;
+          html+=`<div class="aviso-geral-card"><div style="font-size:28px">📢</div><div><span class="aviso-geral-badge">Aviso da Direção</span><br /><div class="aviso-geral-datas"> ${periodo}</div><div class="aviso-geral-texto">${av.mensagem}</div></div></div>`;
         }
       });
       if(html){ container.innerHTML=html; container.style.display='flex'; }
-    }
+    }                                                                                                                                                                                                                                                                  
     mostrarAvisosGerais();
     document.querySelectorAll('.toggle-password').forEach(el=>{ el.onclick=()=>{ const i=document.getElementById(el.dataset.target); i.type=i.type==='password'?'text':'password'; }});
     document.getElementById('aluno-login-form').addEventListener('submit', async (e)=>{ e.preventDefault(); try{ const c=await signInWithEmailAndPassword(auth, document.getElementById('aluno-matricula').value, document.getElementById('aluno-senha').value); const d=await getDoc(doc(db,'alunos',c.user.uid)); localStorage.setItem('uid',c.user.uid); localStorage.setItem('nomeAluno',d.data().nome); location.href='aluno.html'; }catch(err){ Swal.fire('Erro','Email ou senha inválidos','error'); } });
