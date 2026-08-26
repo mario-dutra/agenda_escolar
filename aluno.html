@@ -20,18 +20,13 @@
 .menu-desktop button { background: none; border: none; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; color: #1a5c3a; cursor: pointer; display: flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 8px; transition: 0.2s; position: relative; }
 .menu-desktop button:hover { background: #e8f5e9; transform: translateY(-2px); }
 .menu-desktop button i { font-size: 17px; }
-
-/* BOLINHA VERMELHA COM EFEITO PULSANTE */
 .alerta-prova { position: absolute; top: -8px; right: -8px; min-width: 18px; height: 18px; background: #dc2626; border-radius: 10px; border: 2px solid white; color: white; font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; padding: 0 4px; box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); animation: pulse-vermelho 1.5s infinite; }
 @keyframes pulse-vermelho { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); } }
-
 .container-tarefas { max-width: 1100px; margin: 0 auto; padding: 0 12px; }
 .titulo-secao { background: #6b9b6b; color: white; text-align: center; padding: 13px; border-radius: 10px; font-size: 19px; font-weight: 700; margin-bottom: 18px; }
 .grid-tarefas { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 18px; margin-bottom: 20px; }
-
-/* CARD NOVO - ESTREITO + FONTE MENOR + PROFISSIONAL */
 .tf-card { background: #fff; border-radius: 20px; padding: 10px; display: flex; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid #eef5ef; }
-.tf-esq { background: #D6E8D0; width: 110px; min-width: 110px; border-radius: 14px; padding: 16px 8px 14px; display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: flex-start; }
+.tf-esq { background: #D6E8D0; width: 110px; min-width: 110px; border-radius: 14px; padding: 16px 8px 14px; display: flex; flex-direction: column; align-items: center; text-align: center; }
 .tf-esq-ic { width: 48px; height: 48px; background: #c6d9bf; border-radius: 50%; display: grid; place-items: center; font-size: 22px; color: #4a5a44; margin-bottom: 12px; }
 .tf-esq h3 { font-size: 13.5px; font-weight: 800; color: #1a1a1a; line-height: 1.15; word-break: break-word; text-align: center; text-transform: uppercase; }
 .tf-esq span { font-size: 8.5px; color: #8aa88a; letter-spacing:.7px; margin-top: 6px; text-transform: uppercase; font-weight: 600; }
@@ -43,7 +38,6 @@
 .tf-tx p { font-size: 11.5px; font-weight: 700; color: #2e2a5a; margin-top: 2px; line-height: 1.2; word-break: break-word; }
 .tf-check-sim { color: #1a7a2f!important; font-weight: 800; display: flex; gap: 5px; align-items: center; }
 .tf-check-nao { color: #d32f2f!important; font-weight: 800; display: flex; gap: 5px; align-items: center; }
-
 .loading-tarefas { text-align: center; padding: 40px; color: #1a5c3a; font-weight: 600; grid-column: 1 / -1; }
 .sem-tarefas { text-align: center; padding: 40px; background: white; border-radius: 12px; color: #666; grid-column: 1 / -1; }
 .menu-mobile { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; box-shadow: 0 -3px 15px rgba(0,0,0,0.15); padding: 10px 0 6px; z-index: 9999; height: 65px; }
@@ -65,9 +59,8 @@
 .aviso-mensagem { margin: 8px 0; line-height: 1.5; font-size: 13px; }
 .aviso-prof { margin-top: 10px; font-size: 13px; color: #333; }
 .btn-pdf { width: 100%; background: #1a5c3a; color: white; border: none; padding: 14px; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 15px; }
-    #loader { display: none!important; }
-    @media (max-width: 768px) {.menu-desktop { display: none; }.menu-mobile { display: block; }.perfil-container { flex-direction: column; text-align: center; gap: 12px; }.grid-tarefas { grid-template-columns: 1fr; } body { padding-bottom: 80px; }
-  .tf-esq { width: 100px; min-width: 100px; }.tf-esq h3 { font-size: 12px; } }
+#loader { display: none!important; }
+@media (max-width: 768px) {.menu-desktop { display: none; }.menu-mobile { display: block; }.perfil-container { flex-direction: column; text-align: center; gap: 12px; }.grid-tarefas { grid-template-columns: 1fr; } body { padding-bottom: 80px; }.tf-esq { width: 100px; min-width: 100px; }.tf-esq h3 { font-size: 12px; } }
   </style>
 </head>
 <body>
@@ -78,7 +71,6 @@
   <div class="menu-mobile"><div class="menu-mobile-items"><button onclick="abrirProvas()"><i class="fas fa-calendar-check"></i><span>Provas</span><span class="alerta-prova" id="alerta-prova-mobile" style="display:none;"></span></button><button onclick="abrirAvisos()"><i class="fas fa-bell"></i><span>Avisos</span><span class="alerta-prova" id="alerta-aviso-mobile" style="display:none;"></span></button><button onclick="gerarPDFTarefasSemana()"><i class="fas fa-file-pdf"></i><span>PDF</span></button><button onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Sair</span></button></div></div>
   <div class="modal-provas" id="modal-provas"><div class="modal-content"><div class="modal-header"><h2><i class="fas fa-calendar-check"></i> Agenda de Provas</h2><button class="btn-fechar" onclick="fecharProvas()">×</button></div><div class="modal-body" id="lista-provas"></div></div></div>
   <div class="modal-provas" id="modal-avisos"><div class="modal-content"><div class="modal-header"><h2><i class="fas fa-bell"></i> Avisos da Turma</h2><button class="btn-fechar" onclick="fecharAvisos()">×</button></div><div class="modal-body" id="lista-avisos"></div></div></div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
   <script type="module">
@@ -101,10 +93,11 @@
     window.fecharAvisos = () => { document.getElementById('modal-avisos').classList.remove('ativo'); };
     async function checarProvasNovas(s,turno){ const hoje=formatarDataFirebase(); const tl=turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); try{ const q=query(collection(db,'provas'),where('serie','==',s),where('turno','==',tl),where('dataProva','>',hoje)); const snap=await getDocs(q); const d=document.getElementById('alerta-prova-desktop'), m=document.getElementById('alerta-prova-mobile'); if(snap.size>0){ const t=snap.size>9?'9+':snap.size; d.textContent=t; m.textContent=t; d.style.display='flex'; m.style.display='flex'; } else { d.style.display='none'; m.style.display='none'; } }catch(e){} }
     async function checarAvisosNaoLidos(s,turno){ const tl=turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); const uid=auth.currentUser.uid; try{ const q=query(collection(db,'avisos'),where('serie','==',s),where('turno','==',tl),where('dataValidade','>=',Timestamp.now()),orderBy('dataValidade','desc'),limit(50)); const snap=await getDocs(q); let qtd=0; snap.forEach(doc=>{ const a=doc.data(); if(!a.lidos||!a.lidos.includes(uid)) qtd++; }); const d=document.getElementById('alerta-aviso-desktop'), m=document.getElementById('alerta-aviso-mobile'); if(qtd>0){ const t=qtd>9?'9+':qtd; d.textContent=t; m.textContent=t; d.style.display='flex'; m.style.display='flex'; } else { d.style.display='none'; m.style.display='none'; } }catch(e){} }
-    async function carregarProvas(){ const lista=document.getElementById('lista-provas'); const hoje=formatarDataFirebase(); const tl=dadosAlunoGlobal.turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); try{ const q=query(collection(db,'provas'),where('serie','==',dadosAlunoGlobal.serie),where('turno','==',tl),where('dataProva','>=',hoje),orderBy('dataProva','asc')); const snap=await getDocs(q); provasGlobal=[]; if(snap.empty){ lista.innerHTML=`<div class="sem-tarefas"><i class="fas fa-calendar-times" style="font-size:50px;margin-bottom:15px;color:#ccc;"></i><p>Nenhuma prova agendada!</p><p style="font-size:12px;margin-top:10px;color:#999;">Aproveita pra revisar a matéria 📚</p></div>`; return; } let html=''; snap.forEach(doc=>{ const p=doc.data(); provasGlobal.push({id:doc.id,...p}); const df=new Date(p.dataProva+'T00:00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}); html+=`<div class="card-prova"><div><i class="fas fa-calendar-day"></i> ${df}</div><div><strong>Disciplina:</strong> ${p.disciplina}</div><div><strong>Assunto:</strong> ${formatarAssuntoEmTopicos(p.assunto)}</div><div><strong>Professor:</strong> ${(p.nome_professor||'').replace(/^Prof\.?\s*/i,'')}</div></div>`; }); html+=`<button class="btn-pdf" onclick="gerarPDF()">Gerar PDF</button>`; lista.innerHTML=html; }catch(e){ lista.innerHTML=`Erro: ${e.message}`; } }
+    async function carregarProvas(){ const lista=document.getElementById('lista-provas'); const hoje=formatarDataFirebase(); const tl=dadosAlunoGlobal.turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); try{ const q=query(collection(db,'provas'),where('serie','==',dadosAlunoGlobal.serie),where('turno','==',tl),where('dataProva','>=',hoje),orderBy('dataProva','asc')); const snap=await getDocs(q); provasGlobal=[]; if(snap.empty){ lista.innerHTML=`<div class="sem-tarefas"><p>Nenhuma prova agendada!</p></div>`; return; } let html=''; snap.forEach(doc=>{ const p=doc.data(); provasGlobal.push({id:doc.id,...p}); const df=new Date(p.dataProva+'T00:00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}); html+=`<div class="card-prova"><div><i class="fas fa-calendar-day"></i> ${df}</div><div><strong>Disciplina:</strong> ${p.disciplina}</div><div><strong>Assunto:</strong> ${formatarAssuntoEmTopicos(p.assunto)}</div><div><strong>Professor:</strong> ${(p.nome_professor||'').replace(/^Prof\.?\s*/i,'')}</div></div>`; }); html+=`<button class="btn-pdf" onclick="gerarPDF()">Gerar PDF</button>`; lista.innerHTML=html; }catch(e){ lista.innerHTML=`Erro: ${e.message}`; } }
     async function carregarAvisos(){ const lista=document.getElementById('lista-avisos'); const tl=dadosAlunoGlobal.turno.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); const uid=auth.currentUser.uid; try{ const q=query(collection(db,'avisos'),where('serie','==',dadosAlunoGlobal.serie),where('turno','==',tl),where('dataValidade','>=',Timestamp.now()),orderBy('dataValidade','desc'),limit(20)); const snap=await getDocs(q); if(snap.empty){ lista.innerHTML=`<div class="sem-tarefas"><p>Nenhum aviso</p></div>`; return; } let html=''; const ids=[]; snap.forEach(d=>{ const a=d.data(); if(!a.lidos||!a.lidos.includes(uid)) ids.push(d.id); const pub=formatarDataCompleta(a.criadoEm); const di=formatarDataSimples(a.dataInicio); const df=formatarDataSimples(a.dataValidade); let txt; if(!a.dataInicio||di===df){ txt=`na presente data <span class="data-destaque">${df}</span>`; } else { txt=`no período de <span class="data-destaque">${di}</span> a <span class="data-destaque">${df}</span>`; } html+=`<div class="card-prova" style="${!a.lidos||!a.lidos.includes(uid)?'border-left:4px solid #dc2626;background:#fff5f5':''}"><div class="aviso-header"><span><i class="fas fa-bullhorn"></i> Aviso</span><small class="aviso-publicado">${pub}</small></div><p class="aviso-texto">${txt}</p><p class="aviso-mensagem">${a.aviso||''}</p><p class="aviso-prof">Professor: ${(a.nome_professor||'Coordenação').replace(/^Prof\.?\s*/i,'')}</p></div>`; }); lista.innerHTML=html; for(const id of ids){ await updateDoc(doc(db,'avisos',id), { lidos: arrayUnion(uid) }); } if(ids.length>0) checarAvisosNaoLidos(dadosAlunoGlobal.serie,dadosAlunoGlobal.turno); }catch(e){ lista.innerHTML=`Erro: ${e.message}`; } }
     window.gerarPDF = () => { const { jsPDF } = window.jspdf; const doc = new jsPDF(); doc.text(`Agenda de Provas - ${dadosAlunoGlobal.serie}`, 14, 20); const dadosTabela = provasGlobal.map(p=>[new Date(p.dataProva+'T00:00:00').toLocaleDateString('pt-BR'), p.disciplina, p.assunto, p.nome_professor||'N/I']); doc.autoTable({ head:[['Data','Disciplina','Assunto','Professor']], body:dadosTabela, startY:35, theme:'grid', headStyles:{fillColor:[46,134,95]}}); doc.save(`agenda_provas_${dadosAlunoGlobal.nome}.pdf`); };
 
+    // SEM MARIVALDO - PROFESSOR OBRIGATÓRIO DO FIREBASE
     async function carregarTarefas(serie, turno) {
       const grid = document.getElementById('grid-tarefas');
       const dataHoje = formatarDataFirebase();
@@ -113,22 +106,22 @@
         const q = query(collection(db, 'tarefas'), where('serie', '==', serie), where('turno', '==', turnoLimpo), where('data', '==', dataHoje));
         const snap = await getDocs(q);
         if (snap.empty) {
-          grid.innerHTML = `<div class="sem-tarefas"><i class="fas fa-calendar-times" style="font-size:50px;margin-bottom:15px;color:#ccc;"></i><p>Nenhuma tarefa para hoje!</p></div>`;
+          grid.innerHTML = `<div class="sem-tarefas"><p>Nenhuma tarefa para hoje!</p></div>`;
           return;
         }
         let html = '';
         snap.forEach((docSnap) => {
           const t = docSnap.data();
-          const pag = t.pagina || t.pag || '10 • 25 • 60';
-          const obs = t.observacao || t.obs || 'não contém';
+          const pag = t.pagina || t.pag || '';
+          const obs = t.observacao || t.obs || '';
           const impRaw = (t.impressa || t.tarefaImpressa || 'Não').toString().trim();
           const isSim = impRaw.toLowerCase().includes('sim');
-          const prof = (t.professor || t.nome_professor || 'MARIVALDO').replace(/^Prof\.?\s*/i, '').toUpperCase();
+          const prof = (t.professor || t.nome_professor || '').replace(/^Prof\.?\s*/i, '').toUpperCase();
           html += `
           <div class="tf-card">
             <div class="tf-esq">
               <div class="tf-esq-ic"><i class="fas fa-book-open"></i></div>
-              <h3>${t.disciplina || 'Brincadeiras'}</h3>
+              <h3>${t.disciplina || ''}</h3>
               <span>DISCIPLINA</span>
             </div>
             <div class="tf-dir">
@@ -154,7 +147,6 @@
       for(let i=0;i<5;i++){ const data=new Date(segunda); data.setDate(segunda.getDate()+i); const dataStr=data.toISOString().split('T')[0]; const nomeDia=data.toLocaleDateString('pt-BR',{weekday:'long'}); const qq=query(collection(db,'tarefas'),where('serie','==',dadosAlunoGlobal.serie),where('turno','==',tl),where('data','==',dataStr)); const snap=await getDocs(qq); if(!snap.empty){ doc.setFont('helvetica','bold'); doc.text(nomeDia,14,y); y+=6; snap.forEach(d=>{ const t=d.data(); doc.setFont('helvetica','normal'); doc.text(`${t.disciplina} - ${t.pagina||''}`,14,y); y+=6; }); y+=4; } if(y>270){ doc.addPage(); y=20; } }
       doc.save(`tarefas_semana_${dadosAlunoGlobal.nome}.pdf`);
     };
-
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const alunoSnap = await getDoc(doc(db, "alunos", user.uid));
