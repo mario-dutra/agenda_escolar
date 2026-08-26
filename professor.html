@@ -68,15 +68,15 @@
     }
 
     .main-container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-    .page-title { text-align: center; margin-bottom: 25px; }
-    .page-title h2 {
-      font-size: 28px;
+    .page-title { text-align: center;  }
+    .page-title h1 {
+      font-size: 20px;
       font-weight: 800;
       color: var(--verde-escuro);
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-    .page-title h2 i { margin-right: 10px; color: var(--verde-header); }
+   
 
     .form-card {
       background: white;
@@ -506,13 +506,14 @@
 
   <div class="sub-header">
     <button class="btn-voltar" onclick="history.back()">← Voltar</button>
+     <div class="page-title">
+      <h1> Agendamento de Tarefas</h1>
+    </div>
     <div></div>
   </div>
 
   <main class="main-container">
-    <div class="page-title">
-      <h2><i class="fas fa-tasks"></i> Agendamento de Tarefas</h2>
-    </div>
+   
 
     <div class="form-card">
       <form id="form-tarefa">
