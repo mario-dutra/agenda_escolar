@@ -9,56 +9,50 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
     body{background:linear-gradient(135deg,#7fffd4 0%,#1abc9c 100%);min-height:100vh}
-  .menu{background:#fff;color:#036618;box-shadow:0 2px 10px rgba(0,0,0,0.1);padding:0 24px;}
-  .menu-topo{display:flex;justify-content:space-between;align-items:center;height:62px;}
-  .logo-area img{width:46px;height:46px;object-fit:contain;display:block}
-  .titulo-admin{font-weight:800;font-size:19px;color:#036618;text-align:center;flex:1}
+ .menu{background:#fff;color:#036618;box-shadow:0 2px 10px rgba(0,0,0,0.1);padding:0 24px;}
+ .menu-topo{display:flex;justify-content:space-between;align-items:center;height:62px;}
+ .logo-area img{width:46px;height:46px;object-fit:contain;display:block}
+ .titulo-admin{font-weight:800;font-size:19px;color:#036618;text-align:center;flex:1}
     #logout-button{background:#e74c3c;color:#fff;border:none;padding:7px 16px;border-radius:20px;cursor:pointer;font-weight:700;font-size:13px}
-  .menu-links{display:flex;justify-content:center;gap:28px;padding:12px 0 13px 0;border-top:1px solid #f1f1f1}
-  .menu-links a{color:#036618;text-decoration:none!important;border:none!important;font-weight:700;font-size:15px;display:flex;align-items:center;gap:6px;cursor:pointer}
-  .menu-links a:hover{color:#02a650}
-  .menu-links a i{font-size:14px;color:#036618}
-
-  .conteudo{padding:40px 20px;text-align:center;max-width:1200px;margin:0 auto}
-  .conteudo h2{color:#fff;font-size:32px;text-shadow:1px 1px 3px rgba(0,0,0,0.2);margin-bottom:10px}
-  .conteudo p{color:#fff;font-size:18px;margin-bottom:30px;opacity:.95}
-
-    /* METRICAS ESCONDIDAS - SÓ MOSTRA COM BOTÃO */
-  .metricas{display:none; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-bottom:20px;animation:fadeIn.3s ease}
-  .metricas.ativo{display:grid}
+ .menu-links{display:flex;justify-content:center;gap:28px;padding:12px 0 13px 0;border-top:1px solid #f1f1f1}
+ .menu-links a{color:#036618;text-decoration:none!important;border:none!important;font-weight:700;font-size:15px;display:flex;align-items:center;gap:6px;cursor:pointer}
+ .menu-links a:hover{color:#02a650}
+ .menu-links a i{font-size:14px;color:#036618}
+ .conteudo{padding:40px 20px;text-align:center;max-width:1200px;margin:0 auto}
+ .conteudo h2{color:#fff;font-size:32px;text-shadow:1px 1px 3px rgba(0,0,0,0.2);margin-bottom:10px}
+ .conteudo p{color:#fff;font-size:18px;margin-bottom:30px;opacity:.95}
+ .metricas{display:none; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-bottom:20px;animation:fadeIn.3s ease}
+ .metricas.ativo{display:grid}
    @keyframes fadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
-  .card-metrica{background:#fff;padding:25px 20px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.15)}
-  .card-metrica.titulo{color:#666;font-size:13px;font-weight:600;text-transform:uppercase}
-  .card-metrica.numero{color:#036618;font-size:36px;font-weight:bold;margin:10px 0}
-  .card-metrica.aluno{border-top:4px solid #3498db}.card-metrica.prof{border-top:4px solid #9b59b6}
-
-  .msg-vazia{background:rgba(255,255,255,0.9);padding:40px 20px;border-radius:12px;color:#036618;font-weight:600;margin-top:20px}
-  .msg-vazia i{font-size:32px;margin-bottom:12px;display:block}
-
+ .card-metrica{background:#fff;padding:25px 20px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+ .card-metrica.titulo{color:#666;font-size:13px;font-weight:600;text-transform:uppercase}
+ .card-metrica.numero{color:#036618;font-size:36px;font-weight:bold;margin:10px 0}
+ .card-metrica.aluno{border-top:4px solid #3498db}.card-metrica.prof{border-top:4px solid #9b59b6}
+ .msg-vazia{background:rgba(255,255,255,0.9);padding:40px 20px;border-radius:12px;color:#036618;font-weight:600;margin-top:20px}
+ .msg-vazia i{font-size:32px;margin-bottom:12px;display:block}
     div.swal2-container{z-index:99999!important}
     #modal-aviso-geral{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:2000;justify-content:center;align-items:center;padding:20px}
     #modal-aviso-geral.ativo{display:flex}
-  .modal-conteudo{background:#fff;width:100%;max-width:600px;border-radius:16px;padding:25px;max-height:90vh;overflow-y:auto;position:relative;border-left:6px solid #63e89f}
-  .btn-fechar-x{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:#ff4d4d;color:#fff;border:none;font-size:18px;font-weight:900;cursor:pointer}
-  .lista-avisos{margin-top:25px;text-align:left}
-  .item-aviso{background:#f8f9fa;border:1px solid #ddd;border-left:4px solid #63e89f;border-radius:8px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between;gap:10px}
-  .btn-editar{background:#3498db;color:#fff;border:none;padding:6px 10px;border-radius:5px;cursor:pointer;margin-right:3px;margin-bottom: 3px;}
-  .btn-excluir{background:#e74c3c;color:#fff;border:none;padding:6px 10px;border-radius:5px;cursor:pointer}
-  .modal-conteudo label{display:block;text-align:left;margin:10px 0 5px;font-weight:600;color:#333;font-size:14px}
-  .modal-conteudo input,.modal-conteudo textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:15px}
-  .modal-botoes{display:flex;gap:10px;margin-top:20px}
-  .btn-salvar{flex:1;background:#036618;color:#fff;border:none;padding:12px;border-radius:8px;cursor:pointer;font-weight:bold}
-  .btn-cancelar{flex:1;background:#e0e0e0;color:#333;border:none;padding:12px;border-radius:8px;cursor:pointer;font-weight:bold}
-
+ .modal-conteudo{background:#fff;width:100%;max-width:600px;border-radius:16px;padding:25px;max-height:90vh;overflow-y:auto;position:relative;border-left:6px solid #63e89f}
+ .btn-fechar-x{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:#ff4d4d;color:#fff;border:none;font-size:18px;font-weight:900;cursor:pointer}
+ .lista-avisos{margin-top:25px;text-align:left}
+ .item-aviso{background:#f8f9fa;border:1px solid #ddd;border-left:4px solid #63e89f;border-radius:8px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between;gap:10px}
+ .btn-editar{background:#3498db;color:#fff;border:none;padding:6px 10px;border-radius:5px;cursor:pointer;margin-right:3px;margin-bottom: 3px;}
+ .btn-excluir{background:#e74c3c;color:#fff;border:none;padding:6px 10px;border-radius:5px;cursor:pointer}
+ .modal-conteudo label{display:block;text-align:left;margin:10px 0 5px;font-weight:600;color:#333;font-size:14px}
+ .modal-conteudo input,.modal-conteudo textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:15px}
+ .modal-botoes{display:flex;gap:10px;margin-top:20px}
+ .btn-salvar{flex:1;background:#036618;color:#fff;border:none;padding:12px;border-radius:8px;cursor:pointer;font-weight:bold}
+ .btn-cancelar{flex:1;background:#e0e0e0;color:#333;border:none;padding:12px;border-radius:8px;cursor:pointer;font-weight:bold}
     @media(max-width:700px){
-    .menu{padding:0 12px}
-    .menu-topo{height:56px}
-    .logo-area img{width:40px;height:40px}
-    .titulo-admin{font-size:16px}
-    .menu-links{gap:14px;padding:10px 0 11px 0;flex-wrap:wrap}
-    .menu-links a{font-size:13px}
-    .conteudo{padding:18px 10px}
-    .metricas.ativo{grid-template-columns:1fr}
+   .menu{padding:0 12px}
+   .menu-topo{height:56px}
+   .logo-area img{width:40px;height:40px}
+   .titulo-admin{font-size:16px}
+   .menu-links{gap:14px;padding:10px 0 11px 0;flex-wrap:wrap}
+   .menu-links a{font-size:13px}
+   .conteudo{padding:18px 10px}
+   .metricas.ativo{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -117,10 +111,49 @@ import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/fi
 import { getFirestore, getDocs, getDoc, query, collection, where, addDoc, doc, updateDoc, deleteDoc, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",authDomain:"agenda-escolar-19fda.firebaseapp.com",projectId:"agenda-escolar-19fda",storageBucket:"agenda-escolar-19fda.firebasestorage.app",messagingSenderId:"460998217684",appId:"1:460998217684:web:98e4a2cc23b467124bd041"};
 const app=initializeApp(firebaseConfig);const auth=getAuth(app);const db=getFirestore(app);
-onAuthStateChanged(auth,(user)=>{if(!user)window.location.href='index.html';else carregarMetricas()});
-async function carregarMetricas(){try{const hoje=new Date().toISOString().split('T')[0];const mesAtual=new Date().toISOString().slice(0,7);const[qDiaAluno,qDiaProf,qMesAluno,qMesProf]=await Promise.all([getDocs(query(collection(db,"analytics_access"),where("dia","==",hoje),where("tipo_usuario","==","aluno"))),getDocs(query(collection(db,"analytics_access"),where("dia","==",hoje),where("tipo_usuario","==","professor"))),getDocs(query(collection(db,"analytics_access"),where("mes","==",mesAtual),where("tipo_usuario","==","aluno"))),getDocs(query(collection(db,"analytics_access"),where("mes","==",mesAtual),where("tipo_usuario","==","professor")))]);document.getElementById("contador-dia-aluno").innerText=qDiaAluno.size;document.getElementById("contador-dia-prof").innerText=qDiaProf.size;document.getElementById("contador-mes-aluno").innerText=qMesAluno.size;document.getElementById("contador-mes-prof").innerText=qMesProf.size;}catch(e){console.error(e);}}
 
-// BOTÃO VISUALIZAR ACESSOS COM OLHINHO
+onAuthStateChanged(auth,(user)=>{
+  if(!user) window.location.href='index.html';
+  else carregarMetricas()
+});
+
+// === CORREÇÃO DEFINITIVA - SEM ÍNDICE E PEGA PROFESSORA TAMBÉM ===
+async function carregarMetricas(){
+  try{
+    const hoje=new Date().toISOString().split('T')[0]; // 2026-08-27
+    const mesAtual=hoje.slice(0,7); // 2026-08
+
+    // Busca só 1 campo por vez, não precisa criar índice no Firebase
+    const [snapDia, snapMes] = await Promise.all([
+      getDocs(query(collection(db,"analytics_access"), where("dia","==",hoje))),
+      getDocs(query(collection(db,"analytics_access"), where("mes","==",mesAtual)))
+    ]);
+
+    let diaAluno=0, diaProf=0, mesAluno=0, mesProf=0;
+
+    snapDia.forEach(d=>{
+      const t=(d.data().tipo_usuario||'').toLowerCase().trim();
+      if(t.includes('aluno')) diaAluno++;
+      else if(t.includes('prof')) diaProf++;
+    });
+
+    snapMes.forEach(d=>{
+      const t=(d.data().tipo_usuario||'').toLowerCase().trim();
+      if(t.includes('aluno')) mesAluno++;
+      else if(t.includes('prof')) mesProf++;
+    });
+
+    document.getElementById("contador-dia-aluno").innerText=diaAluno;
+    document.getElementById("contador-dia-prof").innerText=diaProf;
+    document.getElementById("contador-mes-aluno").innerText=mesAluno;
+    document.getElementById("contador-mes-prof").innerText=mesProf;
+
+  }catch(e){
+    console.error('Erro metricas:', e);
+    Swal.fire('Erro ao carregar métricas', e.message, 'error');
+  }
+}
+
 const btnVisualizar = document.getElementById('btn-visualizar-acesso');
 const areaMetricas = document.getElementById('area-metricas');
 const msgVazia = document.getElementById('msg-vazia');
@@ -134,6 +167,7 @@ btnVisualizar.onclick = () => {
     msgVazia.style.display = 'none';
     textoInicial.innerText = 'Registros de acesso da plataforma';
     btnVisualizar.innerHTML = '<i class="fa-solid fa-eye-slash"></i> Ocultar Acessos';
+    carregarMetricas();
   } else {
     areaMetricas.classList.remove('ativo');
     msgVazia.style.display = 'block';
