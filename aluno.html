@@ -43,8 +43,6 @@
 .sem-tarefas i.icone-vazio { font-size: 48px; color: #a3c9a8; margin-bottom: 15px; display: block; }
 .sem-tarefas p.titulo-vazio { font-size: 16px; font-weight: 700; color: #2e2a5a; margin-bottom: 6px; }
 .sem-tarefas p.sub-vazio { font-size: 13px; color: #888; }
-.sem-tarefas.provas i.icone-vazio { color: #6b9b6b; }
-.sem-tarefas.avisos i.icone-vazio { color: #e9b44c; }
 .menu-mobile { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; box-shadow: 0 -3px 15px rgba(0,0,0,0.15); padding: 10px 0 6px; z-index: 9999; height: 65px; }
 .menu-mobile-items { display: flex; justify-content: space-around; align-items: center; max-width: 500px; margin: 0 auto; height: 100%; }
 .menu-mobile button { background: none; border: none; display: flex; flex-direction: column; align-items: center; gap: 3px; color: #1a5c3a; font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 600; cursor: pointer; padding: 4px 12px; position: relative; }
@@ -58,18 +56,12 @@
 .modal-body { padding: 20px; }
 .card-prova { background: #f8f9fa; border-left: 4px solid #2E865F; padding: 15px; margin-bottom: 12px; border-radius: 8px; font-size: 13px; line-height: 1.6; }
 .data-destaque { background-color: yellow; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
-.aviso-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-weight: 600; }
-.aviso-publicado { font-size: 12px; color: #555; }
-.aviso-texto { margin: 10px 0; line-height: 1.6; font-size: 13px; }
-.aviso-mensagem { margin: 8px 0; line-height: 1.5; font-size: 13px; }
-.aviso-prof { margin-top: 10px; font-size: 13px; color: #333; }
 .btn-pdf { width: 100%; background: #1a5c3a; color: white; border: none; padding: 14px; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 15px; }
 #loader { display: none!important; }
 @media (max-width: 768px) {.menu-desktop { display: none; }.menu-mobile { display: block; }.perfil-container { flex-direction: column; text-align: center; gap: 12px; }.grid-tarefas { grid-template-columns: 1fr; } body { padding-bottom: 80px; }.tf-esq { width: 100px; min-width: 100px; }.tf-esq h3 { font-size: 10px; } }
   </style>
 </head>
 <body>
-  <div id="loader"></div>
   <div class="header-aluno"><div class="perfil-container"><img src="" alt="Foto Aluno" class="foto-aluno" id="foto-aluno"><div class="info-aluno"><div class="nome-aluno" id="nome-aluno">CARREGANDO...</div><div class="detalhes-aluno"><div><i class="fas fa-calendar-day"></i><span id="data-hoje"></span></div><div><i class="fas fa-graduation-cap"></i><span id="serie-turno"></span></div></div></div></div></div>
   <div class="menu-desktop"><button onclick="abrirProvas()"><i class="fas fa-calendar-check"></i> Provas<span class="alerta-prova" id="alerta-prova-desktop" style="display:none;"></span></button><button onclick="abrirAvisos()"><i class="fas fa-bell"></i> Avisos<span class="alerta-prova" id="alerta-aviso-desktop" style="display:none;"></span></button><button onclick="gerarPDFTarefasSemana()"><i class="fas fa-file-pdf"></i> PDF da Semana</button><button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button></div>
   <div class="container-tarefas"><div class="titulo-secao"><i class="fas fa-tasks"></i> Tarefas do Dia</div><div class="grid-tarefas" id="grid-tarefas"><div class="loading-tarefas"><i class="fas fa-spinner fa-spin"></i> Carregando tarefas...</div></div></div>
@@ -90,6 +82,17 @@
     function formatarDataCompleta(ts){ if(!ts) return 'N/A'; const d=ts.toDate?ts.toDate():new Date(ts); return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'}).replace(',',' às'); }
     function formatarDataSimples(ts){ if(!ts) return 'N/A'; const d=ts.toDate?ts.toDate():new Date(ts); return d.toLocaleDateString('pt-BR'); }
     function formatarAssuntoEmTopicos(t){ if(!t) return ''; const p=t.split(/[-,;]|\n/).map(x=>x.trim()).filter(x=>x); if(p.length<=1) return t; return `<ul style="margin-left:20px">${p.map(x=>`<li>${x}</li>`).join('')}</ul>`; }
+
+    // TROCA TUDO POR BOLINHA • (vírgula, hífen, espaço, ; / | )
+    function normalizarPaginas(texto){
+      if(!texto) return '-';
+      let txt = texto.toString().trim();
+      if(!txt) return '-';
+      let partes = txt.split(/[\s,;\-\/|]+/).map(s=>s.trim()).filter(s=>s.length>0);
+      partes = [...new Set(partes)];
+      return partes.join(' • ');
+    }
+
     document.getElementById('data-hoje').textContent = formatarData();
     window.logout = () => { signOut(auth).then(()=>{ window.location.href='index.html'; }); };
     window.abrirProvas = async () => { document.getElementById('modal-provas').classList.add('ativo'); await carregarProvas(); };
@@ -116,16 +119,13 @@
         let html = '';
         snap.forEach((docSnap) => {
           const t = docSnap.data();
-
-          // CAMPO CORRETO É LIVRO
           const disciplina = (t.disciplina || '').toUpperCase();
-          const pag = t.livro || t.pagina || t.pag || t.tarefa || '-';
+          const pagRaw = t.livro || t.pagina || t.pag || '-';
+          const pag = normalizarPaginas(pagRaw);
           const obs = t.observacao || t.obs || '-';
           const impRaw = (t.impressa || t.tarefaImpressa || 'Não').toString().trim();
           const prof = (t.professor || t.nome_professor || '').replace(/^Prof\.?\s*/i, '').toUpperCase();
-
           const isSim = impRaw.toLowerCase().includes('sim');
-
           html += `
           <div class="tf-card">
             <div class="tf-esq">
@@ -179,8 +179,8 @@
           doc.setFillColor(214,232,208); doc.roundedRect(x, y, 92, 9, 3,3,'F'); doc.rect(x, y+5, 92, 4, 'F');
           doc.setFontSize(8); doc.setTextColor(26,61,40); doc.setFont('helvetica','bold'); let disc = (t.disciplina||'DISCIPLINA').toUpperCase(); if(disc.length>18){ doc.setFontSize(7); disc = disc.substring(0,20); } doc.text(disc, x+3, y+6, {maxWidth:86});
           doc.setFont('helvetica','normal'); doc.setTextColor(0,0,0); doc.setFontSize(7);
-          let pagPDF = (t.livro || t.pagina || '-').toString().substring(0,28);
-          doc.text(`Pag: ${pagPDF}`, x+3, y+14);
+          let pagPDF = normalizarPaginas(t.livro || t.pagina || '-');
+          doc.text(`Pag: ${pagPDF.substring(0,40)}`, x+3, y+14);
           let obs = (t.observacao||t.obs||'').replace(/\n/g,' ').substring(0,60); doc.text(`Obs: ${obs}`, x+3, y+19, {maxWidth:86}); doc.text(`Prof: ${(t.professor||t.nome_professor||'-').substring(0,25)}`, x+3, y+24); doc.text(`Imp: ${t.impressa || t.tarefaImpressa || 'Nao'}`, x+3, y+29);
           col++; if(col===2){ col=0; x=10; y+=40; } else { x=108; }
         }
