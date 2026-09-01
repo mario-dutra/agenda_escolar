@@ -6,124 +6,25 @@
   <title>Menu Professor</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: aquamarine;
-      margin: 0;
-      padding: 0;
-    }
-    
-    .header {
-      background-color: #2E865F;
-      color: white;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    
-    .header h1 {
-      margin: 0;
-      font-size: 20pt;
-    }
-    
-    .header p {
-      margin: 5px 0 0 0;
-      font-size: 10pt;
-      opacity: 0.9;
-    }
-    
-    .container {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 20px;
-    }
-    
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      margin-top: 20px;
-    }
-    
-    .card {
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      padding: 30px 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      color: #2E865F;
-    }
-    
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 20px rgba(46, 134, 95, 0.3);
-      border-color: #2E865F;
-    }
-    
-    .card i {
-      font-size: 50px;
-      margin-bottom: 15px;
-      color: #2E865F;
-    }
-    
-    .card h2 {
-      margin: 10px 0;
-      font-size: 16pt;
-      color: #2E865F;
-    }
-    
-    .card p {
-      font-size: 10pt;
-      color: #555;
-      margin: 0;
-    }
-    
-    .logout-btn {
-      position: fixed;
-      top: 15px;
-      right: 15px;
-      background-color: white;
-      color: #2E865F;
-      border: 2px solid white;
-      border-radius: 8px;
-      padding: 8px 15px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 10pt;
-      transition: 0.3s;
-    }
-    
-    .logout-btn:hover {
-      background-color: #2E865F;
-      color: white;
-      border-color: white;
-    }
-    
+    body { font-family: Arial, sans-serif; background-color: aquamarine; margin: 0; padding: 0; }
+    .header { background-color: #2E865F; color: white; padding: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .header h1 { margin: 0; font-size: 20pt; }
+    .header p { margin: 5px 0 0 0; font-size: 10pt; opacity: 0.9; }
+    .container { max-width: 1000px; margin: 30px auto; padding: 20px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 20px; }
+    .card { background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 30px 20px; text-align: center; cursor: pointer; transition: all 0.3s ease; text-decoration: none; color: #2E865F; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(46, 134, 95, 0.3); border-color: #2E865F; }
+    .card i { font-size: 50px; margin-bottom: 15px; color: #2E865F; }
+    .card h2 { margin: 10px 0; font-size: 16pt; color: #2E865F; }
+    .card p { font-size: 10pt; color: #555; margin: 0; }
+    .logout-btn { position: fixed; top: 15px; right: 15px; background-color: white; color: #2E865F; border: 2px solid white; border-radius: 8px; padding: 8px 15px; cursor: pointer; font-weight: bold; font-size: 10pt; transition: 0.3s; }
+    .logout-btn:hover { background-color: #2E865F; color: white; border-color: white; }
     @media (max-width: 768px) {
-      .header h1 {
-        font-size: 16pt;
-      }
-      
-      .cards-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-      
-      .card {
-        padding: 25px 15px;
-      }
-      
-      .card i {
-        font-size: 40px;
-      }
-      
-      .card h2 {
-        font-size: 14pt;
-      }
+      .header h1 { font-size: 16pt; }
+      .cards-grid { grid-template-columns: 1fr; gap: 20px; }
+      .card { padding: 25px 15px; }
+      .card i { font-size: 40px; }
+      .card h2 { font-size: 14pt; }
     }
   </style>
 </head>
@@ -139,32 +40,28 @@
   
   <div class="container">
     <div class="cards-grid">
-      
       <a href="professor.html" class="card">
         <i class="fas fa-tasks"></i>
         <h2>Agendamento de Tarefas</h2>
         <p>Cadastrar e gerenciar tarefas diárias por turma</p>
       </a>
-      
       <a href="agendamento_provas.html" class="card">
         <i class="fas fa-calendar-check"></i>
         <h2>Agendamento de Provas</h2>
         <p>Marcar datas de provas e avaliações</p>
       </a>
-      
       <a href="avisos.html" class="card">
         <i class="fas fa-bullhorn"></i>
         <h2>Avisos</h2>
         <p>Enviar avisos para alunos da sua série/turno</p>
       </a>
-      
     </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, query, where, getDocs, doc, getDoc, setDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg",
@@ -180,22 +77,64 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    let nomeProfessorGlobal = '';
+
+    // === CONTA ACESSO 1x POR DIA - CORRETO ===
+    function getSemanaISO(dataStr){
+      const d = new Date(dataStr+'T00:00:00');
+      const jan4 = new Date(d.getFullYear(),0,4);
+      const diff = (d - jan4) / 86400000;
+      const semana = Math.ceil((diff + jan4.getDay()+1)/7);
+      return `${d.getFullYear()}-W${String(semana).padStart(2,'0')}`;
+    }
+
+    async function registrarAcessoProfessor(){
+      try{
+        const user = auth.currentUser;
+        if(!user) return;
+        const hoje = new Date();
+        const dia = `${hoje.getFullYear()}-${String(hoje.getMonth()+1).padStart(2,'0')}-${String(hoje.getDate()).padStart(2,'0')}`;
+        const docId = `${user.uid}_${dia}`;
+        const ref = doc(db, 'analytics_access', docId);
+        const snap = await getDoc(ref);
+        if(snap.exists()){ 
+          console.log('Professor já contado hoje'); 
+          return; 
+        }
+        await setDoc(ref, {
+          userId: user.uid,
+          email: user.email || '',
+          nome: nomeProfessorGlobal || user.email || 'PROFESSOR',
+          tipo_usuario: 'professor',
+          dia: dia,
+          mes: dia.substring(0,7),
+          ano: dia.substring(0,4),
+          semana: getSemanaISO(dia),
+          data: Timestamp.now()
+        });
+        console.log('✅ Professor contado:', docId);
+      }catch(e){ console.error('Erro ao registrar professor:', e); }
+    }
+
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         window.location.href = 'index.html';
         return;
       }
       
-      // Busca nome do professor pra mostrar no topo
       const professoresRef = collection(db, 'professores');
       const q = query(professoresRef, where('email', '==', user.email));
       const querySnapshot = await getDocs(q);
       
       if (!querySnapshot.empty) {
-        querySnapshot.forEach((doc) => {
-          const nome = doc.data().nome.split(" ").slice(0, 2).join(" ");
+        querySnapshot.forEach((docSnap) => {
+          const dados = docSnap.data();
+          nomeProfessorGlobal = dados.nome || '';
+          const nome = dados.nome.split(" ").slice(0, 2).join(" ");
           document.getElementById('nomeProfessor').textContent = `Bem-vindo, Prof. ${nome}`;
         });
+        // CONTA AQUI - LOGO QUE ENTRA NA PRINCIPAL
+        await registrarAcessoProfessor();
       }
     });
 
