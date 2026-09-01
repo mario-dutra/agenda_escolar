@@ -79,7 +79,6 @@
 
     let nomeProfessorGlobal = '';
 
-    // === CONTA ACESSO 1x POR DIA - CORRETO ===
     function getSemanaISO(dataStr){
       const d = new Date(dataStr+'T00:00:00');
       const jan4 = new Date(d.getFullYear(),0,4);
@@ -98,7 +97,7 @@
         const ref = doc(db, 'analytics_access', docId);
         const snap = await getDoc(ref);
         if(snap.exists()){ 
-          console.log('Professor já contado hoje'); 
+          console.log('Professor já contado hoje:', docId); 
           return; 
         }
         await setDoc(ref, {
@@ -113,7 +112,9 @@
           data: Timestamp.now()
         });
         console.log('✅ Professor contado:', docId);
-      }catch(e){ console.error('Erro ao registrar professor:', e); }
+      }catch(e){ 
+        console.error('ERRO ao registrar professor:', e); 
+      }
     }
 
     onAuthStateChanged(auth, async (user) => {
@@ -122,18 +123,36 @@
         return;
       }
       
-      const professoresRef = collection(db, 'professores');
-      const q = query(professoresRef, where('email', '==', user.email));
-      const querySnapshot = await getDocs(q);
-      
-      if (!querySnapshot.empty) {
-        querySnapshot.forEach((docSnap) => {
-          const dados = docSnap.data();
+      try{
+        let dados = null;
+        const refUid = doc(db, 'professores', user.uid);
+        const snapUid = await getDoc(refUid);
+        
+        if(snapUid.exists()){
+          dados = snapUid.data();
+        } else {
+          const professoresRef = collection(db, 'professores');
+          const q = query(professoresRef, where('email', '==', user.email));
+          const querySnapshot = await getDocs(q);
+          if (!querySnapshot.empty) {
+            querySnapshot.forEach((docSnap) => { dados = docSnap.data(); });
+          }
+        }
+
+        if(dados){
           nomeProfessorGlobal = dados.nome || '';
           const nome = dados.nome.split(" ").slice(0, 2).join(" ");
           document.getElementById('nomeProfessor').textContent = `Bem-vindo, Prof. ${nome}`;
-        });
-        // CONTA AQUI - LOGO QUE ENTRA NA PRINCIPAL
+        } else {
+          document.getElementById('nomeProfessor').textContent = `Bem-vindo, Prof. ${user.email}`;
+          nomeProfessorGlobal = user.email;
+        }
+        
+        await registrarAcessoProfessor();
+
+      }catch(err){
+        console.error('Erro:', err);
+        nomeProfessorGlobal = user.email;
         await registrarAcessoProfessor();
       }
     });
