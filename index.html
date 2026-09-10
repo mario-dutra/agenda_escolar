@@ -16,7 +16,7 @@
       flex-direction: column;
       gap: 18px;
     }
-  .aviso-geral-card {
+.aviso-geral-card {
       background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
       border-left: 6px solid #63e89f;
       border-radius: 16px;
@@ -30,15 +30,13 @@
       overflow: hidden;
     }
     @keyframes slideDown { from{opacity:0; transform:translateY(-15px)} to{opacity:1; transform:translateY(0)} }
-  .aviso-geral-badge { background:#63e89f; color:#033618; font-size:10px; font-weight:900; padding:5px 12px; border-radius:20px; text-transform:uppercase; display:inline-block; margin-bottom:6px; }
-  .aviso-geral-texto { color:#1b3a2a; font-size:16px; font-weight:600; white-space:pre-wrap; line-height:1.5; text-align: justify;}
-  .aviso-geral-datas { margin-top:10px; font-size:12px; background:#dff8e7; padding:5px 10px; border-radius:8px; display:inline-block; font-weight:700; color:#2d5a3d; }
+.aviso-geral-badge { background:#63e89f; color:#033618; font-size:10px; font-weight:900; padding:5px 12px; border-radius:20px; text-transform:uppercase; display:inline-block; margin-bottom:6px; }
+.aviso-geral-texto { color:#1b3a2a; font-size:16px; font-weight:600; white-space:pre-wrap; line-height:1.5; text-align: justify;}
+.aviso-geral-datas { margin-top:10px; font-size:12px; background:#dff8e7; padding:5px 10px; border-radius:8px; display:inline-block; font-weight:700; color:#2d5a3d; }
     div.swal2-container{ z-index:99999!important; }
-
-    /* ESQUECEU A SENHA - IGUAL DO ADMIN */
-   .forgot-password { text-align: center; margin-top: 12px; }
-   .forgot-password a { color: #4CAF50; text-decoration: none; font-size: 13px; font-weight: bold; }
-   .forgot-password a:hover { text-decoration: underline; }
+.forgot-password { text-align: center; margin-top: 12px; }
+.forgot-password a { color: #4CAF50; text-decoration: none; font-size: 13px; font-weight: bold; }
+.forgot-password a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -58,7 +56,7 @@
       <h2>Login Aluno</h2>
       <input type="text" id="aluno-matricula" placeholder="Email" required>
       <div class="password-wrapper"><input type="password" id="aluno-senha" placeholder="Senha" required><span class="toggle-password" data-target="aluno-senha">👁️</span></div>
-      <button type="submit">Entrar</button><button type="button" onclick="fecharModal('aluno')">Fechar</button>
+      <button type="submit" id="btn-aluno">Entrar</button><button type="button" onclick="fecharModal('aluno')">Fechar</button>
       <p class="forgot-password"><a href="#" class="esqueci-senha">Esqueceu a senha?</a></p>
     </form>
   </div>
@@ -67,7 +65,7 @@
       <h2>Login Professor</h2>
       <input type="email" id="professor-email" placeholder="Email" required>
       <div class="password-wrapper"><input type="password" id="professor-senha" placeholder="Senha" required><span class="toggle-password" data-target="professor-senha">👁️</span></div>
-      <button type="submit">Entrar</button><button type="button" onclick="fecharModal('professor')">Fechar</button>
+      <button type="submit" id="btn-prof">Entrar</button><button type="button" onclick="fecharModal('professor')">Fechar</button>
       <p class="forgot-password"><a href="#" class="esqueci-senha">Esqueceu a senha?</a></p>
     </form>
   </div>
@@ -75,7 +73,7 @@
   <script src="js/script.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, getDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = { apiKey: "AIzaSyDJnKktnaupmHUwL-jZHIeionowOb6Egrg", authDomain: "agenda-escolar-19fda.firebaseapp.com", projectId: "agenda-escolar-19fda", storageBucket: "agenda-escolar-19fda.firebasestorage.app", messagingSenderId: "460998217684", appId: "1:460998217684:web:98e4a2cc23b467124bd041" };
@@ -102,10 +100,68 @@
 
     document.querySelectorAll('.toggle-password').forEach(el=>{ el.onclick=()=>{ const i=document.getElementById(el.dataset.target); i.type=i.type==='password'?'text':'password'; }});
 
-    document.getElementById('aluno-login-form').addEventListener('submit', async (e)=>{ e.preventDefault(); try{ const c=await signInWithEmailAndPassword(auth, document.getElementById('aluno-matricula').value, document.getElementById('aluno-senha').value); const d=await getDoc(doc(db,'alunos',c.user.uid)); localStorage.setItem('uid',c.user.uid); localStorage.setItem('nomeAluno',d.data().nome); location.href='aluno.html'; }catch(err){ Swal.fire('Erro','Email ou senha inválidos','error'); } });
-    document.getElementById('professor-login-form').addEventListener('submit', async (e)=>{ e.preventDefault(); try{ const c=await signInWithEmailAndPassword(auth, document.getElementById('professor-email').value, document.getElementById('professor-senha').value); const d=await getDoc(doc(db,'professores',c.user.uid)); localStorage.setItem('uid',c.user.uid); localStorage.setItem('nomeProfessor',d.data().nome); location.href='agendamento.html'; }catch(err){ Swal.fire('Erro','Email ou senha inválidos','error'); } });
+    // --- LOGIN ALUNO - CORRIGIDO ---
+    document.getElementById('aluno-login-form').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const btn = document.getElementById('btn-aluno'); btn.disabled = true; btn.textContent = 'Verificando...';
+      try{
+        const cred = await signInWithEmailAndPassword(auth, document.getElementById('aluno-matricula').value.trim(), document.getElementById('aluno-senha').value);
+        const docSnap = await getDoc(doc(db,'alunos',cred.user.uid));
 
-    // ESQUECEU A SENHA - MESMA LÓGICA DO ADMIN
+        if(!docSnap.exists()){
+          await signOut(auth);
+          Swal.fire('Erro','Aluno não encontrado no sistema','error');
+          return;
+        }
+
+        const dados = docSnap.data();
+        // CORRIGIDO: bloqueia inativo OU arquivado
+        if(dados.status === 'inativo' || dados.status === 'arquivado'){
+          await signOut(auth);
+          Swal.fire('Acesso Bloqueado','Este aluno não pode mais acessar a agenda. Fale com a secretaria.','error');
+          return;
+        }
+
+        localStorage.setItem('uid',cred.user.uid);
+        localStorage.setItem('nomeAluno',dados.nome);
+        location.href='aluno.html';
+      }catch(err){
+        Swal.fire('Erro','Email ou senha inválidos','error');
+      }finally{ btn.disabled=false; btn.textContent='Entrar'; }
+    });
+
+    // --- LOGIN PROFESSOR - CORRIGIDO ---
+    document.getElementById('professor-login-form').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const btn = document.getElementById('btn-prof'); btn.disabled = true; btn.textContent = 'Verificando...';
+      try{
+        const cred = await signInWithEmailAndPassword(auth, document.getElementById('professor-email').value.trim(), document.getElementById('professor-senha').value);
+        const docSnap = await getDoc(doc(db,'professores',cred.user.uid));
+
+        if(!docSnap.exists()){
+          await signOut(auth);
+          Swal.fire('Erro','Professor não encontrado','error');
+          return;
+        }
+
+        const dados = docSnap.data();
+        // CORRIGIDO: bloqueia inativo OU arquivado
+        if(dados.status === 'inativo' || dados.status === 'arquivado'){
+          await signOut(auth);
+          Swal.fire('Acesso Bloqueado','Este professor foi arquivado. Fale com a direção.','error');
+          return;
+        }
+
+        localStorage.setItem('uid',cred.user.uid);
+        localStorage.setItem('nomeProfessor',dados.nome);
+        location.href='agendamento.html';
+      }catch(err){
+        console.error(err);
+        Swal.fire('Erro','Email ou senha inválidos','error');
+      }finally{ btn.disabled=false; btn.textContent='Entrar'; }
+    });
+
+    // ESQUECEU A SENHA
     document.querySelectorAll('.esqueci-senha').forEach(link => {
       link.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -118,38 +174,21 @@
           confirmButtonColor: '#4CAF50',
           cancelButtonText: 'Cancelar',
           showCancelButton: true,
-          inputValidator: (value) => {
-            if (!value) return 'digite um email valido!';
-          }
+          inputValidator: (value) => { if (!value) return 'digite um email valido!'; }
         });
-
         if (!email) return;
         Swal.fire({title: 'Verificando...', didOpen: () => Swal.showLoading(), allowOutsideClick: false, showConfirmButton: false});
-
         try {
           await sendPasswordResetEmail(auth, email.trim());
-          Swal.fire({
-            icon: 'success',
-            title: 'Enviado!',
-            text: 'Link de recuperação enviado. Checa teu email e o spam',
-            confirmButtonColor: '#4CAF50'
-          });
+          Swal.fire({ icon: 'success', title: 'Enviado!', text: 'Link de recuperação enviado. Checa teu email e o spam', confirmButtonColor: '#4CAF50' });
         } catch (error) {
-          console.log(error);
           let msgErro = 'Erro ao enviar email. Tenta de novo';
-          if (error.code === 'auth/user-not-found') msgErro = 'Email não existe no Firebase Auth';
+          if (error.code === 'auth/user-not-found') msgErro = 'Email não existe';
           else if (error.code === 'auth/invalid-email') msgErro = 'Email inválido';
-
-          Swal.fire({
-            icon: 'error',
-            title: 'Deu ruim',
-            text: msgErro,
-            confirmButtonColor: '#4CAF50'
-          });
+          Swal.fire({ icon: 'error', title: 'Deu ruim', text: msgErro, confirmButtonColor: '#4CAF50' });
         }
       });
     });
-
   </script>
 </body>
 </html>
