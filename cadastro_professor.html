@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro Professor</title>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
     body { background: linear-gradient(135deg, #7fffd4 0%, #1abc9c 100%); padding: 20px; min-height: 100vh; font-size: 14px; }
@@ -25,7 +26,7 @@
     .btn { padding: 10px 18px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; }
     .btn-salvar { background: #4CAF50; color: white; }
     .btn-limpar { background: #95a5a6; color: white; }
-    .tabela-container { background: white; padding: 18px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow-x: auto; }
+    .tabela-container { background: white; padding: 18px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow-x: auto; position:relative; min-height:200px }
     .tabela-container h3 { color: #036618; margin-bottom: 15px; font-size: 16px; }
     .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 10px; flex-wrap: wrap; }
     .toolbar select { max-width: 220px; padding: 8px; font-size: 13px; }
@@ -38,8 +39,8 @@
     .btn-acao { border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 600; font-size: 12px; transition: 0.2s; }
     .btn-editar { background: #3498db; color: white; }
     .btn-editar:hover { background: #2980b9; transform: translateY(-1px); }
-    .btn-excluir { background: #e74c3c; color: white; }
-    .btn-excluir:hover { background: #c0392b; transform: translateY(-1px); }
+    .btn-excluir { background: #e67e22; color: white; }
+    .btn-excluir:hover { background: #d35400; transform: translateY(-1px); }
     .paginacao { display: flex; justify-content: center; gap: 5px; margin-top: 15px; flex-wrap: wrap; }
     .paginacao button { padding: 6px 12px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 12px; }
     .paginacao button.ativo { background: #036618; color: white; border-color: #036618; }
@@ -51,6 +52,12 @@
     .fechar-modal { font-size: 28px; cursor: pointer; color: #aaa; }
     .fechar-modal:hover { color: #000; }
     .alerta { background: #fff3cd; border: 1px solid #ffeaa7; padding: 8px; border-radius: 5px; font-size: 12px; color: #856404; margin-top: 5px; }
+    /* LOAD */
+    #loader{ position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.9); display:flex; flex-direction:column; justify-content:center; align-items:center; gap:12px; z-index:10; border-radius:10px; }
+    #loader.hidden{ display:none }
+    .spinner{ width:48px; height:48px; border:5px solid #d1f2e5; border-top:5px solid #036618; border-radius:50%; animation: spin 0.9s linear infinite; }
+    @keyframes spin{ to{ transform:rotate(360deg) } }
+    .loader-text{ color:#036618; font-weight:800; font-size:14px }
     @media (max-width: 700px) { 
       .form-grid { grid-template-columns: 1fr; } 
       .header { flex-direction: column; gap: 10px; } 
@@ -65,7 +72,8 @@
     <div class="header">
       <h2>👨‍🏫 Gerenciar Professores</h2>
       <div>
-        <button class="btn-voltar" onclick="history.back()">Voltar</button>
+        <button class="btn-voltar" onclick="window.location.href='cad_aluno_prof.html'">Voltar</button>
+        
         <button class="btn-sair" id="logout-button">Sair</button>
       </div>
     </div>
@@ -80,15 +88,16 @@
             <option value="">Selecione...</option>
             <option value="Jardim">Jardim</option>
             <option value="Fundamental">Ensino Fundamental</option>
-            
           </select>
         </div>
       </div>
       <div id="disciplinas-jardim" class="checkbox-group" style="display: none;">
-        <label><input type="checkbox" name="disciplina" value="Alfabetização"> Alfabetização</label>
-        <label><input type="checkbox" name="disciplina" value="Brincadeiras"> Brincadeiras</label>
-        <label><input type="checkbox" name="disciplina" value="Música"> Música</label>
-        <label><input type="checkbox" name="disciplina" value="Números"> Números</label>
+        <label><input type="checkbox" name="disciplina" value="Linguagem">Linguagem </label>
+        <label><input type="checkbox" name="disciplina" value="Natureza e sociedade">Natureza&sociedade</label>
+        <label><input type="checkbox" name="disciplina" value="Artes">Artes</label>
+        <label><input type="checkbox" name="disciplina" value="Caligrafia">Caligrafia</label>
+        <label><input type="checkbox" name="disciplina" value="Matematica">Matemática</label>
+        <label><input type="checkbox" name="disciplina" value="Ingles">Ingês</label>
       </div>
       <div id="disciplinas-fundamental" class="checkbox-group" style="display: none;">
         <label><input type="checkbox" name="disciplina" value="Matemática"> Matemática</label>
@@ -121,8 +130,12 @@
     </form>
 
     <div class="tabela-container">
+      <div id="loader">
+        <div class="spinner"></div>
+        <div class="loader-text"><i class="fa-solid fa-chalkboard-teacher"></i> Carregando professores...</div>
+      </div>
       <div class="toolbar">
-        <h3>Professores Cadastrados</h3>
+        <h3>Professores Ativos</h3>
         <select id="filtro-nivel">
           <option value="Todos">Todos os Níveis</option>
           <option value="Jardim">Jardim</option>
@@ -155,10 +168,12 @@
           </div>
         </div>
         <div id="edit-disciplinas-jardim" class="checkbox-group" style="display: none;">
-          <label><input type="checkbox" name="edit-disciplina" value="Alfabetização"> Alfabetização</label>
-          <label><input type="checkbox" name="edit-disciplina" value="Brincadeiras"> Brincadeiras</label>
-          <label><input type="checkbox" name="edit-disciplina" value="Música"> Música</label>
-          <label><input type="checkbox" name="edit-disciplina" value="Números"> Números</label>
+        <label><input type="checkbox" name="edit-disciplina" value="Linguagem">Linguagem </label>
+        <label><input type="checkbox" name="edit-disciplina" value="Natureza e sociedade">Natureza&sociedade</label>
+        <label><input type="checkbox" name="edit-disciplina" value="Artes">Artes</label>
+        <label><input type="checkbox" name="edit-disciplina" value="Caligrafia">Caligrafia</label>
+        <label><input type="checkbox" name="edit-disciplina" value="Matematica">Matemática</label>
+        <label><input type="checkbox" name="edit-disciplina" value="Ingles">Ingês</label>
         </div>
         <div id="edit-disciplinas-fundamental" class="checkbox-group" style="display: none;">
           <label><input type="checkbox" name="edit-disciplina" value="Matemática"> Matemática</label>
@@ -225,6 +240,10 @@
     let paginaAtual = 1;
     const itensPorPagina = 5;
     let profEditando = null;
+    const loader = document.getElementById('loader');
+
+    function mostrarLoader(t='Carregando professores...'){ loader.querySelector('.loader-text').innerHTML = `<i class="fa-solid fa-chalkboard-teacher"></i> ${t}`; loader.classList.remove('hidden'); }
+    function esconderLoader(){ loader.classList.add('hidden'); }
 
     onAuthStateChanged(auth, (user) => {
       if (!user) window.location.href = 'admin.html';
@@ -260,7 +279,7 @@
       const professoresDaPagina = professoresFiltrados.slice(inicio, inicio + itensPorPagina);
 
       if(professoresFiltrados.length === 0){
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">Nenhum professor encontrado</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">Nenhum professor ativo</td></tr>';
       } else {
         professoresDaPagina.forEach(p => {
           const tipoTexto = p.tipo === 'Medio' ? 'Ensino Médio' : p.tipo === 'Fundamental' ? 'Ensino Fundamental' : p.tipo;
@@ -269,7 +288,7 @@
               <td>${p.nome || '-'}</td><td>${tipoTexto || '-'}</td><td>${p.disciplinas?.join(', ') || '-'}</td><td>${p.email || '-'}</td>
               <td><div class="acoes">
                 <button class="btn-acao btn-editar" onclick='abrirModalEdicao("${p.id}", ${JSON.stringify(p).replace(/"/g, '&quot;')})'>✏️ Editar</button>
-                <button class="btn-acao btn-excluir" onclick='excluirProfessor("${p.id}")'>🗑️ Excluir</button>
+                <button class="btn-acao btn-excluir" onclick='excluirProfessor("${p.id}")'>📦 Arquivar</button>
               </div></td>
             </tr>`;
         });
@@ -292,7 +311,6 @@
       paginaAtual = novaPagina; renderizarTabela();
     }
 
-    // CADASTRO COM VALIDAÇÃO DE EMAIL
     document.getElementById('form-professor').addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('salvar-btn'); btn.disabled = true; btn.textContent = 'Salvando...';
@@ -303,7 +321,6 @@
       const senha = document.getElementById('senha').value;
       if (disciplinas.length === 0) { Swal.fire('Atenção', 'Selecione pelo menos 1 disciplina!', 'warning'); btn.disabled = false; btn.textContent = 'Salvar'; return; }
       
-      // 1. VALIDA SE EMAIL JÁ EXISTE
       const emailJaExiste = todosProfessores.some(p => p.email === email);
       if(emailJaExiste){
         Swal.fire('Erro', 'Esse e-mail já existe. Use outro e-mail.', 'error');
@@ -314,13 +331,17 @@
       try {
         const userCredential = await createUserWithEmailAndPassword(secondaryAuth, email, senha);
         const uid = userCredential.user.uid;
-        await setDoc(doc(db, "professores", uid), { nome, tipo, disciplinas, email, tipo_usuario: 'professor' });
+        await setDoc(doc(db, "professores", uid), { 
+          nome, tipo, disciplinas, email, 
+          status: 'ativo',
+          tipo_usuario: 'professor',
+          criado_em: new Date().toISOString()
+        });
         await signOut(secondaryAuth);
         Swal.fire('Sucesso', 'Professor cadastrado!', 'success');
         document.getElementById('form-professor').reset(); document.querySelectorAll('.checkbox-group').forEach(g => g.style.display = 'none');
         carregarProfessores();
       } catch (error) { 
-        // Tratativa extra caso passe
         if(error.code === 'auth/email-already-in-use'){
           Swal.fire('Erro', 'Esse e-mail já existe. Use outro e-mail.', 'error');
         } else {
@@ -349,7 +370,6 @@
       profEditando = null;
     }
 
-    // EDIÇÃO COM VALIDAÇÃO DE EMAIL
     document.getElementById('form-edicao').addEventListener('submit', async (e) => {
       e.preventDefault();
       const idAntigo = document.getElementById('edit-id').value;
@@ -363,7 +383,6 @@
 
       const emailMudou = emailNovo !== profEditando.email;
 
-      // 1. VALIDA SE EMAIL JÁ EXISTE
       if(emailMudou){
         const emailJaExiste = todosProfessores.some(p => p.email === emailNovo && p.id !== idAntigo);
         if(emailJaExiste){ 
@@ -390,7 +409,7 @@
           const novoUid = userCredential.user.uid;
           await signOut(secondaryAuth);
           await deleteDoc(doc(db, "professores", idAntigo));
-          await setDoc(doc(db, "professores", novoUid), { nome, tipo, disciplinas, email: emailNovo, tipo_usuario: 'professor' });
+          await setDoc(doc(db, "professores", novoUid), { nome, tipo, disciplinas, email: emailNovo, status: 'ativo', tipo_usuario: 'professor' });
           Swal.fire('Sucesso!', `Login alterado! Nova senha: ${senhaParaUsar}`, 'success');
         } else {
           await updateDoc(doc(db, "professores", idAntigo), { nome, tipo, disciplinas, email: emailNovo });
@@ -409,30 +428,39 @@
     });
 
     async function carregarProfessores() {
+      mostrarLoader();
       const tbody = document.querySelector('#tabela-professores tbody');
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">Carregando...</td></tr>';
       try {
         const snapshot = await getDocs(collection(db, "professores"));
         todosProfessores = [];
-        snapshot.forEach(docSnap => { todosProfessores.push({ id: docSnap.id, ...docSnap.data() }); });
+        snapshot.forEach(docSnap => { 
+          const dados = docSnap.data();
+          if(dados.status !== 'inativo'){
+            todosProfessores.push({ id: docSnap.id, ...dados }); 
+          }
+        });
         aplicarFiltro();
       } catch(err){ console.error(err); tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red">Erro ao carregar</td></tr>'; }
+      finally{ esconderLoader(); }
     }
 
     window.excluirProfessor = async (id) => {
       const result = await Swal.fire({ 
-        title: 'Tem certeza?', 
-        text: 'Isso vai excluir só do banco de dados!',
+        title: 'Arquivar professor?', 
+        text: 'Ele vai sair da lista, não vai logar mais, mas fica salvo em Arquivados para reativar quando voltar. Não dá erro de e-mail e não pede cartão.',
         icon: 'warning', 
         showCancelButton: true, 
-        confirmButtonColor: '#e74c3c', 
-        confirmButtonText: 'Sim, excluir!' 
+        confirmButtonColor: '#e67e22', 
+        confirmButtonText: 'Sim, arquivar!' 
       });
       
       if (result.isConfirmed) {
-        await deleteDoc(doc(db, "professores", id));
-        Swal.fire('Excluído!', 'Professor removido do sistema.', 'success'); 
-        carregarProfessores();
+        try{
+          Swal.fire({title:'Arquivando...', allowOutsideClick:false, didOpen:()=>Swal.showLoading()});
+          await updateDoc(doc(db, "professores", id), { status: 'inativo', data_arquivado: new Date().toISOString() });
+          Swal.fire('Arquivado!', 'Professor movido para arquivados.', 'success'); 
+          carregarProfessores();
+        }catch(e){ Swal.fire('Erro', e.message, 'error'); }
       }
     }
 
